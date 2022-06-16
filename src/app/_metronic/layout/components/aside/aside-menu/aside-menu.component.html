@@ -1,0 +1,381 @@
+<!-- Dashboard -->
+<!-- <div class="menu-item">
+  <a
+    class="menu-link without-sub"
+    routerLink="/dashboard"
+    routerLinkActive="active"
+    ><span class="menu-icon">
+      <span
+        [inlineSVG]="'./assets/media/icons/duotune/art/art002.svg'"
+        class="svg-icon svg-icon-2"
+      ></span>
+    </span>
+    <span class="menu-title" translate="MENU.DASHBOARD"></span
+  ></a>
+</div> -->
+
+<!-- Layout builder -->
+<!-- <div class="menu-item">
+  <a class="menu-link without-sub" routerLink="/#" routerLinkActive="active"
+    ><span class="menu-icon">
+      <span
+        [inlineSVG]="'./assets/media/icons/duotune/general/gen019.svg'"
+        class="svg-icon svg-icon-2"
+      ></span> </span
+    ><span class="menu-title">دليل البدء السريع</span></a
+  >
+</div> -->
+
+<ng-container *ngFor="let item of menuService.menuList$ | async">
+  <ng-container *ngIf="item.title" [ngTemplateOutlet]="menuTemplate" [ngTemplateOutletContext]="{ item: item }"></ng-container>
+</ng-container>
+<ng-template #menuTemplate let-item="item">
+  <ng-container *ngIf="item.submenu" [ngTemplateOutlet]="menuInnerTemplate" [ngTemplateOutletContext]="{ item: item }"></ng-container>
+  <ng-container *ngIf="!item.submenu" [ngTemplateOutlet]="menuItemTemplate" [ngTemplateOutletContext]="{ item: item }"></ng-container>
+</ng-template>
+
+<ng-template #menuInnerTemplate let-item="item">
+
+  <div
+    class="menu-item menu-accordion"
+    data-kt-menu-trigger="click"
+    routerLinkActive="here show"
+    >
+    <span class="menu-link">
+      <span class="menu-icon">
+        <span
+          class="svg-icon svg-icon-2"
+          [inlineSVG]="'./assets/media/icons/duotune/coding/cod001.svg'"
+          >
+        </span>
+      </span>
+      <span class="menu-title">{{item.title}}</span>
+      <span class="menu-arrow"></span>
+    </span>
+    <div *ngFor="let subItem of item.submenu" class="menu-sub menu-sub-accordion" routerLinkActive="menu-active-bg">
+      <ng-container *ngIf="!!subItem.submenu" [ngTemplateOutlet]="menuInnerTemplate" [ngTemplateOutletContext]="{ item: subItem }"></ng-container>
+      <ng-container *ngIf="!subItem.submenu" [ngTemplateOutlet]="menuItemTemplate" [ngTemplateOutletContext]="{ item: subItem }"></ng-container>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #menuItemTemplate let-item="item">
+  <div class="menu-item">
+    <a
+      class="menu-link without-sub"
+      routerLinkActive="active"
+      [routerLink]="item.page"
+      ><span class="menu-icon"
+        ><span
+          class="svg-icon svg-icon-2"
+          [inlineSVG]="'./assets/media/icons/duotune/coding/cod001.svg'"
+        ></span></span
+      ><span class="menu-title">{{item.title}}</span></a
+    >
+  </div>
+</ng-template>
+
+<!-- <div class="menu-item menu-accordion"
+  data-kt-menu-trigger="click"
+  routerLinkActive="here show"
+>
+  <span class="menu-link"
+    >
+     <span class="menu-icon"
+      ><span
+        class="svg-icon svg-icon-2"
+        [inlineSVG]="'./assets/media/icons/duotune/general/gen001.svg'"
+      ></span></span
+    >
+    <span class="menu-title">----</span
+    ><span class="menu-arrow"></span
+  ></span>
+  <div class="menu-sub menu-sub-accordion" routerLinkActive="menu-active-bg">
+    <div
+      class="menu-item menu-accordion"
+      routerLinkActive="here show"
+      data-kt-menu-trigger="click"
+    >
+      <span class="menu-link"
+        ><span class="menu-bullet"></span
+        ><span class="menu-title" data-link="/crafted/pages/profile"
+          >الموقع الأول</span
+        ><span class="menu-arrow"></span
+        >
+      </span>
+      <div
+        class="menu-sub menu-sub-accordion"
+        routerLinkActive="menu-active-bg"
+      >
+        <div
+          class="menu-item menu-accordion"
+          routerLinkActive="here show"
+          data-kt-menu-trigger="click"
+        >
+          <span class="menu-link"
+            ><span class="menu-icon"
+              ><span
+                class="svg-icon svg-icon-2"
+                [inlineSVG]="'./assets/media/icons/duotune/general/gen019.svg'"
+              ></span></span
+            ><span class="menu-title" data-link="/crafted/pages/wizards"
+              >ادارة العمل</span
+            ><span class="menu-arrow"></span
+          ></span>
+          <div
+            class="menu-sub menu-sub-accordion"
+            routerLinkActive="menu-active-bg"
+          >
+            <div class="menu-item">
+              <a
+                class="menu-link without-sub"
+                routerLinkActive="active"
+                routerLink="/crafted/pages/wizards/horizontal"
+                ><span class="menu-icon"
+                  ><span
+                    class="svg-icon svg-icon-2"
+                    [inlineSVG]="
+                      './assets/media/icons/duotune/general/gen045.svg'
+                    "
+                  ></span></span
+                ><span class="menu-title">المهام المفتوحة</span></a
+              >
+            </div>
+            <div class="menu-item">
+              <a
+                class="menu-link without-sub"
+                routerLinkActive="active"
+                routerLink="/crafted/pages/wizards/vertical"
+                ><span class="menu-icon"
+                  ><span
+                    class="svg-icon svg-icon-2"
+                    [inlineSVG]="
+                      './assets/media/icons/duotune/arrows/arr016.svg'
+                    "
+                  ></span></span
+                ><span class="menu-title">المهام المنجزة</span></a
+              >
+            </div>
+
+            <div class="menu-item">
+              <a
+                class="menu-link without-sub"
+                routerLinkActive="active"
+                routerLink="/crafted/pages/wizards/vertical"
+                ><span class="menu-icon"
+                  ><span
+                    class="svg-icon svg-icon-2"
+                    [inlineSVG]="
+                      './assets/media/icons/duotune/general/gen002.svg'
+                    "
+                  ></span></span
+                ><span class="menu-title">ارسال الأعمال</span></a
+              >
+            </div>
+          </div>
+        </div>
+        <div class="menu-item">
+          <a
+            class="menu-link without-sub"
+            routerLinkActive="active"
+            routerLink="/crafted/pages/profile/projects"
+            ><span class="menu-icon"
+              ><span
+                class="svg-icon svg-icon-2"
+                [inlineSVG]="'./assets/media/icons/duotune/general/gen017.svg'"
+              ></span></span
+            ><span class="menu-title">الأصول</span></a
+          >
+        </div>
+        <div class="menu-item">
+          <a
+            class="menu-link without-sub"
+            routerLinkActive="active"
+            routerLink="/crafted/pages/profile/campaigns"
+            ><span class="menu-icon"
+              ><span
+                class="svg-icon svg-icon-2"
+                [inlineSVG]="'./assets/media/icons/duotune/coding/cod009.svg'"
+              ></span></span
+            ><span class="menu-title">إدارة المهام المتكررة</span></a
+          >
+        </div>
+        <div class="menu-item">
+          <a
+            class="menu-link without-sub"
+            routerLinkActive="active"
+            routerLink="/crafted/pages/profile/documents"
+            ><span class="menu-icon"
+              ><span
+                class="svg-icon svg-icon-2"
+                [inlineSVG]="'./assets/media/icons/duotune/graphs/gra010.svg'"
+              ></span></span
+            ><span class="menu-title">الأجزاء</span></a
+          >
+        </div>
+        <div class="menu-item">
+          <a
+            class="menu-link without-sub"
+            routerLinkActive="active"
+            routerLink="/crafted/pages/profile/connections"
+            ><span class="menu-icon"
+              ><span
+                class="svg-icon svg-icon-2"
+                [inlineSVG]="
+                  './assets/media/icons/duotune/communication/com014.svg'
+                "
+              ></span></span
+            ><span class="menu-title">فرق العمل</span></a
+          >
+        </div>
+
+        <div class="menu-item">
+          <a
+            class="menu-link without-sub"
+            routerLinkActive="active"
+            routerLink="/crafted/pages/profile/connections"
+            ><span class="menu-icon"
+              ><span
+                class="svg-icon svg-icon-2"
+                [inlineSVG]="
+                  './assets/media/icons/duotune/communication/com005.svg'
+                "
+              ></span></span
+            ><span class="menu-title">الموردين</span></a
+          >
+        </div>
+
+        <div
+          class="menu-item menu-accordion"
+          routerLinkActive="here show"
+          data-kt-menu-trigger="click"
+        >
+          <span class="menu-link"
+            ><span class="menu-icon"
+              ><span
+                class="svg-icon svg-icon-2"
+                [inlineSVG]="'./assets/media/icons/duotune/finance/fin010.svg'"
+              ></span></span
+            ><span class="menu-title" data-link="/crafted/pages/wizards"
+              >المشتريات</span
+            ><span class="menu-arrow"></span
+          ></span>
+          <div
+            class="menu-sub menu-sub-accordion"
+            routerLinkActive="menu-active-bg"
+          >
+            <div class="menu-item">
+              <a
+                class="menu-link without-sub"
+                routerLinkActive="active"
+                routerLink="/crafted/pages/wizards/horizontal"
+                ><span class="menu-icon"
+                  ><span
+                    class="svg-icon svg-icon-2"
+                    [inlineSVG]="
+                      './assets/media/icons/duotune/ecommerce/ecm001.svg'
+                    "
+                  ></span></span
+                ><span class="menu-title">طلبات الشراء</span></a
+              >
+            </div>
+            <div class="menu-item">
+              <a
+                class="menu-link without-sub"
+                routerLinkActive="active"
+                routerLink="/crafted/pages/wizards/vertical"
+                ><span class="menu-icon"
+                  ><span
+                    class="svg-icon svg-icon-2"
+                    [inlineSVG]="
+                      './assets/media/icons/duotune/general/gen005.svg'
+                    "
+                  ></span></span
+                ><span class="menu-title">الفواتير</span></a
+              >
+            </div>
+            <div class="menu-item">
+              <a
+                class="menu-link without-sub"
+                routerLinkActive="active"
+                routerLink="/crafted/pages/wizards/vertical"
+                ><span class="menu-icon"
+                  ><span
+                    class="svg-icon svg-icon-2"
+                    [inlineSVG]="
+                      './assets/media/icons/duotune/finance/fin002.svg'
+                    "
+                  ></span></span
+                ><span class="menu-title">الميزانية</span></a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="menu-item">
+  <a
+    class="menu-link without-sub"
+    routerLink="settings/users"
+    routerLinkActive="active"
+    ><span class="menu-icon">
+      <span
+        [inlineSVG]="'./assets/media/icons/duotune/communication/com013.svg'"
+        class="svg-icon svg-icon-2"
+      ></span> </span
+    ><span class="menu-title">المستخدمين</span></a
+  >
+</div>
+<div
+  class="menu-item menu-accordion"
+  data-kt-menu-trigger="click"
+  routerLinkActive="here show"
+>
+<div class="menu-item">
+  <a
+    class="menu-link without-sub"
+    routerLink="settings/locations"
+    routerLinkActive="active"
+    ><span class="menu-icon">
+      <span
+        [inlineSVG]="'./assets/media/icons/duotune/general/gen001.svg'"
+        class="svg-icon svg-icon-2"
+      ></span> </span
+    ><span class="menu-title">ادارة المواقع</span></a
+  >
+</div>
+
+<div
+  class="menu-item menu-accordion"
+  data-kt-menu-trigger="click"
+  routerLinkActive="here show"
+>
+  <span class="menu-link"
+    ><span class="menu-icon"
+      ><span
+        class="svg-icon svg-icon-2"
+        [inlineSVG]="'./assets/media/icons/duotune/coding/cod001.svg'"
+      ></span></span
+    ><span class="menu-title" data-link="/crafted/widgets">اعدادات متقدمة</span
+    ><span class="menu-arrow"></span
+  ></span>
+  <div class="menu-sub menu-sub-accordion" routerLinkActive="menu-active-bg">
+    <div class="menu-item">
+      <a
+        class="menu-link without-sub"
+        routerLinkActive="active"
+        routerLink="settings/roles"
+        ><span class="menu-icon"
+          ><span
+            class="svg-icon svg-icon-2"
+            [inlineSVG]="'./assets/media/icons/duotune/abstract/abs041.svg'"
+          ></span></span
+        ><span class="menu-title">الأدوار</span></a
+      >
+    </div>
+
+  </div>
+</div> -->

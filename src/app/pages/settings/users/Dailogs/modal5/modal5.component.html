@@ -1,0 +1,147 @@
+
+
+
+   <div *ngIf="loading; else mainForm">
+    <mat-spinner></mat-spinner>
+  </div>
+
+
+
+
+
+<p-dialog header="تعديل الصوره الشخصسة" [(visible)]="display" [style]="{width: '70vw'}">
+  <div class="container">
+    <div class="card">
+      <div class="card-header">
+
+      </div>
+      <div class="card-body">
+        <input type="file" (change)="fileChangeEvent($event) " />
+        <div class="row" style="margin-top: 15px;">
+            <div class="text-center col-md-8">
+                <h5>Format Picture</h5>
+                <image-cropper
+
+                [imageChangedEvent]="imageChangedEvent"
+                [maintainAspectRatio]="true"
+                [aspectRatio]="4/4"
+                [resizeToWidth]="150"
+                format="png"
+                (imageCropped)="imageCropped($event)"
+                (imageLoaded)="imageLoaded()"
+                (cropperReady)="cropperReady()"
+                (loadImageFailed)="loadImageFailed()"></image-cropper>
+
+            </div>
+            <div class="text-center col-md-4">
+                <h5>Preview</h5>
+                <img [src]="croppedImage" />
+            </div>
+        </div>
+      </div>
+
+    </div>
+</div>
+
+<ng-template pTemplate="footer">
+  <button pButton type="button" (click)="saveImg()" label=" حفظ التعديل" ></button>
+</ng-template>
+</p-dialog>
+<ng-template #mainForm >
+  <div class="modal-contents">
+
+    <div class="row mb-5">
+      <label class="col-lg-3 col-form-label text-lg-end">الصورة الشخصية</label>
+      <div class="col-lg-9 col-xl-9">
+
+
+          <div class="d-flex align-items-center">
+              <div data-kt-image-input="true" class="image-input image-input-outline"
+              (click)="showEditImage()"                        style="background-image: url(&quot;./assets/media/avatars/blank.png&quot;);">
+                  <div class="image-input-wrapper w-125px h-125px"
+                      style="background-image: url({{imgProfile}});" ></div>
+              </div>
+              <!-- <input type="file" #upload hidden (change)="selectImg($event)"> -->
+
+              <!-- app.component.html -->
+
+
+          </div>
+      </div>
+  </div>
+    <div class="form" [formGroup]="formAddUser">
+      <div class="mb-5">
+
+        <div class="row">
+          <div class="col-lg-6">
+            <label class="form-label">اسم المستخدم</label>
+            <input type="text" class="form-control" formControlName="UserName" >
+          </div>
+          <div class="col-lg-6">
+            <label class="form-label">تأكيد البريد الالكتروني</label>
+            <input type="text" class="form-control" formControlName="Email" placeholder="name@example.com">
+          </div>
+        </div>
+
+      </div>
+
+
+      <div class="mb-5">
+        <div class="row">
+          <div class="col-lg-6">
+            <label class="form-label">الاسم الأول</label>
+            <input type="text" class="form-control" formControlName="FirstName" placeholder="">
+          </div>
+          <div class="col-lg-6">
+            <label class="form-label">الاسم الأخير</label>
+            <input type="text" class="form-control" formControlName="LastName" placeholder="">
+          </div>
+        </div>
+
+      </div>
+
+
+
+
+      <!-- <div class="mb-5">
+              <div class="row">
+                  <div class="col-lg-6">
+                      <label class="form-label">الدور</label>
+                      <select class="form-select" aria-label="Select example">
+                          <option>محاسب</option>
+                          <option value="1">One</option>
+                          <option value="2">Two</option>
+                          <option value="3">Three</option>
+                      </select>
+                                  </div>
+                  <div class="col-lg-6">
+                      <label class="form-label">الموقع</label>
+                      <select class="form-select" aria-label="Select example">
+                          <option>موقع الزيتون</option>
+                          <option value="1">One</option>
+                          <option value="2">Two</option>
+                          <option value="3">Three</option>
+                      </select>
+                                  </div>
+              </div>
+
+          </div> -->
+
+      <div class="mb-5">
+        <div class="row">
+          <div class="col-lg-6">
+            <label class="form-label">رقم الهاتف</label>
+            <input type="text" class="form-control" formControlName="PhoneNumber" placeholder="">
+          </div>
+        </div>
+
+      </div>
+
+
+      <div class="mb-5">
+        <button class="btn btn-primary" (click)="EditUser()"><i class="fas fa-user-plus" ></i> اضافة</button>
+
+      </div>
+    </div>
+  </div>
+</ng-template>

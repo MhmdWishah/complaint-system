@@ -1,0 +1,803 @@
+<div class="card card-custom">
+  <!-- begin::Header -->
+  <div class="card-header card-header-stretch">
+    <div class="card-title m-0">
+      <h3 class="fw-bolder m-0">ادارة المستخدمين</h3>
+
+      <div class="card-header-actions">
+
+        <div class="add-user">
+          <button (click)="showDialogAddUser()" class="btn btn-sm btn-primary"><i class="fas fa-user-plus"></i> اضافة
+            مستخدم</button>
+
+        </div>
+        <!-- <div class="bulk-actions"> -->
+        <!-- <a class="btn btn-sm btn-success cursor-pointer" data-kt-menu-trigger="click"
+            data-kt-menu-placement="bottom-end" data-kt-menu-flip="top-end" data-kt-menu="true"><i
+              class="fas fa-cog"></i> </a> -->
+        <div class="col">
+          <div ngbDropdown class="d-inline-block">
+            <button class="btn btn-sm btn-success cursor-pointer" ngbDropdownToggle data-kt-menu-trigger="click"data-kt-menu-placement="bottom-end"data-kt-menu-flip="top-end"data-kt-menu="true" ><i class="fas fa-cog"></i> اجراءات</button>
+
+            <!-- <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>الاجرائات</button> -->
+            <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+              <button ngbDropdownItem>حذف</button>
+              <button ngbDropdownItem>تفعيل الاشعارات</button>
+              <button ngbDropdownItem>ارسال رسالة</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- <p-splitButton  style="direction: ltr;"  label="الاجراءات" icon="pi pi-check" [model]="items" styleClass="p-button-success p-mb-2"></p-splitButton> -->
+        <!-- </div> -->
+      </div>
+    </div>
+  </div>
+  <!-- end::Header -->
+  <!-- begin::Body -->
+  <div class="card-body">
+
+    <div class="users-info">
+      <h5>فيما يلي قائمة المستخدمين وأدوارهم.</h5>
+
+      <div class="total users"></div>
+    <!--   </div>
+
+     <div class="users-list">
+
+      <div class="table-header">
+        <div class="check-item">
+          <div class="form-check form-check-custom form-check-sm">
+            <input class="form-check-input" type="checkbox" value="" id="flexRadioLg" />
+          </div>
+        </div>
+
+        <div class="name">
+          <h3>الاسم</h3>
+        </div>
+
+        <div class="roles-items">
+          <h3>الأدوار</h3>
+        </div>
+
+        <div class="actions">
+          <h3>الخيارات</h3>
+        </div>
+      </div>
+      <div class="user">
+        <div class="check-item">
+          <div class="form-check form-check-custom form-check-sm">
+            <input class="form-check-input" type="checkbox" value="" id="flexRadioLg" />
+          </div>
+        </div>
+        <div class="name">
+          <img src="../../../../assets/media/avatars/150-10.jpg" alt="">
+          <h4>ريهام سعيد</h4>
+        </div>
+        <div class="roles-items">
+
+          <div class="roles-contents">
+            <div class="items">
+              <div class="items-contents">
+                <div class="item">
+                  <div class="role">
+                    <h5>مدير مبيعات</h5>
+                  </div>
+                  <div class="location">
+                    <h5>الموقع الأول</h5>
+                  </div>
+                  <div class="remove">
+                    <a href="#" class="btn btn-icon btn-circle btn-sm sm-xtra btn-light-danger"
+                      pTooltip="حذف هذا الدور من هذا المستخدم" tooltipPosition="top"><i
+                        class="far fa-trash-alt"></i></a>
+                  </div>
+                </div>
+
+                <div class="item">
+                  <div class="role">
+                    <h5>مدير مبيعات</h5>
+                  </div>
+                  <div class="location">
+                    <h5>الموقع الأول</h5>
+                  </div>
+                  <div class="remove">
+                    <a href="#" class="btn btn-icon btn-circle btn-sm sm-xtra btn-light-danger"
+                      pTooltip="حذف هذا الدور من هذا المستخدم" tooltipPosition="top"><i
+                        class="far fa-trash-alt"></i></a>
+                  </div>
+                </div>
+              </div>
+
+              <div class="add-role">
+                <a href="#" class="btn btn-icon btn-circle btn-sm sm-xtra  btn-light-success"
+                  pTooltip="اضافة دور جديد لهذا المستخدم " tooltipPosition="top"><i class="fas fa-plus"></i></a>
+              </div>
+            </div>
+
+            <div class="collapse-roles">
+              <button class="btn btn-icon btn-sm btn-custom-action" pTooltip="اظهار واخفاء أدوار المستخدم"
+                tooltipPosition="top">
+                <span class="action-icon">
+                  <i class="fas fa-chevron-down"></i>
+                </span>
+              </button>
+            </div>
+
+
+          </div>
+
+
+
+
+
+
+        </div>
+
+
+        <div class="actions">
+          <div class="check-actions">
+            <div class="check-item">
+              <button class="btn-check-one  btn btn-icon btn-sm btn-custom-action" (click)="showmodal1()"
+                pTooltip="التبديل إذا كان المستخدم نشطًا أم لا" tooltipPosition="top">
+                <span class="action-icon">
+                  <i class="fas fa-user"></i>
+                </span>
+                <span class="check">
+                  <i class="fas fa-check"></i>
+                </span>
+              </button>
+            </div>
+
+            <div class="check-item">
+              <button class="btn-check-one  btn btn-icon btn-sm btn-custom-action" (click)="showmodal2()"
+                pTooltip="التبديل لتفعيل تلقي إشعارات البريد الإلكتروني أم لا" tooltipPosition="top">
+                <span class="action-icon">
+                  <i class="fas fa-envelope"></i>
+                </span>
+                <span class="check">
+                  <i class="fas fa-times"></i>
+                </span>
+              </button>
+            </div>
+
+            <div class="check-item">
+              <button class="btn-check-one  btn btn-icon btn-sm btn-custom-action" (click)="showmodal3()"
+                pTooltip="التبديل لتفعيل تلقي المستخدم إشعارات فورية على هاتفه المحمول أم لا" tooltipPosition="top">
+                <span class="action-icon">
+                  <i class="fas fa-bell"></i>
+                </span>
+                <span class="check">
+                  <i class="fas fa-check"></i>
+                </span>
+              </button>
+            </div>
+
+            <div class="check-item">
+              <button class="btn-check-two btn btn-icon btn-sm btn-custom-action" (click)="showmodal4()"
+                pTooltip="أدخل كلمة مرور جديدة لهذا المستخدم" tooltipPosition="top">
+                <span class="action-icon">
+                  <i class="fas fa-unlock"></i>
+                </span>
+
+              </button>
+            </div>
+
+            <div class="check-item">
+              <button class="btn-check-two btn btn-icon btn-sm btn-custom-action" (click)="showmodal5()"
+                pTooltip="تعديل بيانات هذا المستخدم" tooltipPosition="top">
+                <span class="action-icon">
+                  <i class="fas fa-user-edit"></i>
+                </span>
+
+              </button>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+
+      <div class="user">
+        <div class="check-item">
+          <div class="form-check form-check-custom form-check-sm">
+            <input class="form-check-input" type="checkbox" value="" id="flexRadioLg" />
+          </div>
+        </div>
+        <div class="name">
+          <img src="../../../../assets/media/avatars/150-1.jpg" alt="">
+          <h4>سعيد عبدالله العكلوك</h4>
+        </div>
+        <div class="roles-items">
+
+          <div class="roles-contents">
+            <div class="items">
+              <div class="items-contents" [hidden]="isRolesShow">
+                <div class="item">
+                  <div class="role">
+                    <h5>مدير مبيعات</h5>
+                  </div>
+                  <div class="location">
+                    <h5>الموقع الأول</h5>
+                  </div>
+                  <div class="remove">
+                    <a href="#" class="btn btn-icon btn-circle btn-sm sm-xtra btn-light-danger"
+                      pTooltip="حذف هذا الدور من هذا المستخدم" tooltipPosition="top"><i
+                        class="far fa-trash-alt"></i></a>
+                  </div>
+                </div>
+
+                <div class="item">
+                  <div class="role">
+                    <h5>مدير مبيعات</h5>
+                  </div>
+                  <div class="location">
+                    <h5>الموقع الأول</h5>
+                  </div>
+                  <div class="remove">
+                    <a href="#" class="btn btn-icon btn-circle btn-sm sm-xtra btn-light-danger"
+                      pTooltip="حذف هذا الدور من هذا المستخدم" tooltipPosition="top"><i
+                        class="far fa-trash-alt"></i></a>
+                  </div>
+                </div>
+              </div>
+
+              <div class="add-role">
+                <a href="#" class="btn btn-icon btn-circle btn-sm sm-xtra btn-light-success"
+                  pTooltip="اضافة دور جديد لهذا المستخدم " tooltipPosition="top"><i class="fas fa-plus"></i></a>
+              </div>
+            </div>
+
+            <div class="collapse-roles">
+              <button (click)=toggleRoles() class="btn btn-icon btn-sm btn-custom-action"
+                pTooltip="اظهار واخفاء أدوار المستخدم" tooltipPosition="top">
+                <span class="action-icon">
+                  <i class="fas fa-chevron-down"></i>
+                </span>
+              </button>
+            </div>
+
+
+          </div>
+
+
+
+
+
+
+        </div>
+
+
+        <div class="actions">
+          <div class="check-actions">
+            <div class="check-item">
+              <button class="btn-check-one  btn btn-icon btn-sm btn-custom-action"
+                pTooltip="التبديل إذا كان المستخدم نشطًا أم لا" tooltipPosition="top">
+                <span class="action-icon">
+                  <i class="fas fa-user"></i>
+                </span>
+                <span class="check">
+                  <i class="fas fa-check"></i>
+                </span>
+              </button>
+            </div>
+
+            <div class="check-item">
+              <button class="btn-check-one  btn btn-icon btn-sm btn-custom-action"
+                pTooltip="التبديل لتفعيل تلقي إشعارات البريد الإلكتروني أم لا" tooltipPosition="top">
+                <span class="action-icon">
+                  <i class="fas fa-envelope"></i>
+                </span>
+                <span class="check">
+                  <i class="fas fa-times"></i>
+                </span>
+              </button>
+            </div>
+
+            <div class="check-item">
+              <button class="btn-check-one  btn btn-icon btn-sm btn-custom-action"
+                pTooltip="التبديل لتفعيل تلقي المستخدم إشعارات فورية على هاتفه المحمول أم لا" tooltipPosition="top">
+                <span class="action-icon">
+                  <i class="fas fa-bell"></i>
+                </span>
+                <span class="check">
+                  <i class="fas fa-check"></i>
+                </span>
+              </button>
+            </div>
+
+            <div class="check-item">
+              <button class="btn-check-two btn btn-icon btn-sm btn-custom-action"
+                pTooltip="أدخل كلمة مرور جديدة لهذا المستخدم" tooltipPosition="top">
+                <span class="action-icon">
+                  <i class="fas fa-unlock"></i>
+                </span>
+
+              </button>
+            </div>
+
+            <div class="check-item">
+              <button class="btn-check-two btn btn-icon btn-sm btn-custom-action" pTooltip="تعديل بيانات هذا المستخدم"
+                tooltipPosition="top">
+                <span class="action-icon">
+                  <i class="fas fa-user-edit"></i>
+                </span>
+
+              </button>
+            </div>
+
+
+          </div>
+
+        </div>
+      </div>
+
+      <div class="user">
+        <div class="check-item">
+          <div class="form-check form-check-custom form-check-sm">
+            <input class="form-check-input" type="checkbox" value="" id="flexRadioLg" />
+          </div>
+        </div>
+        <div class="name">
+          <img src="../../../../assets/media/avatars/150-15.jpg" alt="">
+          <h4>محمد عبدالله</h4>
+        </div>
+        <div class="roles-items">
+
+          <div class="roles-contents">
+            <div class="items">
+              <div class="items-contents">
+                <div class="item">
+                  <div class="role">
+                    <h5>مدير مبيعات</h5>
+                  </div>
+                  <div class="location">
+                    <h5>الموقع الأول</h5>
+                  </div>
+                  <div class="remove">
+                    <a href="#" class="btn btn-icon btn-circle btn-sm sm-xtra btn-light-danger"
+                      pTooltip="حذف هذا الدور من هذا المستخدم" tooltipPosition="top"><i
+                        class="far fa-trash-alt"></i></a>
+                  </div>
+                </div>
+
+                <div class="item">
+                  <div class="role">
+                    <h5>مدير مبيعات</h5>
+                  </div>
+                  <div class="location">
+                    <h5>الموقع الأول</h5>
+                  </div>
+                  <div class="remove">
+                    <a href="#" class="btn btn-icon btn-circle btn-sm sm-xtra btn-light-danger"
+                      pTooltip="حذف هذا الدور من هذا المستخدم" tooltipPosition="top"><i
+                        class="far fa-trash-alt"></i></a>
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="add-role">
+                <a href="#" class="btn btn-icon btn-circle btn-sm sm-xtra btn-light-success"
+                  pTooltip="اضافة دور جديد لهذا المستخدم " tooltipPosition="top"><i class="fas fa-plus"></i></a>
+              </div>
+            </div>
+
+            <div class="collapse-roles">
+              <button class="btn btn-icon btn-sm btn-custom-action" pTooltip="اظهار واخفاء أدوار المستخدم"
+                tooltipPosition="top">
+                <span class="action-icon">
+                  <i class="fas fa-chevron-down"></i>
+                </span>
+              </button>
+            </div>
+
+
+          </div>
+
+
+
+
+
+
+        </div>
+
+
+        <div class="actions">
+          <div class="check-actions">
+            <div class="check-item">
+              <button class="btn-check-one  btn btn-icon btn-sm btn-custom-action"
+                pTooltip="التبديل إذا كان المستخدم نشطًا أم لا" tooltipPosition="top">
+                <span class="action-icon">
+                  <i class="fas fa-user"></i>
+                </span>
+                <span class="check">
+                  <i class="fas fa-check"></i>
+                </span>
+              </button>
+            </div>
+
+            <div class="check-item">
+              <button class="btn-check-one  btn btn-icon btn-sm btn-custom-action"
+                pTooltip="التبديل لتفعيل تلقي إشعارات البريد الإلكتروني أم لا" tooltipPosition="top">
+                <span class="action-icon">
+                  <i class="fas fa-envelope"></i>
+                </span>
+                <span class="check">
+                  <i class="fas fa-times"></i>
+                </span>
+              </button>
+            </div>
+
+            <div class="check-item">
+              <button class="btn-check-one  btn btn-icon btn-sm btn-custom-action"
+                pTooltip="التبديل لتفعيل تلقي المستخدم إشعارات فورية على هاتفه المحمول أم لا" tooltipPosition="top">
+                <span class="action-icon">
+                  <i class="fas fa-bell"></i>
+                </span>
+                <span class="check">
+                  <i class="fas fa-check"></i>
+                </span>
+              </button>
+            </div>
+
+            <div class="check-item">
+              <button class="btn-check-two btn btn-icon btn-sm btn-custom-action"
+                pTooltip="أدخل كلمة مرور جديدة لهذا المستخدم" tooltipPosition="top">
+                <span class="action-icon">
+                  <i class="fas fa-unlock"></i>
+                </span>
+
+              </button>
+            </div>
+
+            <div class="check-item">
+              <button class="btn-check-two btn btn-icon btn-sm btn-custom-action" pTooltip="تعديل بيانات هذا المستخدم"
+                tooltipPosition="top">
+                <span class="action-icon">
+                  <i class="fas fa-user-edit"></i>
+                </span>
+
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="user">
+        <div class="check-item">
+          <div class="form-check form-check-custom form-check-sm">
+            <input class="form-check-input" type="checkbox" value="" id="flexRadioLg" />
+          </div>
+        </div>
+        <div class="name">
+          <img src="../../../../assets/media/avatars/150-21.jpg" alt="">
+          <h4>اماني السيد</h4>
+        </div>
+        <div class="roles-items">
+
+          <div class="roles-contents">
+            <div class="items">
+              <div class="items-contents">
+
+
+                <div class="item">
+                  <div class="role">
+                    <h5>مدير مبيعات</h5>
+                  </div>
+                  <div class="location">
+                    <h5>الموقع الأول</h5>
+                  </div>
+                  <div class="remove">
+                    <a href="#" class="btn btn-icon btn-circle btn-sm sm-xtra btn-light-danger"
+                      pTooltip="حذف هذا الدور من هذا المستخدم" tooltipPosition="top"><i
+                        class="far fa-trash-alt"></i></a>
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="add-role">
+                <a href="#" class="btn btn-icon btn-circle btn-sm sm-xtra btn-light-success"
+                  pTooltip="اضافة دور جديد لهذا المستخدم " tooltipPosition="top"><i class="fas fa-plus"></i></a>
+              </div>
+            </div>
+
+            <div class="collapse-roles">
+              <button class="btn btn-icon btn-sm btn-custom-action" pTooltip="اظهار واخفاء أدوار المستخدم"
+                tooltipPosition="top">
+                <span class="action-icon">
+                  <i class="fas fa-chevron-down"></i>
+                </span>
+              </button>
+            </div>
+
+
+          </div>
+
+
+
+
+
+
+        </div>
+
+
+        <div class="actions">
+          <div class="check-actions">
+            <div class="check-item">
+              <button class="btn-check-one  btn btn-icon btn-sm btn-custom-action"
+                pTooltip="التبديل إذا كان المستخدم نشطًا أم لا" tooltipPosition="top">
+                <span class="action-icon">
+                  <i class="fas fa-user"></i>
+                </span>
+                <span class="check">
+                  <i class="fas fa-check"></i>
+                </span>
+              </button>
+            </div>
+
+            <div class="check-item">
+              <button class="btn-check-one  btn btn-icon btn-sm btn-custom-action"
+                pTooltip="التبديل لتفعيل تلقي إشعارات البريد الإلكتروني أم لا" tooltipPosition="top">
+                <span class="action-icon">
+                  <i class="fas fa-envelope"></i>
+                </span>
+                <span class="check">
+                  <i class="fas fa-times"></i>
+                </span>
+              </button>
+            </div>
+
+            <div class="check-item">
+              <button class="btn-check-one  btn btn-icon btn-sm btn-custom-action"
+                pTooltip="التبديل لتفعيل تلقي المستخدم إشعارات فورية على هاتفه المحمول أم لا" tooltipPosition="top">
+                <span class="action-icon">
+                  <i class="fas fa-bell"></i>
+                </span>
+                <span class="check">
+                  <i class="fas fa-check"></i>
+                </span>
+              </button>
+            </div>
+
+            <div class="check-item">
+              <button class="btn-check-two btn btn-icon btn-sm btn-custom-action"
+                pTooltip="أدخل كلمة مرور جديدة لهذا المستخدم" tooltipPosition="top">
+                <span class="action-icon">
+                  <i class="fas fa-unlock"></i>
+                </span>
+
+              </button>
+            </div>
+
+            <div class="check-item">
+              <button class="btn-check-two btn btn-icon btn-sm btn-custom-action" pTooltip="تعديل بيانات هذا المستخدم"
+                tooltipPosition="top">
+                <span class="action-icon">
+                  <i class="fas fa-user-edit"></i>
+                </span>
+
+              </button>
+            </div>
+          </div>
+
+
+        </div>
+      </div> -->
+
+      <!-- <ul class="pagination pagination-circle">
+        <li class="page-item next"><a href="#" class="page-link"><i class="next"></i></a></li>
+        <li class="page-item "><a href="#" class="page-link">1</a></li>
+        <li class="page-item active"><a href="#" class="page-link">2</a></li>
+        <li class="page-item "><a href="#" class="page-link">3</a></li>
+        <li class="page-item "><a href="#" class="page-link">4</a></li>
+        <li class="page-item "><a href="#" class="page-link">5</a></li>
+        <li class="page-item "><a href="#" class="page-link">6</a></li>
+        <li class="page-item previous disabled"><a href="#" class="page-link"><i class="previous"></i></a></li>
+      </ul> -->
+
+      <div class="users users-inner">
+        <table mat-table [dataSource]="dataSource" style="width: 100%;">
+
+
+
+          <ng-container matColumnDef="#">
+            <th mat-header-cell *matHeaderCellDef class="table-header-text"> <input type="checkbox" /></th>
+            <td mat-cell *matCellDef="let element; let i = index;">
+              <input type="checkbox" />
+            </td>
+          </ng-container>
+
+
+          <ng-container matColumnDef="ID">
+            <th mat-header-cell *matHeaderCellDef class="table-header-text"> # </th>
+            <td mat-cell *matCellDef="let element; let i = index;"> {{i}} </td>
+          </ng-container>
+          <!-- Position Column -->
+          <ng-container matColumnDef="Name">
+            <th mat-header-cell *matHeaderCellDef class="table-header-text"> الاسم </th>
+            <td mat-cell *matCellDef="let element"> {{element.UserName}} </td>
+          </ng-container>
+
+          <!-- Name Column -->
+          <ng-container matColumnDef="Roles">
+            <th mat-header-cell *matHeaderCellDef class="table-header-text" style="width: 500px;"> الادوار </th>
+            <td mat-cell *matCellDef="let element" style="width: 500px;">
+              <div class="row roles-list" style="margin: 5px;">
+                <div class="col-9">
+                  <div class="row" *ngFor="let item of element.Roles" [hidden]="!this.formCheckRoles.get('item-'+element.UserId)?.value">
+                    <div class="col-5">
+                      <h5>{{item.RoleName}}</h5>
+                    </div>
+                    <div class="col-5">
+                      <h5>{{item.LocationName}}</h5>
+                    </div>
+                    <div class="col-2"> <button (click)="deleteRoleLoc(element.UserId,item.LocationId,item.RoleId)" class="btn btn-icon btn-circle btn-sm sm-xtra btn-light-danger"
+                        pTooltip="حذف هذا الدور من هذا المستخدم" tooltipPosition="top"><i
+                          class="far fa-trash-alt"></i></button>
+                    </div>
+                  </div>
+                </div>
+
+
+                <div class="col-9" [hidden]="this.formCheckRoles.get('item-'+element.UserId)?.value"></div>
+
+                <div class="col-3"> <button (click)="collaps(element) "class="btn btn-icon btn-sm btn-custom-action"
+                    pTooltip="اظهار واخفاء أدوار المستخدم" tooltipPosition="top">
+                    <span class="action-icon">
+                      <i class="fas fa-chevron-down"></i>
+                    </span>
+                  </button></div>
+
+                <div class="col-8" [hidden]="!this.formCheckRoles.get('item-'+element.UserId)?.value"></div>
+                <div class="col-4" [hidden]="!this.formCheckRoles.get('item-'+element.UserId)?.value"> <a
+                    class="btn btn-icon btn-circle btn-sm sm-xtra btn-light-success"
+                    pTooltip="اضافة دور جديد لهذا المستخدم " (click)="showmodal2(element)"  tooltipPosition="top"><i class="fas fa-plus"></i></a></div>
+              </div>
+
+
+            </td>
+          </ng-container>
+
+          <!-- Name Column -->
+          <ng-container matColumnDef="Actions">
+            <th mat-header-cell *matHeaderCellDef class="table-header-text"> الاجرائات </th>
+            <td mat-cell *matCellDef="let element">
+              <div class="actions">
+                <div class="check-actions">
+                  <div class="check-item">
+                    <button class="btn-check-one  btn btn-icon btn-sm btn-custom-action" (click)="showmodal1(element)"
+                      pTooltip="التبديل إذا كان المستخدم نشطًا أم لا" tooltipPosition="top">
+                      <span class="action-icon">
+                        <i class="fas fa-user"></i>
+                      </span>
+                      <span class="check">
+                        <i class="fas fa-times" *ngIf="element.UserStatusId==1"></i>
+                        <i class="fas fa-check" *ngIf="element.UserStatusId==2"></i>
+                      </span>
+                    </button>
+                    &nbsp;
+                    <button class="btn-check-one  btn btn-icon btn-sm btn-custom-action" (click)="showmodal3(element)"
+                      pTooltip="التبديل لتفعيل تلقي إشعارات البريد الإلكتروني أم لا" tooltipPosition="top">
+                      <span class="action-icon">
+                        <i class="fas fa-envelope"></i>
+                      </span>
+                      <span class="check">
+                        <i class="fas fa-times" *ngIf="!element.IsEmailNotification"></i>
+                        <i class="fas fa-check" *ngIf="element.IsEmailNotification"></i>
+
+                      </span>
+                    </button>&nbsp;
+
+                    <button class="btn-check-two btn btn-icon btn-sm btn-custom-action" (click)="showmodal4()"
+                      pTooltip="أدخل كلمة مرور جديدة لهذا المستخدم" tooltipPosition="top">
+                      <span class="action-icon">
+                        <i class="fas fa-unlock"></i>
+                      </span>
+
+                    </button>&nbsp;
+                    <button class="btn-check-two btn btn-icon btn-sm btn-custom-action" (click)="showmodal5(element.UserId)"
+                      pTooltip="تعديل بيانات هذا المستخدم" tooltipPosition="top">
+                      <span class="action-icon">
+                        <i class="fas fa-user-edit"></i>
+                      </span>
+
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+
+        </table>
+        <mat-paginator [pageSizeOptions]="[ 20, 10, 50]" showFirstLastButtons></mat-paginator>
+      </div>
+
+
+
+
+
+    </div>
+
+
+  </div>
+  <!-- end::Body -->
+
+  <!-- begin::Footer -->
+  <!-- <div class="card-footer py-6">
+        <div class="row">
+          <div class="col-lg-3"></div>
+          <div class="col-lg-9">
+            <button
+              type="button"
+              (click)="submitPreview()"
+              class="btn btn-primary me-2"
+              [disabled]="configLoading || resetLoading"
+            >
+              <ng-container *ngIf="!configLoading">
+                <span class="indicator-label">Preview</span>
+              </ng-container>
+
+              <ng-container *ngIf="configLoading">
+                <span class="indicator-progress" [style.display]="'block'">
+                  Please wait...{{ " " }}
+                  <span
+                    class="spinner-border spinner-border-sm align-middle ms-2"
+                  ></span>
+                </span>
+              </ng-container>
+            </button>
+
+            <button
+              type="button"
+              id="kt_layout_builder_reset"
+              class="btn btn-active-light btn-color-muted"
+              (click)="resetPreview()"
+              [disabled]="configLoading || resetLoading"
+            >
+              <ng-container *ngIf="!resetLoading">
+                <span class="indicator-label">Reset</span>
+              </ng-container>
+
+              <ng-container *ngIf="resetLoading">
+                <span class="indicator-progress" [style.display]="'block'">
+                  Please wait...{{ " " }}
+                  <span
+                    class="spinner-border spinner-border-sm align-middle ms-2"
+                  ></span>
+                </span>
+              </ng-container>
+            </button>
+          </div>
+        </div>
+      </div> -->
+
+  <!-- end::Footer -->
+</div>
+
+<p-dialog header="اضافه مستخدم" [(visible)]="display" [style]="{width: '40vw'}">
+  <modal-add-user (afterSave)="hidDialogAddUser()"></modal-add-user>
+</p-dialog>
+
+<p-dialog header="إلغاء تنشيط المستخدم" [(visible)]="displaymodal1" [style]="{width: '35vw'}">
+  <modal1 [dataUser]='dataUser' (afterSave)="hidmodal1()"></modal1>
+</p-dialog>
+<p-dialog header="إضافة دور للمستخدم" [(visible)]="displaymodal2" [style]="{width: '50vw'}">
+  <modal2 [dataUser]='dataUser' (afterSave)="hidmodal2()"></modal2>
+</p-dialog>
+<p-dialog header="التبديل " [(visible)]="displaymodal3" [style]="{width: '40vw'}">
+  <modal3  [dataUser]='dataUser' (afterSave)="hidmodal3()"></modal3>
+</p-dialog>
+<p-dialog header="تغيير كلمة المرور" [(visible)]="displaymodal4" [style]="{width: '25vw'}">
+  <modal4></modal4>
+</p-dialog>
+<p-dialog header="تعديل بيانات المستخدم" [(visible)]="displaymodal5" [style]="{width: '45vw'}">
+  <modal5 [idUser]="userId" (afterSave)="hidmodal5()"></modal5>
+</p-dialog>
+
+
+<p-confirmDialog header=" " icon="pi pi-exclamation-triangle" [style]="{width: '50vw'}"></p-confirmDialog>

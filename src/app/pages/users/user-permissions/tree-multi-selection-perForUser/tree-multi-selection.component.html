@@ -1,0 +1,19 @@
+<p-tree
+  [value]="dataTree"
+  [filter]="true"
+  selectionMode="multiple"
+  [(selection)]="selectedFile"
+  selectionMode="checkbox"
+  (onNodeSelect)="nodeSelect()"
+  (onNodeUnselect)="nodeUnselect()"
+  [loading]="(this.service.userPer$ | async) ? false : true"
+>
+</p-tree>
+<!-- class="p-tree-toggler-icon pi pi-fw pi-chevron-left" -->
+<!-- <p-contextMenu #cm [model]="items"></p-contextMenu> -->
+<!-- (onNodeUnselect)="nodeUnselect($event)" -->
+<!-- [contextMenu]="cm" -->
+<!-- [draggableNodes]="true"
+    [droppableNodes]="true"
+    draggableScope="self"
+    droppableScope="self" -->

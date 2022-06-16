@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<!-- <html direction="ltr" dir="ltr" style="direction: ltr"> -->
+<html direction="rtl" dir="rtl" style="direction: rtl">
+  <head>
+    <meta charset="utf-8" />
+    <title>نظام الشكاوى | اكسس لاين</title>
+    <base href="/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="shortcut icon" href="./assets/media/logos/favicon.ico" />
+
+    <link
+      href="//fonts.googleapis.com/css?family=Poppins:300,400,500,600,700"
+      rel="stylesheet"
+    />
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- SPLASH SCREEN-->
+    <link
+      rel="stylesheet"
+      id="layout-styles-anchor"
+      href="./assets/splash-screen.css"
+    />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Almarai:wght@400"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="./assets/assets-style.css" />
+    <link rel="stylesheet" href="./assets/general-style.css" />
+    <link rel="stylesheet" href="./assets/material-icons-style.css" />
+    <!-- <link rel="stylesheet" href="./assets/custom-rtl.css" /> -->
+  </head>
+
+  <script>
+  var html = document.getElementsByTagName('html')[0];
+  const lang = window.localStorage.getItem('language');
+  html.lang = lang;
+  html.dir = lang == 'en' ? 'ltr' : 'rtl';
+  html.style = lang == 'en' ? "direction: ltr" : 'direction: rtl';
+  html.direction = lang == 'en' ? "ltr" : "rtl";
+  if (html.dir == 'rtl') {
+    document.write('<link rel="stylesheet" href="./assets/css/style.angular.rtl.css">')
+    document.write('<link rel="stylesheet" href="./assets/css/override_rtl.css">')
+    document.write('<link rel="stylesheet" href="./assets/custom-rtl.css" />')
+  } else {
+  }
+</script>
+  <!-- <script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDQDC3VV5CGRaueUYpEEJ308KNx8zbG5t0&v=weekly"
+    async
+  ></script> -->
+  <body root id="kt_body">
+    <div id="splash-screen" class="splash-screen">
+      <img src="./assets/media/logo2.png" alt="Metron ic logo" width="80px" height="80px"/>
+      <span>Loading ...</span>
+    </div>
+  </body>
+</html>

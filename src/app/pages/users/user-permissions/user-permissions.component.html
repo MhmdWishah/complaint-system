@@ -1,0 +1,140 @@
+<div class="card card-custom">
+  <!-- begin::Header -->
+  <div class="card-header card-header-stretch align-items-center">
+    <div class="card-title m-0">
+      <i class="fas fa-user-tag fa-lg"></i>
+      <h4 class="fw-bolder mb-0 mx-2">صلاحيات المستخدمين</h4>
+    </div>
+    <div class="card-header-actions">
+      <!-- <div class="add-role">
+        <button class="btn btn-primary" style="background-color: #66a9ed;">
+          <i class="fas fa-plus"></i>
+          أضف صلاحية
+        </button>
+      </div> -->
+
+      <div class="input-group">
+        <input
+          type="text"
+          class="form-control"
+          [matAutocomplete]="userAuto"
+          [formControl]="userSearchControl"
+          placeholder="البحث عن المستخدمين..."
+        />
+        <div class="input-group-text">
+          <i class="fa fa-search"></i>
+        </div>
+        <mat-autocomplete #userAuto="matAutocomplete">
+          <mat-option *ngFor="let user of searchedUsers$ | async" [value]="user.FullName"
+            (onSelectionChange)="onSelectionUserChange(user)">
+            {{ user.FullName }}
+          </mat-option>
+        </mat-autocomplete>
+      </div>
+    </div>
+  </div>
+  <!-- end::Header -->
+  <!-- begin::Body -->
+  <div class="card-body">
+    <div
+      class="d-flex flex-row align-items-start justify-content-between"
+      *ngIf="!!selectedUser; else chooseUser"
+    >
+      <div class="col-lg-8 d-flex flex-column justify-content-around">
+        <h4>{{ selectedUser!.FullName! }}</h4>
+        <form [formGroup]="form" class="d-flex flex-column">
+          <div
+            class="col-md-12 d-flex align-items-center justify-content-between px-2"
+          >
+            <label class="form-label">الأدوار</label>
+            <!-- <div class="tags-group"> -->
+            <mat-form-field class="col-md-11">
+              <mat-chip-list #chipList>
+                <mat-chip
+                  *ngFor="let role of selectedUserRole$ | async"
+                  [selectable]="true"
+                  [removable]="true"
+                  (remove)="removeRole(role)"
+                >
+                  <!--  -->
+                  {{ role.RoleName }}
+                  <button matChipRemove>
+                    <mat-icon (click)="removeRole(role)">close</mat-icon>
+                  </button>
+                </mat-chip>
+                <input
+                  type="text"
+                  class="form-control"
+                  [formControl]="roleSearchControl"
+                  [matAutocomplete]="roleAuto"
+                  [matChipInputFor]="chipList"
+                  id="chipListInput"
+                />
+              </mat-chip-list>
+              <mat-autocomplete #roleAuto="matAutocomplete">
+                <mat-option *ngFor="let item of searchedRoles$ | async"
+                  (onSelectionChange)="addRole(item)">{{ item.Name }}</mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+            <!-- </div> -->
+          </div>
+        </form>
+        <multi-select-tree></multi-select-tree>
+      </div>
+      <div class="vr"></div>
+      <div class="col-lg-3">
+        <div class="roles-list">
+          <div class="title">
+            <i class="fas fa-user-tag fa-lg" style="color: #66a9ed"></i>
+            <h5 class="mx-2 mb-0">الادوار</h5>
+          </div>
+          <div
+            class="roles-items"
+            *ngIf="dataRoles$ | async as data; else spinnerLoader"
+          >
+            <div #rolesContainer class="roles-items-container">
+              <div *ngFor="let item of data; index as i" class="roles-item">
+                <!-- <div [style]="{height: '100%' , width: item.RoleStatus?'85%':'72%'}"
+                  (click)="GetDataById(item.code,item.Name);item.checked=true;readOnlyCheak(item.RoleStatus)">
+                  <div class="item-title" style="margin-top: 2px;">
+                    <h6>{{item?.Name}}</h6>
+                  </div>
+                </div> -->
+
+                <div class="role-name">
+                  <p class="mb-0 px-2">{{ item?.Name }}</p>
+                </div>
+
+                <div class="item-actions text-start">
+                  <!-- [hidden]="item?.RoleStatus -->
+                  <a class="d-inline-block">
+                    <i
+                      (click)="saveNewRoleForUser(item.code)"
+                      class="fas fa-plus action-icon"
+                      tooltipPosition="top"
+                    ></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- end::Body -->
+</div>
+
+<!-- <div>
+  <p-toast position="bottom-left"></p-toast>
+</div> -->
+
+<ng-template #chooseUser>
+  <div class="d-flex justify-content-center my-3">
+    <h1>عليك اختيار المستخدم</h1>
+  </div>
+</ng-template>
+
+<ng-template #spinnerLoader>
+  <p-progressSpinner [style]="{ width: '4rem' }"></p-progressSpinner>
+</ng-template>

@@ -1,0 +1,269 @@
+<div class="card card-custom">
+  <!-- begin::Header -->
+  <div class="card-header card-header-stretch">
+    <div class="card-title m-0">
+      <h3 class="fw-bolder m-0">شاشة بيانات المستخدمين</h3>
+    </div>
+    <div class="card-header-actions d-flex justify-content-between gap-3 py-3">
+      <div>
+        <div class="input-group">
+          <input type="text" class="form-control" [matAutocomplete]="userAuto" [formControl]="userSearchControl" placeholder="اكتب اسم المستخدم">
+          <!-- <span class="input-group-text" aria-label="userSearchControl" aria-describedby="userSearchControl">
+            <i class="fa fa-search"></i>
+          </span> -->
+          <div class="input-group-text">
+            <i class="fa fa-search"></i>
+          </div>
+        </div>
+        <mat-autocomplete #userAuto="matAutocomplete">
+          <mat-option *ngFor="let user of searchedUsers$ | async" [value]="user.FullName"
+            (onSelectionChange)="onSelectionUserChange(user)">
+            {{ user.FullName }}
+          </mat-option>
+        </mat-autocomplete>
+      </div>
+      <div class="d-flex justify-content-between gap-3">
+        <a role="button" class="btn btn-secondary" mat-raised-button matTooltip="Reset changes"
+          (click)="clear()">
+          <span class="hidden-mobile">
+            <i class="fas fa-eraser"></i>
+            تفريغ
+          </span>
+        </a>
+        <a role="button" class="btn btn-primary" color="primary" mat-raised-button matTooltip="Save & Continue"
+          (click)="save()">
+          <span class="hidden-mobile">
+            <i class="fa fa-save"></i>
+            حفظ
+          </span>
+        </a>
+      </div>
+    </div>
+  </div>
+  <!-- end::Header -->
+
+  <!-- begin::Body -->
+  <div class="card-body">
+    <div class="d-flex flex-column justify-content-between" *ngIf="codes$ | async as codes; else loadingSpinner">
+    <section>
+      <form [formGroup]="form" class="row">
+        <div class="col-md-2 mb-7">
+          <label class="required">اسم المستخدم</label>
+          <input type="text" class="form-control" formControlName="UserName">
+          <app-required-validation-msg [control]="formControls!.UserName!" [submitted]="submitted"></app-required-validation-msg>
+        </div>
+
+        <div class="col-md-4 mb-7">
+          <label class="required">الاسم بالكامل</label>
+          <input type="text" class="form-control" formControlName="FullName">
+          <app-required-validation-msg [control]="formControls!.FullName!" [submitted]="submitted"></app-required-validation-msg>
+        </div>
+
+        <div class="col-md-2 mb-7">
+          <label class="required">رقم الهوية</label>
+          <input type="text" class="form-control" formControlName="IDNumber">
+          <app-required-validation-msg [control]="formControls!.IDNumber!" [submitted]="submitted"></app-required-validation-msg>
+        </div>
+
+        <div class="col-md-4 mb-7">
+          <label>الإيميل</label>
+          <input type="email" class="form-control" formControlName="Email">
+        </div>
+
+        <div class="col-md-2 mb-7">
+          <label class="required">رقم الهاتف المحمول</label>
+          <input type="text" class="form-control" formControlName="Mobile" placeholder="Mobile Number">
+          <app-required-validation-msg [control]="formControls!.Mobile!" [submitted]="submitted"></app-required-validation-msg>
+        </div>
+
+        <div class="col-md-2 mb-7">
+          <label class="required">كلمة المرور</label>
+          <input type="password" class="form-control" formControlName="Password">
+          <app-required-validation-msg [control]="formControls!.Password!" [submitted]="submitted"></app-required-validation-msg>
+        </div>
+
+        <div class="col-md-2 mb-7">
+          <label class="required">تأكيد كلمة المرور</label>
+          <input type="password" class="form-control" formControlName="ConfirmPassword">
+          <ng-container *ngIf="form.get('ConfirmPassword')!.errors">
+            <small class="errors" *ngIf="formControls!.ConfirmPassword?.errors?.mustMatch! && (formControls!.ConfirmPassword?.touched || submitted)">
+              كلمتا المرور لا يتطابقان !
+            </small>
+          </ng-container>
+          <app-required-validation-msg [control]="formControls!.ConfirmPassword!" [submitted]="submitted"></app-required-validation-msg>
+        </div>
+
+        <div class="col-md-4 mb-7">
+          <label>الموظف</label>
+          <div class="input-group">
+            <input type="text" class="form-control" formControlName="StaffNo" [matAutocomplete]="empAuto">
+            <span class="input-group-text">
+              <i class="fa fa-search"></i>
+            </span>
+          </div>
+
+          <mat-autocomplete #empAuto="matAutocomplete">
+            <mat-option
+              (onSelectionChange)="onSelectionEmpChange(emp)"
+              *ngFor="let emp of emps$ | async"
+              [value]="emp.Name"
+              >
+                {{ emp.Name }}
+            </mat-option>
+          </mat-autocomplete>
+
+          <!-- <div class="errors" *ngIf="form.get('StaffNo')!.errors">
+            <small *ngIf="form.get('StaffNo')!.errors!.required && (form.get('StaffNo')!.touched || submitted)">
+              هذا الحقل مطلوب
+            </small>
+          </div> -->
+        </div>
+
+        <div class="col-md-2 mb-7">
+          <label class="required">القسم</label>
+          <select class="form-control" formControlName="Department">
+              <option *ngFor="let item of codes!.Department" [value]="item.Code">{{ item.Name }}</option>
+          </select>
+          <app-required-validation-msg [control]="formControls!.Department!" [submitted]="submitted"></app-required-validation-msg>
+        </div>
+
+        <div class="col-md-2 mb-7">
+          <label class="required">التصنيف</label>
+          <select class="form-control" formControlName="UserGroup">
+              <option *ngFor="let item of codes!.UserGroup" [value]="item.Code">{{ item.Name }}</option>
+          </select>
+          <app-required-validation-msg [control]="formControls!.UserGroup!" [submitted]="submitted"></app-required-validation-msg>
+        </div>
+
+        <div class="col-md-2 mb-7">
+          <label>الفعالية</label>
+          <div class="input-group py-3">
+            <mat-radio-group formControlName="Active">
+              <mat-radio-button class="mx-3" [value]="true">
+                فعّال
+              </mat-radio-button>
+              <mat-radio-button class="mx-3" [value]="false">
+                غير فعّال
+              </mat-radio-button>
+            </mat-radio-group>
+          </div>
+        </div>
+
+        <div class="col-md-3">
+          <label>صلاحية الحساب</label>
+          <div class="input-group">
+            <input
+              type="text"
+              autocomplete="off"
+              (focus)="limitDatePicker.open()"
+              [matDatepicker]="limitDatePicker"
+              class="form-control"
+              placeholder="dd/mm/yyyy"
+              formControlName="LimitDate"
+            />
+            <!-- <div class="input-group-append" (click)="limitDatePicker.open()"> -->
+              <div class="input-group-text" (click)="limitDatePicker.open()">
+                <i class="fas fa-calendar-alt"></i>
+              </div>
+              <mat-datepicker #limitDatePicker></mat-datepicker>
+            <!-- </div> -->
+          </div>
+        </div>
+
+        <div class="col-md-12">
+          <label>الوصف</label>
+          <textarea class="form-control" formControlName="Description" rows="3"></textarea>
+        </div>
+      </form>
+    </section>
+
+    <hr>
+
+    <section class="my-10">
+      <form [formGroup]="SearchForm" class="row my-5">
+
+        <div class="col-md-3 ">
+          <label >القسم</label>
+          <select class="form-control" formControlName="Department">
+            <option>غير محدد</option>
+            <option *ngFor="let item of codes!.Department" [value]="item.Code">{{ item.Name }}</option>
+          </select>
+
+        </div>
+
+        <div class="col-md-3">
+          <label>التصنيف</label>
+          <select class="form-control" formControlName="UserGroup">
+            <option>غير محدد</option>
+            <option *ngFor="let item of codes?.UserGroup" [value]="item.Code">{{ item.Name }}</option>
+          </select>
+        </div>
+
+        <div class="col-md-3">
+          <label>الفعالية</label>
+          <select class="form-control" formControlName="Active">
+            <option>غير محدد</option>
+            <option [value]="true">فعّال</option>
+            <option [value]="false">غير فعّال</option>
+          </select>
+        </div>
+
+        <div class="col-md-3 pt-7">
+          <a role="button" class="btn btn-info btn-sm" matTooltip="عرض" (click)="fetchUsers()">
+            <span class="hidden-mobile">عرض</span>
+            &nbsp;
+            <i class="fas fa-tags"></i>
+          </a>
+        </div>
+      </form>
+
+      <table class="table table-light table-striped table-hover">
+        <thead>
+          <tr>
+            <th>اسم المستخدم</th>
+            <th>الاسم الكامل</th>
+            <th>رقم الهوية</th>
+            <th>رقم الجوال</th>
+            <th>البريد الإلكتروني</th>
+            <th>فعال؟</th>
+            <th style="width: 10%">إجراءات</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of allUsersData$ | async">
+            <td>{{ user!.UserName! }}</td>
+            <td>{{ user!.FullName! }}</td>
+            <td>{{ user!.IDNO! }}</td>
+            <td>{{ user!.Mobile! }}</td>
+            <td>{{ user!.Email! }}</td>
+            <td>
+              <a *ngIf="user.Active" tabindex="-1" aria-disabled="true" class="pe-none btn btn-icon btn-circle btn-success btn-sm">
+                <i class="fas fa-user-check"></i>
+              </a>
+              <a *ngIf="!user.Active" tabindex="-1" aria-disabled="true"  class="pe-none btn btn-icon btn-circle btn-danger btn-sm">
+                <i class="fas fa-user-times"></i>
+              </a>
+            </td>
+            <td>
+              <a class="btn btn-icon btn-primary btn-circle btn-outline btn-outline-default" (click)="editUserInfo(user)">
+                <i class="fas fa-pen"></i>
+              </a>
+              &nbsp;
+              <a class="btn btn-icon btn-danger btn-circle btn-outline btn-outline-default" (click)="deleteUser(user)">
+                <i class="fas fa-trash"></i>
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+    </div>
+  </div>
+  <!-- end::body -->
+</div>
+
+<ng-template #loadingSpinner>
+  <div class="col-md-12 d-flex justify-content-center">
+    <mat-spinner></mat-spinner>
+  </div>
+</ng-template>

@@ -1,0 +1,112 @@
+<div class="card card-custom">
+  <!-- begin::Header -->
+  <div class="card-header card-header-stretch">
+    <div class="card-title m-0">
+      <h3 class="fw-bolder m-0">شاشة ثوابت النظام</h3>
+
+      <div *ngIf="false" class="card-header-actions">
+
+        <div class="add-user">
+          <button class="btn btn-sm btn-primary">
+            <i class="fas fa-user-plus"></i>
+            اضافة مستخدم
+          </button>
+
+        </div>
+
+        <div class="col">
+          <div ngbDropdown class="d-inline-block">
+            <button class="btn btn-sm btn-success cursor-pointer" ngbDropdownToggle data-kt-menu-trigger="click"
+              data-kt-menu-placement="bottom-end" data-kt-menu-flip="top-end" data-kt-menu="true"><i
+                class="fas fa-cog"></i> اجراءات</button>
+
+            <!-- <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>الاجرائات</button> -->
+            <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+              <button ngbDropdownItem>حذف</button>
+              <button ngbDropdownItem>تفعيل الاشعارات</button>
+              <button ngbDropdownItem>ارسال رسالة</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- <p-splitButton  style="direction: ltr;"  label="الاجراءات" icon="pi pi-check" [model]="items" styleClass="p-button-success p-mb-2"></p-splitButton> -->
+        <!-- </div> -->
+      </div>
+    </div>
+  </div>
+  <!-- end::Header -->
+
+  <!-- begin::Body -->
+  <div class="card-body">
+    <section *ngIf="dataTables$ | async as data; else loadingSpinner">
+      <form [formGroup]="form" class="row">
+        <div class="col-md-3">
+          <label>اختر ثابت النظام</label>
+          <select class="form-control" id="select" name="select" (change)="selectTable($event)" formControlName="tableName">
+            <option *ngFor="let item of data" [value]="item.tableName">{{ item.tableTitle }}</option>
+          </select>
+        </div>
+        <div class="col-md-3">
+          <label>الاسم</label>
+          <input type="text" class="form-control" formControlName="name">
+        </div>
+        <div class="col-md-3">
+          <label>الاسم باللغة الإنجليزية</label>
+          <input type="text" class="form-control" formControlName="eng">
+        </div>
+        <div class="col-md-3 pt-6">
+          <a class="btn btn-primary" (click)="saveCode()">
+            <i class="fa fa-save"></i>
+            &nbsp;
+            <span>حفظ</span>
+          </a>
+          &nbsp;
+          <a class="btn btn-secondary" (click)="clearForm()">
+            <i class="fa fa-save"></i>
+            &nbsp;
+            <span>تفريغ</span>
+          </a>
+          <!-- <button class="btn btn-secondary">
+            <i class="fa fa-eraser"></i>
+            &nbsp;
+
+          </button> -->
+        </div>
+      </form>
+    </section>
+
+    <section id="sectionTable">
+      <table class="table table-light table-striped table-hover">
+        <thead>
+          <tr>
+            <th>الاسم</th>
+            <th>الاسم باللغة الانجليزية</th>
+            <th>#</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let code of dataTableCodes$ | async">
+            <td>{{ code.name }}</td>
+            <td>{{ code.eng }}</td>
+            <td>
+              <a class="btn btn-icon btn-primary btn-circle btn-sm btn-outline btn-outline-default"
+                (click)="selectCode(code)">
+                <i class="fas fa-pen"></i>
+              </a>
+              &nbsp;
+              <a class="btn btn-icon btn-danger btn-circle btn-sm btn-outline btn-outline-default"
+                (click)="deleteCode(code)">
+                <i class="fas fa-trash"></i>
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  </div>
+  <!-- end::Footer -->
+</div>
+
+<ng-template #loadingSpinner>
+  <mat-spinner></mat-spinner>
+</ng-template>

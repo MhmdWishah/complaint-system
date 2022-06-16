@@ -1,0 +1,83 @@
+<div class="modal-contents">
+  <div class="hint">
+    <h5>الرجاء تحديد الدور الذي ترغب في إضافته للمستخدم: <span>سعيد عبدالله</span></h5>
+  </div>
+
+  <div class="roles-check">
+    <div class="form">
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="title">
+            <h5>الدور:</h5>
+          </div>
+          <div class="mb-5">
+            <!--begin::Option-->
+            <div *ngFor="let item of DataPage?.Roles  let i=index"  (click)="checkRoles(item.Code)"> <input type="radio" class="btn-check" name="radio_buttons_2" value="apps"
+                id="kt_radio_buttons_2_option_{{i+1}}" />
+              <label class="btn btn-outline btn-outline-dashed btn-outline-default p-2 d-flex align-items-center mb-5"
+                for="kt_radio_buttons_2_option_{{i+1}}">
+
+
+                <span class="d-block fw-bold text-start">
+                  <span class="text-dark fw-bolder d-block fs-3">{{item.Name}}</span>
+
+                </span>
+              </label>
+            </div>
+
+            <!--end::Option-->
+
+            <!--begin::Option-->
+            <!-- <div >
+              <input type="radio" class="btn-check" name="radio_buttons_2" value="sms"
+                id="kt_radio_buttons_2_option_2" />
+              <label class="btn btn-outline btn-outline-dashed btn-outline-default p-2 d-flex align-items-center"
+                for="kt_radio_buttons_2_option_2">
+
+
+                <span class="d-block fw-bold text-start">
+                  <span class="text-dark fw-bolder d-block fs-3">محاسب</span>
+                </span>
+              </label>
+            </div> -->
+
+            <!--end::Option-->
+
+
+          </div>
+
+        </div>
+
+        <div class="col-lg-6">
+
+          <div class="title">
+            <h5>الموقع:</h5>
+          </div>
+          <div class="mb-5">
+            <!--begin::Option-->
+            <div *ngFor="let item of DataPage?.Location let i=index" (click)="checkLocation(item.Code)">
+              <input type="radio" class="btn-check" name="radio_buttons_3" value="sms"
+                id="kt_radio_buttons_3_option_{{i+1}}" />
+              <label class="btn btn-outline btn-outline-dashed btn-outline-default p-2 d-flex align-items-center"
+                for="kt_radio_buttons_3_option_{{i+1}}">
+
+
+                <span class="d-block fw-bold text-start">
+                  <span class="text-dark fw-bolder d-block fs-3">{{item.Name}}</span>
+                </span>
+              </label>
+            </div>
+            <!--end::Option-->
+          </div>
+
+
+        </div>
+
+        <div class="mb-5">
+          <button  class="btn btn-primary" (click)="saveRolesLocation()"><i class="fas fa-save"></i> حفظ</button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

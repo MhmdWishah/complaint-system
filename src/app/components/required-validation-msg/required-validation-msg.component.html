@@ -1,0 +1,7 @@
+<ng-container *ngIf="control?.errors">
+  <div class="errors">
+    <small *ngIf="control?.errors?.required && (control?.touched || submitted)">
+      هذا الحقل مطلوب
+    </small>
+  </div>
+</ng-container>
