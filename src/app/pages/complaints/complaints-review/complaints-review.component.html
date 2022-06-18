@@ -1,0 +1,162 @@
+<div class="card card-custom">
+    <!-- begin::Header -->
+    <div class="card-header card-header-stretch">
+      <div class="card-title m-0">
+        <h3 class="fw-bolder m-0">شاشة استعراض الشكاوى</h3>
+      </div>
+      <div class="card-header-actions d-flex justify-content-between gap-3 py-3">
+        <!-- <div class="d-flex justify-content-between gap-3">
+          <a role="button" class="btn btn-secondary" matTooltip="Reset"
+            (click)="clear()">
+            <i class="fas fa-eraser"></i>
+            <span class="hidden-mobile">
+              تفريغ
+            </span>
+          </a>
+          <a role="button" class="btn btn-primary" color="primary" matTooltip="Save & Continue"
+            (click)="save()">
+            <i class="fa fa-save"></i>
+            <span class="hidden-mobile">
+              حفظ
+            </span>
+          </a>
+        </div> -->
+      </div>
+    </div>
+    <!-- end::Header -->
+  
+    <!-- begin::Body -->
+    <div class="card-body">
+        <div class=""container *ngIf="codes$ | async as codes; else loadingSpinner">
+            <section>
+                <form [formGroup]="SearchForm" class="row py-2 gy-5">
+                    <div class="col-md-3">
+                        <label class="required form-label" >من تاريخ</label>
+                        <div class="input-group">
+                            <input
+                              type="text"
+                              autocomplete="off"
+                              (focus)="fromDatePicker.open()"
+                              [matDatepicker]="fromDatePicker"
+                              class="form-control"
+                              placeholder="dd/mm/yyyy"
+                              formControlName="FromDate"
+                            />
+                            <!-- <div class="input-group-append" (click)="limitDatePicker.open()"> -->
+                            <div class="input-group-text" (click)="fromDatePicker.open()">
+                            <i class="fas fa-calendar-alt"></i>
+                            </div>
+                            <mat-datepicker #fromDatePicker></mat-datepicker>
+                            <!-- </div> -->
+                        </div>
+                        <app-required-validation-msg [control]="formControls!.FromDate!" [submitted]="submitted"></app-required-validation-msg>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label class="required form-label" >إلى تاريخ</label>
+                        <div class="input-group">
+                            <input
+                              type="text"
+                              autocomplete="off"
+                              (focus)="toDatePicker.open()"
+                              [matDatepicker]="toDatePicker"
+                              class="form-control"
+                              placeholder="dd/mm/yyyy"
+                              formControlName="ToDate"
+                            />
+                            <!-- <div class="input-group-append" (click)="limitDatePicker.open()"> -->
+                            <div class="input-group-text" (click)="toDatePicker.open()">
+                            <i class="fas fa-calendar-alt"></i>
+                            </div>
+                            <mat-datepicker #toDatePicker></mat-datepicker>
+                            <!-- </div> -->
+                        </div>
+                        <app-required-validation-msg [control]="formControls!.ToDate!" [submitted]="submitted"></app-required-validation-msg>
+                    </div>
+                    
+                    <div class="col-md-4">
+                      <label class="form-label">نوع الشكوى</label>
+                      <select class="form-select" formControlName="ComplaintType">
+                          <option *ngFor="let type of codes.ComplaintType" [value]="type.Code">{{type.Name}}</option>
+                      </select>
+                      <app-required-validation-msg [control]="formControls!.ComplaintType!" [submitted]="submitted"></app-required-validation-msg>
+                    </div>
+
+                    <div class="col-md-2">
+                      <label class="required form-label">مستوى الخطورة</label>
+                      <select class="form-select" formControlName="ComplaintRiskLevel">
+                          <option *ngFor="let type of codes.RiskLeavel" [value]="type.Code">{{type.Name}}</option>
+                      </select>
+                      <app-required-validation-msg [control]="formControls!.complaintRiskLevel!" [submitted]="submitted"></app-required-validation-msg>
+                    </div>
+
+                    <div class="col-md-2">
+                      <label class="required form-label">حالة الشكوى</label>
+                      <select class="form-select" formControlName="ComplaintStatus">
+                          <option *ngFor="let type of codes.ComplaintStatus" [value]="type.Code">{{type.Name}}</option>
+                      </select>
+                      <app-required-validation-msg [control]="formControls!.ComplaintStatus!" [submitted]="submitted"></app-required-validation-msg>
+                    </div>
+
+                    <div class="col-md-2 pt-11">
+                      <a role="button" class="btn btn-info btn-sm" matTooltip="استعراض" (click)="fetchComplaints()">
+                        <span class="hidden-mobile">استعراض</span>
+                        &nbsp;
+                        <i class="fas fa-tags"></i>
+                      </a>
+                    </div>
+                </form>
+
+                <hr class="my-10">
+                <table class="table table-light table-striped table-hover">
+                    <thead>
+                      <tr>
+                        <th>اسم المدعي</th>
+                        <th>تاريخ الشكوى</th>
+                        <th>مستوى الخطورة</th>
+                        <th>نوع الشكوى</th>
+                        <th>سرية الشكوى؟</th>
+                        <th style="width: 15%">إجراءات</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let complaint of complaints$ | async">
+                            <td>{{ complaint!.ComplainantName! }}</td>
+                            <td>{{ complaint!.ComplaintDate! }}</td>
+                            <td>{{ complaint!.ComplaintRiskLevelName! }}</td>
+                            <td>{{ complaint!.ComplaintTypeName! }}</td>
+                            <td>{{ complaint!.IsSecretComplaint! }}</td>
+                            <!-- <td>
+                            <a *ngIf="user.Active" tabindex="-1" aria-disabled="true" class="pe-none btn btn-icon btn-circle btn-success btn-sm">
+                                <i class="fas fa-user-check"></i>
+                            </a>
+                            <a *ngIf="!user.Active" tabindex="-1" aria-disabled="true"  class="pe-none btn btn-icon btn-circle btn-danger btn-sm">
+                                <i class="fas fa-user-times"></i>
+                            </a> 
+                            </td> -->
+                            <td>
+                              <!-- <a class="btn btn-icon btn-primary btn-circle btn-sm btn-outline btn-outline-default">
+                                <i class="fas fa-pen"></i>
+                              </a>
+                              &nbsp;
+                              <a class="btn btn-icon btn-danger btn-circle btn-sm btn-outline btn-outline-default">
+                                <i class="fas fa-trash"></i>
+                              </a> -->
+
+                              <a role="button" class="btn btn-icon btn-info btn-circle btn-sm" matTooltip="متابعة" (click)="onPursueClick(complaint.ID)">
+                                <i class="fas fa-reply"></i>
+                              </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+        </div>
+    </div>
+</div>
+
+<ng-template #loadingSpinner>
+    <div class="col-md-12 d-flex justify-content-center py-15">
+        <mat-spinner></mat-spinner>
+    </div>
+</ng-template>

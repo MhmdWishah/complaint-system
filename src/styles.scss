@@ -36,6 +36,9 @@ $demo1-theme: mat.define-light-theme(
 
 /* You can add global styles to this file, and also import other style files */
 @import "./assets/sass/style";
+@import "./assets/global";
+
+
 
 // Replace above style with this SCSS file to enable dark mode styles
 //@import "./assets/sass/style.dark";
@@ -56,8 +59,22 @@ html,
 body {
   height: 100%;
 }
+html {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  -webkit-box-sizing: inherit;
+  -moz-box-sizing: inherit;
+  box-sizing: inherit;
+}
 body {
   margin: 0;
   font-family: "Almarai", sans-serif;
   background-color: #f5f8fa !important;
 }
+
+// .errors , .errors > small {
+//   color: $danger !important;
+// }

@@ -1,0 +1,144 @@
+<div class="card card-custom">
+    <!-- begin::Header -->
+    <div class="card-header card-header-stretch">
+      <div class="card-title m-0">
+        <h3 class="fw-bolder m-0">شاشة إدخال الشكوى</h3>
+      </div>
+      <div class="card-header-actions d-flex justify-content-between gap-3 py-3">
+        <div class="d-flex justify-content-between gap-3">
+          <a role="button" class="btn btn-secondary" matTooltip="Reset"
+            (click)="clear()">
+            <i class="fas fa-eraser"></i>
+            <span class="hidden-mobile">
+              تفريغ
+            </span>
+          </a>
+          <a role="button" class="btn btn-primary" color="primary" matTooltip="Save & Continue"
+            (click)="save()">
+            <i class="fa fa-save"></i>
+            <span class="hidden-mobile">
+              حفظ
+            </span>
+          </a>
+        </div>
+      </div>
+    </div>
+    <!-- end::Header -->
+  
+    <!-- begin::Body -->
+    <div class="card-body">
+        <div class=""container *ngIf="codes$ | async as codes; else loadingSpinner">
+            <section>
+                <form [formGroup]="form" class="row py-2 gy-5">
+                    <div class="col-md-4" >
+                        <label class="required form-label">اسم المدعي بالكامل</label>
+                        <input type="text" class="form-control" formControlName="ComplainantName">
+                        <app-required-validation-msg [control]="formControls!.ComplainantName!" [submitted]="submitted"></app-required-validation-msg>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="form-label" >العنوان</label>
+                        <input type="text" class="form-control" formControlName="ComplainantAddress">
+                        <app-required-validation-msg [control]="formControls!.ComplainantAddress!" [submitted]="submitted"></app-required-validation-msg>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="form-label" >رقم الهاتف المحمول</label>
+                        <input type="text" class="form-control" formControlName="ComplainantMobileNumber">
+                        <app-required-validation-msg [control]="formControls!.ComplainantMobileNumber!" [submitted]="submitted"></app-required-validation-msg>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="form-label" >الإيميل</label>
+                        <input type="email" class="form-control" formControlName="ComplainantEmail">
+                        <app-required-validation-msg [control]="formControls!.ComplainantEmail!" [submitted]="submitted"></app-required-validation-msg>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="required form-label" >مكان تقديم الشكوى</label>
+                        <input type="text" class="form-control" formControlName="ComplaintPlace">
+                        <app-required-validation-msg [control]="formControls!.ComplaintPlace!" [submitted]="submitted"></app-required-validation-msg>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="required form-label" >تاريخ الشكوى</label>
+                        <div class="input-group">
+                            <input
+                              type="text"
+                              autocomplete="off"
+                              (focus)="complaintDatePicker.open()"
+                              [matDatepicker]="complaintDatePicker"
+                              class="form-control"
+                              placeholder="dd/mm/yyyy"
+                              formControlName="ComplaintDate"
+                            />
+                            <!-- <div class="input-group-append" (click)="limitDatePicker.open()"> -->
+                            <div class="input-group-text" (click)="complaintDatePicker.open()">
+                            <i class="fas fa-calendar-alt"></i>
+                            </div>
+                            <mat-datepicker #complaintDatePicker></mat-datepicker>
+                            <!-- </div> -->
+                        </div>
+                        <app-required-validation-msg [control]="formControls!.ComplaintDate!" [submitted]="submitted"></app-required-validation-msg>
+                    </div>
+                    
+                    <div class="col-md-4">
+                        <label class="required form-label">نوع الشكوى</label>
+                        <select class="form-select" formControlName="ComplaintType">
+                            <option *ngFor="let type of codes.ComplaintType" [value]="type.Code">{{type.Name}}</option>
+                        </select>
+                        <app-required-validation-msg [control]="formControls!.ComplaintType!" [submitted]="submitted"></app-required-validation-msg>
+                    </div>
+
+                    <div class="col-md-4 custom-form-check">
+                        <!-- <div class= form-check-inline"> -->
+                        <input type="checkbox" class="form-check-input" formControlName="IsSecretComplaint">
+                        <label class="required form-label form-check-label" >هل هي شكوى سرية أو حساسة؟</label>
+                        <!-- </div> -->
+                        <app-required-validation-msg [control]="formControls!.IsSecretComplaint!" [submitted]="submitted"></app-required-validation-msg>
+                    </div>
+
+                    <div class="col-md-12">
+                        <label class="required form-label">وصف الشكوى</label>
+                        <textarea type="text" class="form-control" formControlName="ComplaintDescription" rows="3"></textarea>
+                        <app-required-validation-msg [control]="formControls!.ComplaintDescription!" [submitted]="submitted"></app-required-validation-msg>
+                    </div>
+
+                    <div class="col-md-12">
+                        <label class="required form-label">النتائج المتوقعة</label>
+                        <textarea type="text" class="form-control" formControlName="ComplaintExpectedResults"></textarea>
+                        <app-required-validation-msg [control]="formControls!.ComplaintExpectedResults!" [submitted]="submitted"></app-required-validation-msg>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="required form-label">الجنس</label>
+                        <select class="form-select" formControlName="ComplainantGender">
+                            <option *ngFor="let type of codes.Gender" [value]="type.Code">{{type.Name}}</option>
+                        </select>
+                        <app-required-validation-msg [control]="formControls!.ComplainantGender!" [submitted]="submitted"></app-required-validation-msg>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="required form-label">مستوى الخطورة</label>
+                        <select class="form-select" formControlName="ComplaintRiskLevel">
+                            <option *ngFor="let type of codes.RiskLeavel" [value]="type.Code">{{type.Name}}</option>
+                        </select>
+                        <app-required-validation-msg [control]="formControls!.ComplaintRiskLevel!" [submitted]="submitted"></app-required-validation-msg>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="required form-label">مصدر الشكوى</label>
+                        <select class="form-select" formControlName="ComplaintSourse">
+                            <option *ngFor="let type of codes.ComplaintSource" [value]="type.Code">{{type.Name}}</option>
+                        </select>
+                        <app-required-validation-msg [control]="formControls!.ComplaintSourse!" [submitted]="submitted"></app-required-validation-msg>
+                    </div>
+                </form>
+            </section>
+        </div>
+    </div>
+</div>
+
+<ng-template #loadingSpinner>
+    <div class="col-md-12 d-flex justify-content-center py-15">
+        <mat-spinner></mat-spinner>
+    </div>
+</ng-template>

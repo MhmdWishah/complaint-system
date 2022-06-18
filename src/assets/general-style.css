@@ -942,7 +942,7 @@ span.p-calendar {
 /* ----------------------------------------------------------- */
 
 .form-label {
-  font-size: 14px !important;
+  font-size: 14px ;
 }
 
 .table tr:first-child,
@@ -1216,4 +1216,25 @@ bs-datepicker-container {
 .mat-tab-body-wrapper .mat-tab-body,
 .mat-tab-body-wrapper .mat-tab-body .mat-tab-body-content {
   overflow: visible !important;
+}
+
+
+
+.defualt-cursor {
+  cursor: default;
+}
+
+.custom-form-check{
+  display: flex;
+  align-items: center;
+  padding-top: 2.5rem;
+}
+
+.custom-form-check > .form-check-label{
+  margin-inline-start: 1rem;
+  padding-top: .3rem;
+}
+
+.form-check-input{
+  cursor: pointer;
 }

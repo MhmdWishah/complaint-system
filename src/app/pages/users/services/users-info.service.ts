@@ -10,7 +10,7 @@ import { ConvertObjectToHttpParams } from 'src/app/functions/convertObjectToHttp
 @Injectable({providedIn: 'any'})
 export class UsersInfoService {
 
-  readonly baseUrl: string = environment.baseUrl + "/user";
+  private readonly baseUrl: string = environment.baseUrl + "/user";
 
   private userData = new BehaviorSubject<User|undefined>(undefined);
 

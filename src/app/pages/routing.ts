@@ -57,9 +57,9 @@ const Routing: Routes = [
       import('../modules/apps/chat/chat.module').then((m) => m.ChatModule),
   },
   {
-    path: 'ComplaintModel',
+    path: 'Complaints',
     loadChildren: () =>
-      import('./complaint-model/complaint-model.module').then((m) => m.ComplaintModelModule),
+      import('./complaints/complaints.module').then((m) => m.ComlaintsModule),
   },
   {
     path: '',
