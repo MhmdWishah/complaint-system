@@ -2,12 +2,15 @@
   class="d-flex flex-column bgi-no-repeat rounded-top"
   [style.background-image]="'url(./assets/media/misc/pattern-1.jpg)'"
 >
-  <h3 class="text-white fw-bold px-9 mt-10 mb-6">
-    Notifications <span class="fs-8 opacity-75 ps-3">24 reports</span>
-  </h3>
+  <ng-container *ngIf="unreadNotificationsNumber$ | async as unreadNumber">
+    <h3 class="text-white fw-bold px-9 mt-10 mb-6">
+      الإشعارات <span class="fs-8 opacity-75 ps-3">{{unreadNumber}} غير مقروءة</span>
+    </h3>
+  </ng-container>
+  
 
   <ul class="nav nav-line-tabs nav-line-tabs-2x nav-stretch fw-bold px-9">
-    <li class="nav-item">
+    <!-- <li class="nav-item">
       <a
         class="
           nav-link
@@ -22,9 +25,9 @@
       >
         Alerts
       </a>
-    </li>
+    </li> -->
 
-    <li class="nav-item">
+    <!-- <li class="nav-item">
       <a
         class="
           nav-link
@@ -39,9 +42,9 @@
       >
         Updates
       </a>
-    </li>
+    </li> -->
 
-    <li class="nav-item">
+    <!-- <li class="nav-item">
       <a
         class="
           nav-link
@@ -56,7 +59,7 @@
       >
         Logs
       </a>
-    </li>
+    </li> -->
   </ul>
 </div>
 
@@ -67,32 +70,34 @@
     role="tabpanel"
     [ngClass]="activeTabId === 'kt_topbar_notifications_1' ? 'show active' : ''"
   >
-    <div class="scroll-y mh-325px my-5 px-8">
-      <div *ngFor="let alert of alerts" class="d-flex flex-stack py-4">
-        <div class="d-flex align-items-center">
-          <div class="symbol symbol-35px me-4">
-            <span class="symbol-label" [ngClass]="'bg-light-' + alert.state">
-              <span
-                [inlineSVG]="'./assets/media/' + alert.icon"
-                class="svg-icon svg-icon-2"
-                [ngClass]="'svg-icon-' + alert.state"
-              ></span>
-            </span>
+    <div class="scroll-y mh-325px my-4 px-4">
+      <ng-container *ngIf="notifications$ | async as notifications">
+
+        <div *ngFor="let notification of notifications" [ngClass]="{'bg-light': !notification.is_read}" class="d-flex flex-stack my-2 p-4 ">
+          <div class="d-flex align-items-center">
+            <!-- <div class="symbol symbol-35px me-4">
+              <span class="symbol-label" [ngClass]="'bg-light-' + notification.is_read ? 'primary' : 'warning'">
+                <i
+                  [class]="notification.Icon "
+                  
+                ></i>
+              </span>
+            </div> -->
+
+            <div class="mb-0 me-2" style="cursor: pointer;" (click)="onNotificationClick(notification)">
+              <a class="fs-6 text-gray-800 text-hover-primary fw-bolder">
+                {{ notification.Title }}
+              </a>
+              <div class="text-gray-400 fs-7">{{ notification.text }}</div>
+            </div>
           </div>
 
-          <div class="mb-0 me-2">
-            <a href="#" class="fs-6 text-gray-800 text-hover-primary fw-bolder">
-              {{ alert.title }}
-            </a>
-            <div class="text-gray-400 fs-7">{{ alert.description }}</div>
-          </div>
+          <span class="badge badge-primary fs-8">{{ notification.created_time | date : 'MM/dd/YYYY hh-mm a' }}</span>
         </div>
-
-        <span class="badge badge-light fs-8">{{ alert.time }}</span>
-      </div>
+      </ng-container>
     </div>
 
-    <div class="py-3 text-center border-top">
+    <!-- <div class="py-3 text-center border-top">
       <a
         routerLink="/crafted/pages/profile"
         class="btn btn-color-gray-600 btn-active-color-primary"
@@ -103,10 +108,10 @@
           class="svg-icon svg-icon-5"
         ></span>
       </a>
-    </div>
+    </div> -->
   </div>
 
-  <div
+  <!-- <div
     class="tab-pane fade"
     id="kt_topbar_notifications_2"
     role="tabpanel"
@@ -140,9 +145,9 @@
         />
       </div>
     </div>
-  </div>
+  </div> -->
 
-  <div
+  <!-- <div
     class="tab-pane fade"
     id="kt_topbar_notifications_3"
     role="tabpanel"
@@ -178,5 +183,5 @@
         ></span>
       </a>
     </div>
-  </div>
+  </div> -->
 </div>

@@ -1,27 +1,27 @@
 <div class="card card-custom">
     <!-- begin::Header -->
     <div class="card-header card-header-stretch">
-      <div class="card-title m-0">
-        <h3 class="fw-bolder m-0">شاشة إدخال الشكوى</h3>
-      </div>
-      <div class="card-header-actions d-flex justify-content-between gap-3 py-3">
-        <div class="d-flex justify-content-between gap-3">
-          <a role="button" class="btn btn-secondary" matTooltip="Reset"
-            (click)="clear()">
-            <i class="fas fa-eraser"></i>
-            <span class="hidden-mobile">
-              تفريغ
-            </span>
-          </a>
-          <a role="button" class="btn btn-primary" color="primary" matTooltip="Save & Continue"
-            (click)="save()">
-            <i class="fa fa-save"></i>
-            <span class="hidden-mobile">
-              حفظ
-            </span>
-          </a>
+        <div class="card-title m-0">
+            <h3 class="fw-bolder m-0">شاشة إدخال الشكوى</h3>
         </div>
-      </div>
+        <div class="card-header-actions d-flex justify-content-between gap-3 py-3">
+            <div class="d-flex justify-content-between gap-3">
+            <a role="button" class="btn btn-secondary" matTooltip="Reset"
+                (click)="clear()">
+                <i class="fas fa-eraser"></i>
+                <span class="hidden-mobile">
+                تفريغ
+                </span>
+            </a>
+            <a role="button" class="btn btn-primary" color="primary" matTooltip="Save & Continue"
+                (click)="save()">
+                <i class="fa fa-save"></i>
+                <span class="hidden-mobile">
+                حفظ
+                </span>
+            </a>
+            </div>
+        </div>
     </div>
     <!-- end::Header -->
   
@@ -32,30 +32,40 @@
                 <form [formGroup]="form" class="row py-2 gy-5">
                     <div class="col-md-4" >
                         <label class="required form-label">اسم المدعي بالكامل</label>
-                        <input type="text" class="form-control" formControlName="ComplainantName">
+                        <input maxlength="100" minlength="0" type="text" class="form-control" formControlName="ComplainantName">
                         <app-required-validation-msg [control]="formControls!.ComplainantName!" [submitted]="submitted"></app-required-validation-msg>
                     </div>
 
                     <div class="col-md-4">
                         <label class="form-label" >العنوان</label>
-                        <input type="text" class="form-control" formControlName="ComplainantAddress">
+                        <!-- <input type="text" class="form-control" formControlName="ComplainantAddress"> -->
+                        <select class="form-select" formControlName="ComplainantAddress">
+                            <option *ngFor="let type of codes.Address" [value]="type.Code">{{type.Name}}</option>
+                        </select>
                         <app-required-validation-msg [control]="formControls!.ComplainantAddress!" [submitted]="submitted"></app-required-validation-msg>
                     </div>
 
                     <div class="col-md-4">
                         <label class="form-label" >رقم الهاتف المحمول</label>
-                        <input type="text" class="form-control" formControlName="ComplainantMobileNumber">
+                        <input maxlength="15" minlength="0" type="text" class="form-control" formControlName="ComplainantMobileNumber">
                         <app-required-validation-msg [control]="formControls!.ComplainantMobileNumber!" [submitted]="submitted"></app-required-validation-msg>
                     </div>
 
                     <div class="col-md-4">
                         <label class="form-label" >الإيميل</label>
-                        <input type="email" class="form-control" formControlName="ComplainantEmail">
+                        <input maxlength="150" minlength="0" type="email" class="form-control" formControlName="ComplainantEmail">
                         <app-required-validation-msg [control]="formControls!.ComplainantEmail!" [submitted]="submitted"></app-required-validation-msg>
                     </div>
                     <div class="col-md-4">
+                        <label class="required form-label">الجنس</label>
+                        <select class="form-select" formControlName="ComplainantGender">
+                            <option *ngFor="let type of codes.Gender" [value]="type.Code">{{type.Name}}</option>
+                        </select>
+                        <app-required-validation-msg [control]="formControls!.ComplainantGender!" [submitted]="submitted"></app-required-validation-msg>
+                    </div>
+                    <div class="col-md-4">
                         <label class="required form-label" >مكان تقديم الشكوى</label>
-                        <input type="text" class="form-control" formControlName="ComplaintPlace">
+                        <input maxlength="200" minlength="0" type="text" class="form-control" formControlName="ComplaintPlace">
                         <app-required-validation-msg [control]="formControls!.ComplaintPlace!" [submitted]="submitted"></app-required-validation-msg>
                     </div>
                     <div class="col-md-4">
@@ -88,32 +98,13 @@
                         <app-required-validation-msg [control]="formControls!.ComplaintType!" [submitted]="submitted"></app-required-validation-msg>
                     </div>
 
-                    <div class="col-md-4 custom-form-check">
-                        <!-- <div class= form-check-inline"> -->
-                        <input type="checkbox" class="form-check-input" formControlName="IsSecretComplaint">
-                        <label class="required form-label form-check-label" >هل هي شكوى سرية أو حساسة؟</label>
-                        <!-- </div> -->
-                        <app-required-validation-msg [control]="formControls!.IsSecretComplaint!" [submitted]="submitted"></app-required-validation-msg>
-                    </div>
-
-                    <div class="col-md-12">
-                        <label class="required form-label">وصف الشكوى</label>
-                        <textarea type="text" class="form-control" formControlName="ComplaintDescription" rows="3"></textarea>
-                        <app-required-validation-msg [control]="formControls!.ComplaintDescription!" [submitted]="submitted"></app-required-validation-msg>
-                    </div>
-
-                    <div class="col-md-12">
-                        <label class="required form-label">النتائج المتوقعة</label>
-                        <textarea type="text" class="form-control" formControlName="ComplaintExpectedResults"></textarea>
-                        <app-required-validation-msg [control]="formControls!.ComplaintExpectedResults!" [submitted]="submitted"></app-required-validation-msg>
-                    </div>
-
                     <div class="col-md-4">
-                        <label class="required form-label">الجنس</label>
-                        <select class="form-select" formControlName="ComplainantGender">
-                            <option *ngFor="let type of codes.Gender" [value]="type.Code">{{type.Name}}</option>
+                        <label class="required form-label" >هل هي شكوى سرية أو حساسة؟</label>
+                        <select class="form-select" formControlName="IsSecretComplaint">
+                            <option value="0">لا</option>
+                            <option value="1">نعم</option>
                         </select>
-                        <app-required-validation-msg [control]="formControls!.ComplainantGender!" [submitted]="submitted"></app-required-validation-msg>
+                        <app-required-validation-msg [control]="formControls!.IsSecretComplaint!" [submitted]="submitted"></app-required-validation-msg>
                     </div>
 
                     <div class="col-md-4">
@@ -130,6 +121,18 @@
                             <option *ngFor="let type of codes.ComplaintSource" [value]="type.Code">{{type.Name}}</option>
                         </select>
                         <app-required-validation-msg [control]="formControls!.ComplaintSourse!" [submitted]="submitted"></app-required-validation-msg>
+                    </div>
+
+                    <div class="col-md-12">
+                        <label class="required form-label">وصف الشكوى</label>
+                        <textarea maxlength="4000" minlength="0" type="text" class="form-control" formControlName="ComplaintDescription" rows="5"></textarea>
+                        <app-required-validation-msg [control]="formControls!.ComplaintDescription!" [submitted]="submitted"></app-required-validation-msg>
+                    </div>
+
+                    <div class="col-md-12">
+                        <label class="required form-label">النتائج المتوقعة</label>
+                        <textarea maxlength="4000" minlength="0" rows="3" type="text" class="form-control" formControlName="ComplaintExpectedResults"></textarea>
+                        <app-required-validation-msg [control]="formControls!.ComplaintExpectedResults!" [submitted]="submitted"></app-required-validation-msg>
                     </div>
                 </form>
             </section>

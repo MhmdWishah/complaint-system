@@ -11,9 +11,10 @@ export class MessageInterceptor implements HttpInterceptor {
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
       return next.handle(req).pipe(tap(
         (event: HttpEvent<any>) => {
+          // console.log("req:",req);
           if (event instanceof HttpResponse) {
             if(!!event!.body && (event!.body!.status || event!.body!.rv)){
-              if((event!.body!.status > 0 || event!.body!.rv > 0)) {
+              if((event!.body!.status > 0 || (event!.body!.rv > 0 && req.method != "POST" && req.url != "http://hr-api-test.accessline.ps/api/Notifications"))) {
                 this.toastr.success(event!.body!.message);
               }else if(event!.body!.rv < 1 || event!.body!.status < 1){
                 this.toastr.error(event!.body!.message!);

@@ -16,9 +16,9 @@ export const routes: Routes = [
     },
 
     {
-        path: 'ComplaintPursue/:id',
+        path: 'ComplaintFollowUp/:id',
         loadChildren: () =>
-            import('./complaint-pursue/complaint-pursue.module').then((m) => m.ComplaintPursueModule),
+            import('./complaint-follow-up/complaint-follow-up.module').then((m) => m.ComplaintFollowUpModule),
     },
     // {
     //     path: '/Complaint',

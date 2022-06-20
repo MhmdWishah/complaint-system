@@ -1,4 +1,4 @@
-import { Response } from "../pages/users/models/roles.model";
+import { Response } from "../models/common-response.model";
 
 export function HandleStringResponse(stringResponse:string) : Response|undefined {
     if(stringResponse.includes('|')){

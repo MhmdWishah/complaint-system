@@ -1,5 +1,11 @@
 import { Component, HostBinding, OnInit } from '@angular/core';
 import { LayoutService } from '../../../../../layout';
+import { NotificationsService } from '../../../../../../services/notifications.service';
+import { Observable } from 'rxjs';
+import { Notification } from 'src/app/models/notifications.model';
+import { SignalRService } from '../../../../../../services/signalr.service';
+import { Router } from '@angular/router';
+import { Response } from 'src/app/models/common-response.model';
 
 export type NotificationsTabsType =
   | 'kt_topbar_notifications_1'
@@ -15,15 +21,42 @@ export class NotificationsInnerComponent implements OnInit {
     'menu menu-sub menu-sub-dropdown menu-column w-350px w-lg-375px';
   @HostBinding('attr.data-kt-menu') dataKtMenu = 'true';
 
-  activeTabId: NotificationsTabsType = 'kt_topbar_notifications_2';
+  activeTabId: NotificationsTabsType = 'kt_topbar_notifications_1';
   alerts: Array<AlertModel> = defaultAlerts;
   logs: Array<LogModel> = defaultLogs;
-  constructor() {}
+  notifications$: Observable<Notification[]>;
+  unreadNotificationsNumber$: Observable<number>;
 
-  ngOnInit(): void {}
+  constructor(
+    private notifyService: NotificationsService,
+    private signalRService:SignalRService,
+    private router: Router ) {}
+
+  ngOnInit(): void {
+    this.fetchNotifications();
+    this.notifications$ = this.notifyService.Notifications$;
+    this.unreadNotificationsNumber$ = this.notifyService.UnreadNotificationsNumber$; 
+  }
 
   setActiveTabId(tabId: NotificationsTabsType) {
     this.activeTabId = tabId;
+  }
+
+  fetchNotifications(){
+    this.notifyService.SearchNotifications();
+  }
+
+  onNotificationClick(notification: Notification){
+    this.notifyService.SaveAsRead(notification.id).subscribe(
+      (response: Response|undefined) => {
+        console.log("response:",response)
+        // if(response!.status! > 0){
+          this.fetchNotifications();
+          this.router.navigate([notification.href])
+        // }
+        // this.router.navigate([notification.href])
+      }
+    );
   }
 }
 

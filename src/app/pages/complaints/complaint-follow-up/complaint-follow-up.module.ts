@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { ComplaintPursueComponent } from './complaint-pursue.component';
+import { ComplaintFollowUpComponent } from './complaint-follow-up.component';
 import { RouterModule } from '@angular/router';
 import { ComponentsModule } from '../../../components/components.module';
 import { MatButtonModule } from '@angular/material/button';
@@ -13,6 +13,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MatTabsModule } from '@angular/material/tabs';
 import { ComplaintInfoComponent } from '../components/complaint-info/complaint-info.component';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { FollowUpTemplateComponent } from '../components/follow-up-template/follow-up-template.component';
+import {CdkAccordionModule} from '@angular/cdk/accordion';
 
 
 @NgModule({
@@ -29,15 +34,19 @@ import { ComplaintInfoComponent } from '../components/complaint-info/complaint-i
         MatButtonModule,
         ComponentsModule,
         MatTabsModule,
+        MatChipsModule,
+        MatFormFieldModule,
+        MatExpansionModule,
+        CdkAccordionModule,
         RouterModule.forChild([
             {
                 path: '',
-                component: ComplaintPursueComponent
+                component: ComplaintFollowUpComponent
             }
         ])
     ],
-    exports: [ComplaintInfoComponent],
-    declarations: [ComplaintPursueComponent,ComplaintInfoComponent],
+    exports: [ComplaintInfoComponent, FollowUpTemplateComponent],
+    declarations: [ComplaintFollowUpComponent,ComplaintInfoComponent, FollowUpTemplateComponent],
     providers: [],
 })
-export class ComplaintPursueModule { }
+export class ComplaintFollowUpModule { }

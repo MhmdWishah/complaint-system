@@ -6,8 +6,9 @@ import { switchMap, startWith, map } from 'rxjs/operators';
 import { CommonService } from '../../../services/common.service';
 import { AutoCompleteUser } from '../models/users.model';
 import { UserPermissionsService } from '../services/user-permissions.service';
-import { UserRole, Role, SaveRolePayload, Response } from '../models/roles.model';
+import { UserRole, Role, SaveRolePayload } from '../models/roles.model';
 import { ToastrService } from 'ngx-toastr';
+import { Response } from 'src/app/models/common-response.model';
 
 @Component({
   selector: 'user-permissions',

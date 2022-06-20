@@ -40,7 +40,7 @@ export class ComplaintsReviewComponent implements OnInit {
             "ToDate": ["", []],
             "ComplaintRiskLevel": ["", []],
             "ComplaintType": ["", []],
-            "ComplaintStatus":  ["", []],
+            "Status":  ["", []],
         })
     }
 
@@ -53,6 +53,6 @@ export class ComplaintsReviewComponent implements OnInit {
     }
 
     onPursueClick(complaintId:number){
-        this.router.navigate(['/Complaints/ComplaintPursue',complaintId])
+        this.router.navigate(['/Complaints/ComplaintFollowUp',complaintId])
     }
 }

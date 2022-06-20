@@ -5,7 +5,7 @@ import { CodesService } from '../../system-settings/codes/codes.service';
 import { ComplaintModelService } from '../services/complaint-model.service';
 import { Observable } from 'rxjs';
 import { Code } from '../../system-settings/system-settings.model';
-import { Response } from '../../users/models/roles.model';
+import { Response } from 'src/app/models/common-response.model';
 @Component({
     selector: 'complaint-model',
     templateUrl: './complaint-model.component.html',
@@ -34,16 +34,16 @@ export class ComplaintModelComponent implements OnInit {
 
     private initForm() {
         this.form = this.fb.group({
-            "ComplainantName": ["", [Validators.required]],
+            "ComplainantName": ["", [Validators.required, Validators.maxLength(100), Validators.minLength(0)]],
             "ComplainantAddress": ["", []],
-            "ComplainantMobileNumber": ["", []],
-            "ComplainantEmail": ["", []],
-            "ComplaintPlace": ["", [Validators.required]],
-            "ComplaintDate": ["", [Validators.required]],
+            "ComplainantMobileNumber": ["", [Validators.maxLength(15), Validators.minLength(0)]],
+            "ComplainantEmail": ["", [Validators.maxLength(150), Validators.minLength(0)]],
+            "ComplaintPlace": ["", [Validators.required, Validators.maxLength(200), Validators.minLength(0)]],
+            "ComplaintDate": ["", [Validators.required, Validators.minLength(1)]],
             "IsSecretComplaint": [false, [Validators.required]],
             "ComplaintType": [null, [Validators.required]],
-            "ComplaintDescription": ["", [Validators.required]],
-            "ComplaintExpectedResults": ["", [Validators.required]],
+            "ComplaintDescription": ["", [Validators.required, Validators.maxLength(4000), Validators.minLength(0)]],
+            "ComplaintExpectedResults": ["", [Validators.required, Validators.maxLength(4000), Validators.minLength(0)]],
             "ComplainantGender": [null, [Validators.required]],
             "ComplaintRiskLevel": [null, [Validators.required]],
             "ComplaintSourse": [null, [Validators.required]],

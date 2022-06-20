@@ -20,6 +20,10 @@
             <input type="email" class="form-control" readonly [value]="ComplaintInfo!.ComplainantEmail!">
         </div>
         <div class="col-md-4">
+            <label class="form-label">الجنس</label>
+            <input class="form-control" readonly [value]="ComplaintInfo!.ComplainantGenderName!">
+        </div>
+        <div class="col-md-4">
             <label class="form-label" >مكان تقديم الشكوى</label>
             <input type="text" class="form-control" readonly [value]="ComplaintInfo!.ComplaintPlace!">
         </div>
@@ -36,37 +40,35 @@
         
         <div class="col-md-4">
             <label class="form-label">نوع الشكوى</label>
-            <input class="form-control" readonly [value]="ComplaintInfo!.ComplaintType!" >
+            <input class="form-control" readonly [value]="ComplaintInfo!.ComplaintTypeName!" >
         </div>
 
         <div class="col-md-4 custom-form-check">
-            <input type="checkbox" disabled class="form-check-input" [value]="ComplaintInfo!.IsSecretComplaint!">
+            <input type="checkbox" disabled class="form-check-input" [ngModel]="ComplaintInfo!.IsSecretComplaint!">
             <label class="form-label form-check-label" >هل هي شكوى سرية أو حساسة؟</label>
         </div>
 
-        <div class="col-md-12">
-            <label class="form-label">وصف الشكوى</label>
-            <textarea type="text" class="form-control" readonly [value]="ComplaintInfo!.ComplaintDescription!" rows="3"></textarea>
-        </div>
+        
 
-        <div class="col-md-12">
-            <label class="form-label">النتائج المتوقعة</label>
-            <textarea type="text" class="form-control" readonly [value]="ComplaintInfo!.ComplaintExpectedResults!"></textarea>
-        </div>
-
-        <div class="col-md-4">
-            <label class="form-label">الجنس</label>
-            <input class="form-control" readonly [value]="ComplaintInfo!.ComplainantGender!">
-        </div>
-
+        
         <div class="col-md-4">
             <label class="form-label">مستوى الخطورة</label>
-            <input class="form-control" readonly [value]="ComplaintInfo!.ComplaintRiskLevel!">
+            <input class="form-control" readonly [value]="ComplaintInfo!.ComplaintRiskLevelName!">
         </div>
 
         <div class="col-md-4">
             <label class="form-label">مصدر الشكوى</label>
-            <input class="form-control" readonly [value]="ComplaintInfo!.ComplaintSourse!">
+            <input class="form-control" readonly [value]="ComplaintInfo!.ComplaintSourseName!">
+        </div>
+        
+        <div class="col-md-12">
+            <label class="form-label">وصف الشكوى</label>
+            <textarea type="text" rows="4" class="form-control" readonly [value]="ComplaintInfo!.ComplaintDescription!" rows="3"></textarea>
+        </div>
+
+        <div class="col-md-12">
+            <label class="form-label">النتائج المتوقعة</label>
+            <textarea rows="4" type="text" class="form-control" readonly [value]="ComplaintInfo!.ComplaintExpectedResults!"></textarea>
         </div>
 
     </div>

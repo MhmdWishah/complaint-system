@@ -35,7 +35,7 @@
 <!-- </div> -->
 
 <!-- NOTIFICATIONS -->
-<!-- <div class="d-flex align-items-center" [ngClass]="toolbarButtonMarginClass">
+<div class="d-flex align-items-center" [ngClass]="toolbarButtonMarginClass">
   <div
     class="btn btn-icon btn-active-light-primary position-relative"
     [ngClass]="toolbarButtonHeightClass"
@@ -43,15 +43,22 @@
     data-kt-menu-attach="parent"
     data-kt-menu-placement="bottom-end"
     data-kt-menu-flip="bottom"
-  >
+    (click)="openNotifications()">
+    <ng-container *ngIf="unreadNotificationsNumber$ | async as unreadNumber">
+      <span class="badge badge-warning badge-pill"
+        style="border-radius: 100%/100%;margin-bottom: 1.6rem;margin-inline-end: -0.7rem;"
+        >
+        {{unreadNumber}}
+      </span>
+    </ng-container>
     <span
-      [inlineSVG]="'./assets/media/icons/duotune/general/gen022.svg'"
+      [inlineSVG]="'./assets/media/icons/duotune/general/gen007.svg'"
       class="svg-icon"
       [ngClass]="toolbarButtonIconSizeClass"
     ></span>
   </div>
   <app-notifications-inner></app-notifications-inner>
-</div> -->
+</div>
 
 <!-- CHAT -->
 <!-- <div class="d-flex align-items-center" [ngClass]="toolbarButtonMarginClass"> -->

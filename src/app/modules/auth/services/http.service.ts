@@ -3,6 +3,8 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AuthService } from './auth.service';
 import * as moment from 'moment';
+import { Response } from 'src/app/models/common-response.model';
+import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class HttpService {
@@ -17,7 +19,7 @@ export class HttpService {
     });
   }
 
-  saveData(route: string, body: any) {
+  saveData(route: string, body: any){
     return this.http.post(this.baseUrl + route, this.convartData(body), {
       headers: this.auth.getHeaders(),
     });

@@ -4,7 +4,7 @@ import { HttpService } from '../../../modules/auth/services/http.service';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../../../modules/auth/services/auth.service';
 import { Observable, BehaviorSubject } from 'rxjs';
-import { Response } from '../../users/models/roles.model';
+import { Response } from 'src/app/models/common-response.model';
 import { ComplaintsSearchFilters, SearchedComplaint } from '../model/complaints-review.model';
 
 @Injectable({providedIn: 'root'})

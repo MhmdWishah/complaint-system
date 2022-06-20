@@ -18,8 +18,3 @@ export interface SaveRolePayload {
   RoleID: number;
   userID: number;
 }
-
-export interface Response {
-  status: number;
-  message: string
-}

@@ -9,6 +9,7 @@ export const environment = {
   isMockEnabled: true,
   apiUrl: 'api',
   baseUrl:'http://hr-api-test.accessline.ps/api',
+  baseUrlWithoutApi: 'http://hr-api-test.accessline.ps',
   appThemeName: 'Metronic',
   appPurchaseUrl: 'https://1.envato.market/EA4JP',
   appHTMLIntegration: 'https://preview.keenthemes.com/metronic8/demo1/documentation/base/helpers/flex-layouts.html',

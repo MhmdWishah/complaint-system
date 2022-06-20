@@ -1212,11 +1212,11 @@ bs-datepicker-container {
   z-index: 999999999999 !important;
 }
 
-.mat-tab-body-wrapper,
+/* .mat-tab-body-wrapper,
 .mat-tab-body-wrapper .mat-tab-body,
 .mat-tab-body-wrapper .mat-tab-body .mat-tab-body-content {
-  overflow: visible !important;
-}
+  overflow: unset !important;
+} */
 
 
 

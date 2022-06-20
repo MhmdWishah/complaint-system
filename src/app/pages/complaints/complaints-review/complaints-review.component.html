@@ -92,10 +92,10 @@
 
                     <div class="col-md-2">
                       <label class="required form-label">حالة الشكوى</label>
-                      <select class="form-select" formControlName="ComplaintStatus">
+                      <select class="form-select" formControlName="Status">
                           <option *ngFor="let type of codes.ComplaintStatus" [value]="type.Code">{{type.Name}}</option>
                       </select>
-                      <app-required-validation-msg [control]="formControls!.ComplaintStatus!" [submitted]="submitted"></app-required-validation-msg>
+                      <app-required-validation-msg [control]="formControls!.Status!" [submitted]="submitted"></app-required-validation-msg>
                     </div>
 
                     <div class="col-md-2 pt-11">

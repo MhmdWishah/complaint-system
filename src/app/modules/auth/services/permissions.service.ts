@@ -20,13 +20,13 @@ export class PemissionsService {
   ){}
   get currentUserPermissions() {
     return this.http
-      .get(`${environment.baseUrl}/user/permissions`, {
+      .get(`${environment.baseUrl}/user/permissions?Program=c`, {
         headers: this.authService.getHeaders(),
       })
       .pipe(
         map((res: any) => {
           const tree = this.mapPermissions(res);
-          console.log("tree:",tree)
+          // console.log("tree:",tree)
           return tree;
         })
       );

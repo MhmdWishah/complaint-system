@@ -8,6 +8,7 @@ import {locale as jpLang} from './modules/i18n/vocabs/jp';
 import {locale as deLang} from './modules/i18n/vocabs/de';
 import {locale as frLang} from './modules/i18n/vocabs/fr';
 import {locale as arLang} from './modules/i18n/vocabs/ar';
+import { SignalRService } from './services/signalr.service';
 
 
 @Component({
@@ -18,7 +19,8 @@ import {locale as arLang} from './modules/i18n/vocabs/ar';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent implements OnInit {
-  constructor(private translationService: TranslationService) {
+  constructor(private translationService: TranslationService,
+    private signalR: SignalRService) {
     // register translations
     this.translationService.loadTranslations(
       enLang,

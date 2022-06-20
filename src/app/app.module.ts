@@ -25,11 +25,14 @@ import { ToastrModule } from 'ngx-toastr';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { CommonModule } from '@angular/common';
 import { interceptors } from './interceptors/index';
+import { GlobalServices } from './services';
+import { NotificationsService } from './services/notifications.service';
+import { SignalRService } from './services/signalr.service';
 // #fake-end#
 
-function appInitializer(authService: AuthService) {
+function appInitializer(authService: AuthService,notificationsService:NotificationsService, signalRService:SignalRService,) {
   return () => {
-
+    () => notificationsService.SearchNotifications();
   };
 }
 
@@ -69,9 +72,10 @@ function appInitializer(authService: AuthService) {
       provide: APP_INITIALIZER,
       useFactory: appInitializer,
       multi: true,
-      deps: [AuthService],
+      deps: [AuthService, SignalRService, NotificationsService],
     },
-    interceptors
+    interceptors,
+    // GlobalServices
   ],
   bootstrap: [AppComponent],
 })

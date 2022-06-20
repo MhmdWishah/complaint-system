@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ComplaintInfo } from '../../model/complaint-pursue.model';
+import { ComplaintInfo } from '../../model/complaint-follow-up.model';
 
 @Component({
     selector: 'app-complaint-info',

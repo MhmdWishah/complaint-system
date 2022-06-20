@@ -22,3 +22,24 @@ export interface ComplaintInfo{
     StatusName: string;
     ComplaintTypeName: string;
 }
+
+export interface ComplaintFollowUp{
+    ComplaintID: string;
+    InsertDateTime: string;
+    FollowUpType: number;
+    Description: string;
+    ToEmpID: string;
+}
+
+export interface FollowUpInfo{
+    ComplaintID: string;
+    InsertDateTime: string;
+    FollowUpType: number;
+    Description: string;
+    ToEmpID: string;
+    EmpID: number;
+    EmpIDName: string;
+    FollowUpTypeName: string;
+    ID: number;
+    ToEmpIDName: string;
+}
