@@ -21,7 +21,7 @@ export class NotificationsService {
     const EmpID = localStorage.getItem("empID");
     this.http.getData(this.baseUrl + "?Program=Complaint", { EmpID }).pipe(
       tap((res: Notification[]) => {
-        console.log("nots", res)
+        // console.log("nots", res)
         // if(length != res.length) this.audio.play();
         this.Notifications.next(res);
         this.UnreadNotificationsNumber.next(res.filter(not => !not.is_read).length);

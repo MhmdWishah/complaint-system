@@ -21,6 +21,7 @@ export interface ComplaintInfo{
     ComplaintSourseName: string;
     StatusName: string;
     ComplaintTypeName: string;
+    DepartmentName: string;
 }
 
 export interface ComplaintFollowUp{

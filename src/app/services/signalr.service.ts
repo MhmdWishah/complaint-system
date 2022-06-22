@@ -12,7 +12,6 @@ export class SignalRService {
 
   constructor(private notificationsService: NotificationsService) {
     this.createConnection();
-    // ../../../../../assets/sounds/tweet.mp3
     this.audio = new Audio('../../../../../assets/sounds/tweet.mp3');
     
   }
@@ -27,16 +26,14 @@ export class SignalRService {
 
   private register(): void {
     this.hubConnection.on('Notification', (param: string) => {
-      console.log("param:"+param);
+      console.log("register, register:", param);
+      this.notificationsService.SearchNotifications();
       this.notificationsService.Notifications$.subscribe(value => {
         console.log("notificationsService.notifications$:", value)
-        if(this.lenght != value.length) this.audio.play();
+        if(this.lenght != value.length && value.filter(notif => !notif.is_read).length > 0)
+          this.audio.play();
         this.lenght = value.length
       });
-      this.notificationsService.SearchNotifications();
-      // this.notificationsService.Notifications$.subscribe(value => {
-      //   if(this.lenght != value.length) this.audio.play();
-      // });
     });
   }
 

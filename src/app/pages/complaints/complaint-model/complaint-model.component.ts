@@ -37,7 +37,7 @@ export class ComplaintModelComponent implements OnInit {
             "ComplainantName": ["", [Validators.required, Validators.maxLength(100), Validators.minLength(0)]],
             "ComplainantAddress": ["", []],
             "ComplainantMobileNumber": ["", [Validators.maxLength(15), Validators.minLength(0)]],
-            "ComplainantEmail": ["", [Validators.maxLength(150), Validators.minLength(0)]],
+            "ComplainantEmail": ["", [Validators.email, Validators.minLength(0)]],
             "ComplaintPlace": ["", [Validators.required, Validators.maxLength(200), Validators.minLength(0)]],
             "ComplaintDate": ["", [Validators.required, Validators.minLength(1)]],
             "IsSecretComplaint": [false, [Validators.required]],
@@ -47,6 +47,8 @@ export class ComplaintModelComponent implements OnInit {
             "ComplainantGender": [null, [Validators.required]],
             "ComplaintRiskLevel": [null, [Validators.required]],
             "ComplaintSourse": [null, [Validators.required]],
+            "DepartmentID": [null, []],
+
         })
     }
 
@@ -71,7 +73,7 @@ export class ComplaintModelComponent implements OnInit {
 
     clear(){
         this.form.reset();
-        this.form.controls['isSecretComplaint'].reset(false);
+        this.form.controls['IsSecretComplaint'].reset(false);
         this.submitted = false;
     }
 }

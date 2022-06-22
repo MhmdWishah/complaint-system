@@ -43,13 +43,12 @@
             <input class="form-control" readonly [value]="ComplaintInfo!.ComplaintTypeName!" >
         </div>
 
-        <div class="col-md-4 custom-form-check">
-            <input type="checkbox" disabled class="form-check-input" [ngModel]="ComplaintInfo!.IsSecretComplaint!">
-            <label class="form-label form-check-label" >هل هي شكوى سرية أو حساسة؟</label>
+        <div class="col-md-4">
+            <label class="form-label">هل هي شكوى سرية أو حساسة؟</label>
+            <input class="form-control" readonly [value]="ComplaintInfo!.IsSecretComplaint!">
         </div>
 
         
-
         
         <div class="col-md-4">
             <label class="form-label">مستوى الخطورة</label>
@@ -59,6 +58,11 @@
         <div class="col-md-4">
             <label class="form-label">مصدر الشكوى</label>
             <input class="form-control" readonly [value]="ComplaintInfo!.ComplaintSourseName!">
+        </div>
+
+        <div class="col-md-4">
+            <label class="form-label">المركز المُقدَّم فيه الشكوى</label>
+            <input class="form-control" readonly [value]="ComplaintInfo!.DepartmentName!">
         </div>
         
         <div class="col-md-12">

@@ -1,5 +1,5 @@
 import { HttpService } from './modules/auth/services/http.service';
-import { NgModule, APP_INITIALIZER } from '@angular/core';
+import { NgModule, APP_INITIALIZER, LOCALE_ID } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
@@ -28,6 +28,7 @@ import { interceptors } from './interceptors/index';
 import { GlobalServices } from './services';
 import { NotificationsService } from './services/notifications.service';
 import { SignalRService } from './services/signalr.service';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
 // #fake-end#
 
 function appInitializer(authService: AuthService,notificationsService:NotificationsService, signalRService:SignalRService,) {
@@ -68,6 +69,8 @@ function appInitializer(authService: AuthService,notificationsService:Notificati
 
   ],
   providers: [
+    [{ provide: MAT_DATE_LOCALE, useValue: 'en-GB' },         
+    { provide: LOCALE_ID, useValue: "en-GB" }],
     {
       provide: APP_INITIALIZER,
       useFactory: appInitializer,

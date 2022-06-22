@@ -1,0 +1,65 @@
+<ng-container *ngFor="let validation of commonValidations.UnreactiveValidations">
+    <ng-container
+        [ngTemplateOutlet]="reactiveFormError"
+        [ngTemplateOutletContext]="{
+        validation: validation.name,
+        message: validation.msg,
+        control: control 
+        }"
+        >
+    </ng-container>
+</ng-container>
+
+<ng-container *ngFor="let validation of commonValidations.ReactiveValidations">
+    <ng-container
+        [ngTemplateOutlet]="unreactiveFormError"
+        [ngTemplateOutletContext]="{
+        validation: validation.name,
+        message: validation.msg,
+        control: control 
+        }"
+        >
+    </ng-container>
+</ng-container>
+
+<ng-template
+    #reactiveFormError
+    let-control="control"
+    let-message="message"
+    let-validation="validation"
+    >
+    <ng-container
+        *ngIf="control.hasError(validation) && (control.dirty || control.touched || conditions.includes(true))"
+        >
+        <div class="fv-plugins-message-container">
+            <span role="alert">
+                {{ message }}
+            </span>
+        </div>
+    </ng-container>
+</ng-template>
+
+<ng-template
+    #unreactiveFormError
+    let-control="control"
+    let-message="message"
+    let-validation="validation"
+    >
+    <ng-container
+        *ngIf="control.hasError(validation) && (control.dirty || control.touched|| conditions.includes(true))"
+        >
+        <div class="fv-plugins-message-container">
+            <span role="alert">
+                {{ message }} 
+            </span>
+        </div>
+    </ng-container>
+</ng-template>
+
+<!-- <p *ngIf="formControls!.ComplaintDescription!.hasError('maxlength')">
+    at max {{formControls!.ComplaintDescription!.errors!.maxlength!.requiredLength}} characters
+</p>
+  
+<p *ngIf="formControls!.ComplaintDescription!.hasError('minlength')">
+    at least {{formControls!.ComplaintDescription!.errors!.minlength!.requiredLength}} characters
+</p> -->

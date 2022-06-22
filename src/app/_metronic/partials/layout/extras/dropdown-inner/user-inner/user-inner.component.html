@@ -2,32 +2,37 @@
   <div class="menu-item px-3">
     <div class="menu-content d-flex align-items-center px-3">
       <div class="symbol symbol-50px me-5">
-        <img alt="Logo" [src]=" pic" />
+        <img src="./assets/media/avatars/blank.png" alt="Profile Image" />
       </div>
 
-      <div class="d-flex flex-column">
+      <div class="d-flex flex-column" *ngIf="UserInfo | async as info">
         <div class="fw-bolder d-flex align-items-center fs-5">
-          {{  firstname }}
-          <span class="badge badge-light-success fw-bolder fs-8 px-2 py-1 ms-2"
-            >Pro</span
+          {{ info!.fullName!  }}
+          <span class="badge badge-light-primary fw-bolder fs-8 px-2 py-1 ms-2"
+            >
+            <a class="fw-bold text-muted text-hover-primary fs-7 cursor-pointer">
+              {{  info!.userName! }}
+            </a>
+            </span
           >
+          <!-- <a class="fw-bold text-muted text-hover-primary fs-7 cursor-pointer">
+            {{  info!.fullName! }}
+          </a> -->
         </div>
-        <a class="fw-bold text-muted text-hover-primary fs-7 cursor-pointer">
-          {{  email }}
-        </a>
+        
       </div>
     </div>
   </div>
 
   <div class="separator my-2"></div>
 
-  <div class="menu-item px-5">
+  <!-- <div class="menu-item px-5">
     <a  class="menu-link px-5" (click)="profile()">
       الملف الشخصي
     </a>
-  </div>
+  </div> -->
 
-  <div class="menu-item px-5">
+  <!-- <div class="menu-item px-5">
     <a class="menu-link px-5 cursor-pointer">
       <span class="menu-text">مشاريعي</span>
       <span class="menu-badge">
@@ -36,7 +41,7 @@
         >
       </span>
     </a>
-  </div>
+  </div> -->
 
   <div
     class="menu-item px-5"
@@ -44,25 +49,25 @@
     data-kt-menu-placement="left-start"
     data-kt-menu-flip="bottom"
   >
-    <a class="menu-link px-5 cursor-pointer">
+    <!-- <a class="menu-link px-5 cursor-pointer">
       <span class="menu-title">الاشتراكات</span>
       <span class="menu-arrow"></span>
-    </a>
+    </a> -->
 
     <div class="menu-sub menu-sub-dropdown w-175px py-4">
-      <div class="menu-item px-3">
+      <!-- <div class="menu-item px-3">
         <a class="menu-link px-5 cursor-pointer"> Referrals </a>
-      </div>
+      </div> -->
 
-      <div class="menu-item px-3">
+      <!-- <div class="menu-item px-3">
         <a class="menu-link px-5 cursor-pointer"> الفواتير </a>
-      </div>
+      </div> -->
 
-      <div class="menu-item px-3">
+      <!-- <div class="menu-item px-3">
         <a class="menu-link px-5 cursor-pointer"> الدفعات </a>
-      </div>
+      </div> -->
 
-      <div class="menu-item px-3">
+      <!-- <div class="menu-item px-3">
         <a class="menu-link d-flex flex-stack px-5 cursor-pointer">
           Statements
           <i
@@ -71,11 +76,11 @@
             title="View your statements"
           ></i>
         </a>
-      </div>
+      </div> -->
 
-      <div class="separator my-2"></div>
+      <!-- <div class="separator my-2"></div> -->
 
-      <div class="menu-item px-3">
+      <!-- <div class="menu-item px-3">
         <div class="menu-content px-3">
           <label
             class="form-check form-switch form-check-custom form-check-solid"
@@ -90,13 +95,13 @@
             <span class="form-check-label text-muted fs-7">الاشعارات</span>
           </label>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 
-  <div class="menu-item px-5">
+  <!-- <div class="menu-item px-5">
     <a class="menu-link px-5 cursor-pointer"> My Statements </a>
-  </div>
+  </div> -->
 
   <div class="separator my-2"></div>
 
@@ -107,8 +112,10 @@
     data-kt-menu-flip="bottom"
   >
     <a class="menu-link px-5 cursor-pointer">
+      <span class="fs-7 px-2">
+        اللغة : 
+      </span>
       <span class="menu-title position-relative">
-        {{'LANGUAGE' | translate}}
         <span
           class="
             fs-8
@@ -126,7 +133,7 @@
           <img
             class="w-15px h-15px rounded-1 ms-2"
             [src]="language?.flag"
-            alt="metronic"
+            alt="Language Flag"
           />
         </span>
       </span>
@@ -151,11 +158,11 @@
     </div>
   </div>
 
-  <div class="menu-item px-5 my-1">
+  <!-- <div class="menu-item px-5 my-1">
     <a routerLink="/crafted/account/settings" class="menu-link px-5">
       اعدادات الحساب
     </a>
-  </div>
+  </div> -->
 
   <div class="menu-item px-5">
     <a (click)="logout()" class="menu-link px-5 cursor-pointer"> تسجيل الخروج </a>

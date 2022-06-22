@@ -1,0 +1,27 @@
+
+<ng-container
+    [ngTemplateOutlet]="formError"
+    [ngTemplateOutletContext]="{
+    validation: 'minlength',
+    message: 'Password should have at least 3 symbols',
+    control: control 
+    }"
+    >
+</ng-container>
+
+<ng-template
+  #formError
+  let-control="control"
+  let-message="message"
+  let-validation="validation"
+>
+  <ng-container
+    *ngIf="control.hasError(validation) && (control.dirty || control.touched)"
+  >
+    <div class="fv-plugins-message-container">
+      <span role="alert">
+        {{ message }}
+      </span>
+    </div>
+  </ng-container>
+</ng-template>

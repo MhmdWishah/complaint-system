@@ -55,6 +55,11 @@
                         <label class="form-label" >الإيميل</label>
                         <input maxlength="150" minlength="0" type="email" class="form-control" formControlName="ComplainantEmail">
                         <app-required-validation-msg [control]="formControls!.ComplainantEmail!" [submitted]="submitted"></app-required-validation-msg>
+                        <div class="errors">
+                            <small *ngIf="formControls.ComplainantEmail?.errors?.email && (formControls!.ComplainantEmail?.touched || submitted)">
+                                هذا الإيميل غير صحيح
+                            </small>
+                        </div>
                     </div>
                     <div class="col-md-4">
                         <label class="required form-label">الجنس</label>
@@ -101,8 +106,8 @@
                     <div class="col-md-4">
                         <label class="required form-label" >هل هي شكوى سرية أو حساسة؟</label>
                         <select class="form-select" formControlName="IsSecretComplaint">
-                            <option value="0">لا</option>
-                            <option value="1">نعم</option>
+                            <option [value]="false">لا</option>
+                            <option [value]="true">نعم</option>
                         </select>
                         <app-required-validation-msg [control]="formControls!.IsSecretComplaint!" [submitted]="submitted"></app-required-validation-msg>
                     </div>
@@ -121,6 +126,14 @@
                             <option *ngFor="let type of codes.ComplaintSource" [value]="type.Code">{{type.Name}}</option>
                         </select>
                         <app-required-validation-msg [control]="formControls!.ComplaintSourse!" [submitted]="submitted"></app-required-validation-msg>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="form-label">المركز المقدَّم فيه الشكوى:</label>
+                        <select class="form-select" formControlName="ComplaintSourse">
+                            <option *ngFor="let type of codes.Department" [value]="type.Code">{{type.Name}}</option>
+                        </select>
+                        <!-- <app-required-validation-msg [control]="formControls!.ComplaintSourse!" [submitted]="submitted"></app-required-validation-msg> -->
                     </div>
 
                     <div class="col-md-12">

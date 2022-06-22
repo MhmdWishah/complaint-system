@@ -16,8 +16,8 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   // KeenThemes mock, change it to:
   defaultAuth: any = {
-    username: '1',
-    password: '--',
+    username: '',
+    password: '',
   };
 
   loginForm: FormGroup;
@@ -77,6 +77,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   login() {
+    this.loginForm.markAsDirty();
     this.authService.login(this.f.username.value, this.f.password.value);
     //   .login(this.f.email.value, this.f.password.value)
     // this.hasError = false;

@@ -44,7 +44,6 @@ export class AuthService implements OnDestroy {
     this.currentUserSubject = new BehaviorSubject<UserType>(undefined);
     this.currentUser$ = this.currentUserSubject.asObservable();
     this.isLoading$ = this.isLoadingSubject.asObservable();
-    const subscr = this.user;
   }
 
 
@@ -60,7 +59,7 @@ export class AuthService implements OnDestroy {
         catchError((error: any) => {
           return of();
         }),
-            finalize(() => this.isLoadingSubject.next(false))
+        finalize(() => this.isLoadingSubject.next(false))
       )
       .subscribe();
   }
@@ -74,12 +73,17 @@ export class AuthService implements OnDestroy {
       localStorage.setItem("empID", res.empNo);
       localStorage.setItem("center", res.center);
       localStorage.setItem("userID", res.userID);
+      localStorage.setItem("departmentTxt", res.departmentTxt);
+      localStorage.setItem("lang", res.lang);
+      localStorage.setItem("description", res.description);
+
       // if (userName == "public") this.router.navigate(["/jobs/app/" + appID]);
       // else {
       // localStorage.removeItem("public");
       if (userName) {
         // console.log("hi", userName)
-        this.router.navigate(["/dashboard"]);
+        localStorage.setItem("userName", res.userName);
+        this.router.navigateByUrl("/dashboard");
       }
     }
     else {
@@ -96,9 +100,6 @@ export class AuthService implements OnDestroy {
     return !!localStorage.getItem("token");
   }
 
-  get user() {
-    return { fullName: localStorage.getItem("fullName") };
-  }
 
 
 

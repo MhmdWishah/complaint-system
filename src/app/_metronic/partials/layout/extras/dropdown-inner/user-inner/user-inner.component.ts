@@ -1,8 +1,9 @@
 import { Router } from '@angular/router';
 import { Component, HostBinding, OnDestroy, OnInit } from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subscription, of } from 'rxjs';
 import { TranslationService } from '../../../../../../modules/i18n';
 import { AuthService, UserType } from '../../../../../../modules/auth';
+import { GetUserInfo } from 'src/app/functions/handleLocalStorage';
 
 @Component({
   selector: 'app-user-inner',
@@ -16,48 +17,49 @@ export class UserInnerComponent implements OnInit, OnDestroy {
   language: LanguageFlag;
   user$: Observable<any>;
   langs: any[] = [];
-  firstname:any
-  lastname:any
-  email:any
-  pic:any
+  userPic: any;
   private unsubscribe: Subscription[] = [];
-active:any
+
+  private readonly userInfo:any;
+  active:any
   constructor(
     public auth: AuthService,
     private translationService: TranslationService,
     private router:Router
   ) {
+    this.userInfo = GetUserInfo();
+    console.log(this.userInfo);
     this.langs = [
       {
         lang: 'en',
         name: 'English',
         flag: './assets/media/flags/united-states.svg',
       },
-      {
-        lang: 'zh',
-        name: 'Mandarin',
-        flag: './assets/media/flags/china.svg',
-      },
-      {
-        lang: 'es',
-        name: 'Spanish',
-        flag: './assets/media/flags/spain.svg',
-      },
-      {
-        lang: 'ja',
-        name: 'Japanese',
-        flag: './assets/media/flags/japan.svg',
-      },
-      {
-        lang: 'de',
-        name: 'German',
-        flag: './assets/media/flags/germany.svg',
-      },
-      {
-        lang: 'fr',
-        name: 'French',
-        flag: './assets/media/flags/france.svg',
-      },
+      // {
+      //   lang: 'zh',
+      //   name: 'Mandarin',
+      //   flag: './assets/media/flags/china.svg',
+      // },
+      // {
+      //   lang: 'es',
+      //   name: 'Spanish',
+      //   flag: './assets/media/flags/spain.svg',
+      // },
+      // {
+      //   lang: 'ja',
+      //   name: 'Japanese',
+      //   flag: './assets/media/flags/japan.svg',
+      // },
+      // {
+      //   lang: 'de',
+      //   name: 'German',
+      //   flag: './assets/media/flags/germany.svg',
+      // },
+      // {
+      //   lang: 'fr',
+      //   name: 'French',
+      //   flag: './assets/media/flags/france.svg',
+      // },
     
       {
         lang: 'ar',
@@ -70,9 +72,6 @@ active:any
   ngOnInit(): void {
     this.user$ = this.auth.currentUserSubject.asObservable();
     this.setLanguage(this.translationService.getSelectedLanguage());
-    this.firstname = localStorage.getItem("fullName");
-    this.email= "a.sori@gmail.com";
-    this.pic= "";
     this.active=this.auth.isActive;
   }
 
@@ -103,6 +102,10 @@ active:any
   }
   profile(){
     this.router.navigate(['settings/my-profile']);
+  }
+
+  get UserInfo(){
+    return of(this.userInfo);
   }
 }
 

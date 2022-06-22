@@ -19,11 +19,11 @@ const Routing: Routes = [
       import('./users/users.module').then(m => m.UsersModule),
   },
 
-  {
-    path: 'settings',
-    loadChildren: () =>
-      import('./system-settings/system-settings.module').then(m => m.SystemSettingsModule),
-  },
+  // {
+  //   path: 'settings',
+  //   loadChildren: () =>
+  //     import('./system-settings/system-settings.module').then(m => m.SystemSettingsModule),
+  // },
   {
     path: 'builder',
     loadChildren: () =>
@@ -68,6 +68,11 @@ const Routing: Routes = [
   },
   {
     path: '',
+    redirectTo: '/dashboard',
+    pathMatch: 'full',
+  },
+  {
+    path: 'Dashboard',
     redirectTo: '/dashboard',
     pathMatch: 'full',
   },

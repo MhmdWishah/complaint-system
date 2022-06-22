@@ -42,5 +42,10 @@ export class ComplaintFollowUpService {
     SaveComplaintFollowUp(data:ComplaintFollowUp): Observable<Response|any> {
         return this.http.saveData(this.baseUrl+"/FollowUpSave", data);
     }
+
+    destroy(){
+        this.SelectedComplaintInfo.next(undefined);
+        this.AllFollowUps.next(undefined);
+    }
     
 }

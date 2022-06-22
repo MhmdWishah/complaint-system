@@ -50,8 +50,8 @@
       formControlName="username"
       autocomplete="off"
       [ngClass]="{
-        'is-invalid': loginForm.controls['username'].invalid,
-        'is-valid': loginForm.controls['username'].valid
+        'is-invalid': (loginForm.controls['username'].invalid && (loginForm.controls['username'].touched || loginForm.controls['username'].dirty)),
+        'is-valid': loginForm.controls['username'].valid && (loginForm.controls['username'].touched || loginForm.controls['username'].dirty)
       }"
     />
     <ng-container
@@ -94,14 +94,14 @@
     <div class="d-flex justify-content-between mt-n5">
       <div class="d-flex flex-stack mb-2">
         <label class="form-label fw-bolder text-dark fs-6 mb-0">كلمة المرور</label>
-        <a
+        <!-- <a
           routerLink="/auth/forgot-password"
           class="link-primary fs-6 fw-bolder"
           id="kt_login_forgot"
           [style.margin-left]="'5px'"
         >
           هل نسيت كلمة المرور
-        </a>
+        </a> -->
       </div>
     </div>
 
@@ -112,8 +112,8 @@
       autocomplete="off"
       formControlName="password"
       [ngClass]="{
-        'is-invalid': loginForm.controls['password'].invalid,
-        'is-valid': loginForm.controls['password'].valid
+        'is-invalid': (loginForm.controls['password'].invalid && (loginForm.controls['password'].touched || loginForm.controls['password'].dirty)),
+        'is-valid': loginForm.controls['password'].valid && (loginForm.controls['password'].touched || loginForm.controls['password'].dirty)
       }"
     />
     <ng-container

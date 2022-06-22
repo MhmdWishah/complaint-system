@@ -14,21 +14,21 @@
     <div class="card-body">
         <div class="col-md-12">
             <mat-tab-group animationDuration="0ms">
-                <mat-tab id="tab1" label="بيانات الشكوى">
+                <mat-tab id="tab1" label="بيانات الشكوى" style="min-height: 150px;">
                     <!-- <ng-template mat-tab-label>
                         بيانات الشكوى
                     </ng-template> -->
-                    <div class="container">
+                    <div class="container" style="min-height: 150px;">
                         <div class="py-5" *ngIf="selectedComplaintInfo$ | async as complaintInfo; else loadingSpinner">
                             <app-complaint-info [ComplaintInfo]="complaintInfo"></app-complaint-info>
                         </div>
                     </div>
                 </mat-tab>
-                <mat-tab  id="tab1" label="إجراءات المتابعة">
+                <mat-tab  id="tab1" label="إجراءات المتابعة"  style="min-height: 150px;">
                     <!-- <ng-template mat-tab-label>
                         إجراءات المتابعة
                     </ng-template> -->
-                    <div class="continer" *ngIf="selectedComplaintInfo$ | async as complaintInfo; else loadingSpinner">
+                    <div class="continer" *ngIf="selectedComplaintInfo$ | async as complaintInfo; else loadingSpinner" style="min-height: 150px;">
                         <div class="py-5 px-3" *ngIf="codes$ | async as codes; else loadingSpinner">
                             <form [formGroup]="form" class="row gy-5">
                                 <div class="col-md-3">

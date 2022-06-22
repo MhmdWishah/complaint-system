@@ -14,7 +14,7 @@ export class MyFollowUpsService {
         this.AllMyFollowUps.next(undefined);
         this.http.getData(this.baseUrl+"/FollowUpSearch", {ComplaintID: SelectedComlaintID})
             .subscribe( (response: MyFollowUpInfo[]) => {
-                console.log("FollowUps response:", response)
+                // console.log("FollowUps response:", response)
                 if(Array.isArray(response) && !!response){
                     this.AllMyFollowUps.next(response);
                 }
@@ -27,6 +27,10 @@ export class MyFollowUpsService {
 
     SaveFollowUpComplateData(data:FollowUpCompleteData): Observable<Response|any> {
         return this.http.saveData(this.baseUrl+"/FollowUpCompleteDataSave", data);
+    }
+
+    destroy(){
+        this.AllMyFollowUps.next(undefined);
     }
     
 }

@@ -12,4 +12,5 @@ export interface ComplaintModel{
     ComplainantGender: number;
     ComplaintRiskLevel: number;
     ComplaintSourse: number;
+    DepartmentID: number
 }

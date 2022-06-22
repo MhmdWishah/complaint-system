@@ -28,5 +28,9 @@ export class ComplaintsReviewService {
     get Complaints$(): Observable<SearchedComplaint[]|undefined>{
         return this.AllComplaints.asObservable();
     }
+
+    destroy(){
+        this.AllComplaints.next(undefined);
+    }
     
 }
