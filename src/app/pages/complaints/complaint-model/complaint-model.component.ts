@@ -35,10 +35,10 @@ export class ComplaintModelComponent implements OnInit {
     private initForm() {
         this.form = this.fb.group({
             "ComplainantName": ["", [Validators.required, Validators.maxLength(100)]],
-            "ComplainantAddress": ["", [Validators.maxLength(100)]],
-            "ComplainantAddressDetails": ["", Validators.compose([Validators.maxLength(200)])],
+            "ComplainantAddress": ["", []],
+            "ComplainantAddressDetails": ["", []],
             "ComplainantMobileNumber": ["", [Validators.maxLength(15)]],
-            "ComplainantEmail": ["", [Validators.email,  Validators.minLength(1),  Validators.maxLength(100)]],
+            "ComplainantEmail": ["", [Validators.email]],
             "ComplaintPlace": ["", [Validators.required, Validators.maxLength(200)]],
             "ComplaintDate": ["", [Validators.required, Validators.minLength(1)]],
             "IsSecretComplaint": [false, [Validators.required]],
