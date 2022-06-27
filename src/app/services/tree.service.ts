@@ -22,7 +22,7 @@ export class treeService {
     };
 
     let tree: any[] = [];
-    console.log('list', list.length);
+    // console.log('list', list.length);
     list.forEach((item) => {
       if (!item.ParentId) {
         tree.push({ ...item, children: [], ParentId: 0, level });

@@ -1,11 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router, NavigationStart, ChildActivationEnd } from '@angular/router';
 import { ComplaintFollowUpService } from '../services/complaint-follow-up.service';
 import { Observable, BehaviorSubject, of, Subscription } from 'rxjs';
 import { ComplaintInfo, FollowUpInfo } from '../model/complaint-follow-up.model';
 import { CodesService } from '../../system-settings/codes/codes.service';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { startWith, switchMap, map } from 'rxjs/operators';
+import { startWith, switchMap, map, filter } from 'rxjs/operators';
 import { CommonService } from '../../../services/common.service';
 import { CommonEmp } from '../../../models/common-autocomplete.model';
 import { Response } from 'src/app/models/common-response.model';
@@ -22,17 +22,17 @@ import { Response } from 'src/app/models/common-response.model';
             padding: 0.5rem 0;
         }
 
-        #chipListInput {
+        .chipListInput {
             padding: 0rem 1rem;
             height: 2.5rem;
-            font-size: 1.1rem;
+            font-size: 14px;
             font-weight: 500;
         }
     `]
 })
 
 export class ComplaintFollowUpComponent implements OnInit, OnDestroy {
-    private SelectedComlaintID: number|undefined;
+    private SelectedComlaintID = new BehaviorSubject<number|undefined|null>(undefined);
     codes$ : Observable<any>;
     selectedComplaintInfo$: Observable<ComplaintInfo|undefined>;
     
@@ -53,22 +53,41 @@ export class ComplaintFollowUpComponent implements OnInit, OnDestroy {
         private compFollowUpService: ComplaintFollowUpService,
         private codesService: CodesService,
         private fb: FormBuilder,
-        private commonService: CommonService
+        private commonService: CommonService,
+        private router: Router
     ) { 
         this.route.paramMap.subscribe(
             (params: any) => {
-                // console.log(params.get('id'));
+                // console.log("params:",params);
                 this.destroy();
                 if(!!params.get('id')){
-                    this.SelectedComlaintID = +params.get('id');
-                    this.compFollowUpService.getComplaintInfo(this.SelectedComlaintID!);
+                    this.SelectedComlaintID.next(+params.get('id'));
+                    this.compFollowUpService.getComplaintInfo(this.SelectedComlaintID!.getValue()!);
                     this.fetchFollowUps();  
                 }
             }
         );
+        // this.router.events
+        // .pipe(filter((e:any) => {
+        //     if(e instanceof NavigationStart && e?.url! == "/Complaints/ComplaintFollowUp"){
+        //         return e;
+        //     }
+        //     if(e instanceof ChildActivationEnd && e?.snapshot.routeConfig!.path! == "ComplaintFollowUp"){
+        //         return e;
+        //     }
+        //     return e;
+        // }))
+        // .subscribe((e: NavigationStart|any) => {
+        //     console.log("NavigationStart:",e)
+        //     const navigation  = this.router.getCurrentNavigation();
+        //     // console.log("NavigationStart:",e)
+        //     if(!!navigation?.extras!.state!['id']!){
+        //         console.log("getCurrentNavigation:",navigation)
+        //         this.SelectedComlaintID = navigation!.extras.state ? navigation!.extras.state.orderId : 0;
+        //     }
+        // });
         this.initForm();
         
-        // console.log("this.ParamID: ", this.SelectedComlaintID);
     }
     ngOnDestroy(): void {
         this.destroy();
@@ -143,17 +162,17 @@ export class ComplaintFollowUpComponent implements OnInit, OnDestroy {
         arrSelectedToEmps.push(emp);
         this.selectedToEmps.next([...arrSelectedToEmps]);
         this.form.controls['ToEmpID'].setValue(arrSelectedToEmps.map(selectedEmp => selectedEmp.Code).join());
-        const ele: any = document!.getElementById("chipListInput");
+        const ele: any = document!.getElementById("chipListToEmpsInput");
         ele.value = "";
     }
 
     fetchFollowUps(){
-        this.compFollowUpService.searchComplaintFollowUps(this.SelectedComlaintID!);
+        this.compFollowUpService.searchComplaintFollowUps(this.SelectedComlaintID!.getValue()!);
     }
     saveFollowUp(){
         this.submitted = true;
         if(this.form.valid){
-            this.FollowUpSaveSubscription = this.compFollowUpService.SaveComplaintFollowUp({...this.form.value, ComplaintID: this.SelectedComlaintID!})
+            this.FollowUpSaveSubscription = this.compFollowUpService.SaveComplaintFollowUp({...this.form.value, ComplaintID: this.SelectedComlaintID!.getValue()!})
                 .subscribe( 
                     (response: Response|undefined) =>{
                         if(response!.status! > 0){
@@ -166,7 +185,7 @@ export class ComplaintFollowUpComponent implements OnInit, OnDestroy {
     }
 
     clearAfterSave(){
-        const ele: any = document!.getElementById("chipListInput");
+        const ele: any = document!.getElementById("chipListToEmpsInput");
         if(!!ele)
             ele!.value = "";
         this.selectedToEmps.next([]);
@@ -175,10 +194,15 @@ export class ComplaintFollowUpComponent implements OnInit, OnDestroy {
         this.submitted = false;
     }
 
+    get SelectedComlaintID$(){
+        return this.SelectedComlaintID.asObservable();
+    }
+
     destroy(){
         if(!!this.FollowUpTypeValueSubscription)
             this.FollowUpTypeValueSubscription.unsubscribe();
         this.compFollowUpService.destroy();
+        this.SelectedComlaintID.next(undefined);
         if(!!this.FollowUpSaveSubscription)
             this.FollowUpSaveSubscription!.unsubscribe();
         this.clearAfterSave();

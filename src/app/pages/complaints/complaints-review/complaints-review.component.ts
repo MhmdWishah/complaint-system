@@ -53,6 +53,9 @@ export class ComplaintsReviewComponent implements OnInit {
     }
 
     onPursueClick(complaintId:number){
-        this.router.navigate(['/Complaints/ComplaintFollowUp',complaintId])
+        console.log("complaintId:",complaintId)
+        // this.router.navigateByUrl('/Complaints/ComplaintFollowUp',{ state:{id: complaintId},replaceUrl: true})
+        this.router.navigate(['/Complaints/ComplaintFollowUp', complaintId]);
+
     }
 }

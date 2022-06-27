@@ -23,7 +23,7 @@ export class MyProfileService {
   saveImageProfile(Img:File){
     let  formData = new FormData();
     formData.append("Avatar", Img)
-      console.log("img",Img)
+      // console.log("img",Img)
     return this.httpp.post(this.baseUrl + "/UsersProfile/Avatar", formData, { headers: this.auth.getHeaders() });
   }
 }

@@ -24,7 +24,7 @@ export class UsersService {
     formData.append("UserID", id)
 
 
-    console.log("img", Img)
+    // console.log("img", Img)
     return this.httpp.post(this.baseUrl + "/UsersProfile/Avatar", formData, { headers: this.auth.getHeaders() });
   }
   userTypeId(body: any) {

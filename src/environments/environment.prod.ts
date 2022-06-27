@@ -29,14 +29,14 @@ export const environment = {
       'title': 'Demo 2',
       'description': 'SaaS Application',
       'published': false,
-      'thumbnail': './assets/media/demos/demo2.png'
+      // 'thumbnail': './assets/media/demos/demo2.png'
     },
 
     'demo3': {
       'title': 'Demo 3',
       'description': 'New Trend',
       'published': false,
-      'thumbnail': './assets/media/demos/demo3.png'
+      // 'thumbnail': './assets/media/demos/demo3.png'
     },
 
     'demo4': {

@@ -18,7 +18,7 @@ export class HttpErrorsInterceptor implements HttpInterceptor {
             },
             (event: any) => {
                 if (event instanceof HttpErrorResponse) {
-                  console.log(event)
+                  // console.log(event);
                     switch (event.status) {
                         // not authorized
                         case (401):
@@ -31,7 +31,7 @@ export class HttpErrorsInterceptor implements HttpInterceptor {
                             break;
                         // something wrong in the back end
                         case (400):
-                          console.log(event)
+                          // console.log(event)
                             if(!!event!.error!.message)
                               this.toastr.error(event!.error!.message)
                             else

@@ -75,7 +75,7 @@ export class UserPermissionsComponent implements OnInit, OnDestroy {
       .subscribe(
         (response: Response|undefined) => {
           if((response!.status!) > 0){
-            console.log(response)
+            // console.log(response)
             this.roleSearchControl.reset("");
             const ele: any = document!.getElementById("chipListInput");
             ele.value = "";

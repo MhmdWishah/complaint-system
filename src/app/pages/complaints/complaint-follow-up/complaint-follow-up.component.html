@@ -12,7 +12,7 @@
   
     <!-- begin::Body -->
     <div class="card-body">
-        <div class="col-md-12">
+        <div class="col-md-12" *ngIf="SelectedComlaintID$ | async as selectedComlaintID; else loadingSpinner">
             <mat-tab-group animationDuration="0ms">
                 <mat-tab id="tab1" label="بيانات الشكوى" style="min-height: 150px;">
                     <!-- <ng-template mat-tab-label>
@@ -24,7 +24,7 @@
                         </div>
                     </div>
                 </mat-tab>
-                <mat-tab  id="tab1" label="إجراءات المتابعة"  style="min-height: 150px;">
+                <mat-tab  id="tab2" label="إجراءات المتابعة"  style="min-height: 150px;">
                     <!-- <ng-template mat-tab-label>
                         إجراءات المتابعة
                     </ng-template> -->
@@ -81,11 +81,11 @@
                                             </mat-chip>
                                             <input
                                             type="text"
-                                            class="form-control"
+                                            class="form-control chipListInput"
                                             [formControl]="empSearchControl"
                                             [matAutocomplete]="empAuto"
                                             [matChipInputFor]="chipList"
-                                            id="chipListInput"
+                                            id="chipListToEmpsInput"
                                             />
                                         </mat-chip-list>
                                         <mat-autocomplete #empAuto="matAutocomplete">
@@ -123,6 +123,11 @@
                                 
                             </div>
                         </div>
+                    </div>
+                </mat-tab>
+                <mat-tab  id="tab3" label="لجنة الشكاوى"  style="min-height: 150px;">
+                    <div class="continer" style="min-height: 150px;">
+                        <app-complaint-commission [selectedComlaintId$]="SelectedComlaintID$"></app-complaint-commission>
                     </div>
                 </mat-tab>
             </mat-tab-group>  

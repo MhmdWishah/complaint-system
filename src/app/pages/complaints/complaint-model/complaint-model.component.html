@@ -44,6 +44,12 @@
                         </select>
                         <app-required-validation-msg [control]="formControls!.ComplainantAddress!" [submitted]="submitted"></app-required-validation-msg>
                     </div>
+                    <div class="col-md-4">
+                        <label class="form-label" >تفاصيل العنوان</label>
+                        <!-- <input type="text" class="form-control" formControlName="ComplainantAddress"> -->
+                        <input class="form-control" maxLength="200"
+                        formControlName="ComplainantAddressDetails">
+                    </div>
 
                     <div class="col-md-4">
                         <label class="form-label" >رقم الهاتف المحمول</label>

@@ -41,7 +41,7 @@ export class TreeMultiSelectionForUserPerComponent implements OnInit {
       if (Data.data) {
         this.dataTree = this.treeService.mapTree(Data.data);
         this.userId = Data.userID;
-        console.log('this.dataTree', this.dataTree);
+        // console.log('this.dataTree', this.dataTree);
         this.findItemSelectedViewInMenu();
       }
       this.cdr.detectChanges();

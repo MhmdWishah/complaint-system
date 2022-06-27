@@ -1,0 +1,87 @@
+<div class="py-5 px-3">
+    <ng-container *ngIf="!!selectedComlaintId; else loadingSpinner">
+        <div class="row gy-5">
+            <div class="col-md-6">
+                <label class="form-label required">الموظف</label>
+                <div class="input-group">
+                    <input
+                        type="text"
+                        class="form-control"
+                        [formControl]="complaintEmpsSearchControl"
+                        [matAutocomplete]="complaintEmpsAuto"
+                        id="ComplaintEmpsInput"
+                    />
+                    <mat-autocomplete #complaintEmpsAuto="matAutocomplete">
+                        <mat-option *ngFor="let searchedEmp of searchedComplaintEmps$ | async" [value]="searchedEmp.Name"
+                            (onSelectionChange)="onComplaintEmpSelect(searchedEmp)">{{ searchedEmp.Name }}</mat-option>
+                    </mat-autocomplete>
+                </div>
+                <div class="errors">
+                    <small *ngIf="complaintEmpsSearchControl?.errors?.required && (complaintEmpsSearchControl?.touched || complaintEmpsSearchControl?.dirty || addEmpSubmitted)">
+                      هذا الحقل مطلوب
+                    </small>
+                  </div>
+                <!-- <app-required-validation-msg [formControl]="complaintEmpsSearchControl" [submitted]="addEmpSubmitted"></app-required-validation-msg> -->
+
+            </div>
+
+            <div class="col-md-3 pt-12">
+                <a role="button" class="btn btn-primary btn-sm" matTooltip="إضافة إلى لجنة الشكاوى" (click)="saveComplaintEmp()">
+                    <span class="hidden-mobile">إضافة</span>
+                    &nbsp;
+                    <i class="fas fa-plus"></i>
+                </a>
+            </div>
+        </div>
+        <div class="container my-6">
+            <ng-container *ngIf="ComplaintEmps$ | async as emps; else loadingSpinner">
+                <h4 class="my-4">أعضاء لجنة الشكاوى :-</h4>
+                <div class="col-md-12 row gap-4 flex-wrap my-5">
+                    <div style="width: calc(100%/4.2)" class="card bg-light" *ngFor="let emp of emps">
+                        <div class="card-body card-body px-1 d-flex justify-content-between align-items-center">
+                            <p class="font-size-14 font-weight-400">{{emp.EmpName}}</p>
+                            <button class="btn btn-icon btn-danger btn-circle btn-sm" (click)="removeEmp(emp)">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+
+        <hr class="my-8">
+
+        <div class="row gy-5">
+            <div class="col-md-10">
+                <label class="form-label">موظفون آخرون</label>
+                <textarea
+                    rows="4"
+                    maxlength="500"
+                    class="form-control"
+                    [formControl]="complaintOtherEmps"
+                ></textarea>
+                <!-- <div class="errors">
+                    <small *ngIf="complaintOtherEmps?.errors?.required && (complaintOtherEmps?.touched || complaintOtherEmps?.dirty || saveOthersSubmitted)">
+                      هذا الحقل مطلوب
+                    </small>
+                </div> -->
+            </div>
+
+            <div class="col-md-2 pt-15">
+                <a role="button" class="btn btn-primary btn-sm" matTooltip="إضافة إلى لجنة الشكاوى" (click)="saveComplaintOtherEmps()">
+                    <span class="hidden-mobile">حفظ</span>
+                    &nbsp;
+                    <i class="fas fa-save"></i>
+                </a>
+            </div>
+        </div>
+        
+        
+    </ng-container>
+</div>
+
+<ng-template #loadingSpinner>
+    <div class="col-md-12 d-flex justify-content-center align-items-center py-2 h-100 d-inline-block">
+        <mat-spinner></mat-spinner>
+    </div>
+</ng-template>

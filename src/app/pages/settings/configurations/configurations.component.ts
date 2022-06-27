@@ -120,13 +120,13 @@ export class ConfigurationsComponent implements OnInit {
   getCodeConfigurationAndDataConfiguration() {
     this.Codes$ = this.service.getCodeConfiguration();
     this.service.getCodeConfiguration().subscribe(data => {
-      console.log("data", data);
+      // console.log("data", data);
       this.service.getConfiguration().subscribe(dataForm => {
         this.ConfigurationsForm.patchValue({
           ...dataForm,
           FisalYear: new Date(dataForm.FisalYear)
         })
-        console.log("dataForm", dataForm);
+        // console.log("dataForm", dataForm);
       })
 
     })

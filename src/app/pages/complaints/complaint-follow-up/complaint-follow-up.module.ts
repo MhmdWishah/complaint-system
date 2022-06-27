@@ -18,8 +18,11 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { FollowUpTemplateComponent } from '../components/follow-up-template/follow-up-template.component';
 import {CdkAccordionModule} from '@angular/cdk/accordion';
+import { ComplaintCommissionComponent } from '../components/complaint-commission/complaint-commission.component';
 
-
+const components = [
+    ComplaintInfoComponent, FollowUpTemplateComponent, ComplaintCommissionComponent
+];
 @NgModule({
     imports: [
         CommonModule,
@@ -45,8 +48,8 @@ import {CdkAccordionModule} from '@angular/cdk/accordion';
             }
         ])
     ],
-    exports: [ComplaintInfoComponent, FollowUpTemplateComponent],
-    declarations: [ComplaintFollowUpComponent,ComplaintInfoComponent, FollowUpTemplateComponent],
+    exports: [components],
+    declarations: [ComplaintFollowUpComponent, components],
     providers: [],
 })
 export class ComplaintFollowUpModule { }

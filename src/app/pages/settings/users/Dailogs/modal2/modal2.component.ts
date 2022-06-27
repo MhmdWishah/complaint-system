@@ -18,7 +18,7 @@ export class modal2Component implements OnInit {
   ngOnInit(): void {
     this.usersService.getCodeUsers().subscribe(value => {
       this.DataPage = value;
-      console.log("DataRoles", value)
+      // console.log("DataRoles", value)
     })
 
 

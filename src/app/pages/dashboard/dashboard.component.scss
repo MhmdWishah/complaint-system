@@ -1,0 +1,32 @@
+.card{
+    width: 45%;
+    padding: 1rem;
+    margin: 1rem;
+    height: 50rem;
+}
+
+.card .card-body{
+   padding: 1rem 1.25rem !important;
+}
+
+.card-header {
+    align-items: center;
+    justify-content: center;
+}
+
+.card-header > .chart-header{
+    font-weight: 600;
+    margin: 0;
+    padding: 0;
+    font-size: 1.5rem;
+    color: #48465b;
+    text-align: center;
+}
+
+.card.bar-chart-1{
+    height: 30rem;
+}
+
+.card.pie-chart-1 > .card-body {
+    padding: 1.2rem 4rem 5.7rem 4rem !important;
+}

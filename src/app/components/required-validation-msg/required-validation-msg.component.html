@@ -1,7 +1,19 @@
-<ng-container *ngIf="control?.errors">
-  <div class="errors">
-    <small *ngIf="control?.errors?.required && (control?.touched || submitted)">
-      هذا الحقل مطلوب
-    </small>
-  </div>
+<ng-container *ngIf="control"> 
+  <ng-container *ngIf="control?.errors">
+    <div class="errors">
+      <small *ngIf="control?.errors?.required && (control?.touched || submitted)">
+        هذا الحقل مطلوب
+      </small>
+    </div>
+  </ng-container>
 </ng-container>
+
+<!-- <ng-template #formControlErrors>
+  <ng-container *ngIf="formControl?.errors">
+    <div class="errors">
+      <small *ngIf="formControl?.errors?.required && (control?.touched || || submitted)">
+        هذا الحقل مطلوب
+      </small>
+    </div>
+  </ng-container>
+</ng-template> -->

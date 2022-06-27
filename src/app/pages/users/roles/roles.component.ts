@@ -33,7 +33,6 @@ export class RolesComponent implements OnInit {
   }
 
   AddOrEditOrdeleteRoles(type: number) {
-    console.log(this.roleSelected);
     var body: any;
     switch (type) {
       case 1:

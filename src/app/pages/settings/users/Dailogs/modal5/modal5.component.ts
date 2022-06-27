@@ -45,7 +45,7 @@ export class modal5Component implements OnInit, OnChanges {
 
   }
   EditUser() {
-    console.log("edit")
+    // console.log("edit")
     this.usersService.addUser({ ...this.formAddUser.value, userId: this.idUser }).subscribe((res: any) => {
       if (res.rv > 0) {
         this.toastr.success(res.Msg);
@@ -78,15 +78,15 @@ export class modal5Component implements OnInit, OnChanges {
       this.imageChangedEvent.target.files[0].name,
     )
 
-    console.log(this.imageChangedEvent.target.files[0]);
-    console.log(this.fileToReturn);
+    // console.log(this.imageChangedEvent.target.files[0]);
+    // console.log(this.fileToReturn);
     return this.fileToReturn;
   }
 
 
   base64ToFile(data: any, filename: any) {
-    console.log("data", data);
-    console.log("filename", filename);
+    // console.log("data", data);
+    // console.log("filename", filename);
     const arr = data.split(',');
     const mime = arr[0].match(/:(.*?);/)[1];
     const bstr = atob(arr[1]);

@@ -34,16 +34,17 @@ export class ComplaintModelComponent implements OnInit {
 
     private initForm() {
         this.form = this.fb.group({
-            "ComplainantName": ["", [Validators.required, Validators.maxLength(100), Validators.minLength(0)]],
-            "ComplainantAddress": ["", []],
-            "ComplainantMobileNumber": ["", [Validators.maxLength(15), Validators.minLength(0)]],
-            "ComplainantEmail": ["", [Validators.email, Validators.minLength(0)]],
-            "ComplaintPlace": ["", [Validators.required, Validators.maxLength(200), Validators.minLength(0)]],
+            "ComplainantName": ["", [Validators.required, Validators.maxLength(100)]],
+            "ComplainantAddress": ["", [Validators.maxLength(100)]],
+            "ComplainantAddressDetails": ["", Validators.compose([Validators.maxLength(200)])],
+            "ComplainantMobileNumber": ["", [Validators.maxLength(15)]],
+            "ComplainantEmail": ["", [Validators.email,  Validators.minLength(1),  Validators.maxLength(100)]],
+            "ComplaintPlace": ["", [Validators.required, Validators.maxLength(200)]],
             "ComplaintDate": ["", [Validators.required, Validators.minLength(1)]],
             "IsSecretComplaint": [false, [Validators.required]],
             "ComplaintType": [null, [Validators.required]],
-            "ComplaintDescription": ["", [Validators.required, Validators.maxLength(4000), Validators.minLength(0)]],
-            "ComplaintExpectedResults": ["", [Validators.required, Validators.maxLength(4000), Validators.minLength(0)]],
+            "ComplaintDescription": ["", [Validators.required, Validators.maxLength(4000)]],
+            "ComplaintExpectedResults": ["", [Validators.required, Validators.maxLength(4000)]],
             "ComplainantGender": [null, [Validators.required]],
             "ComplaintRiskLevel": [null, [Validators.required]],
             "ComplaintSourse": [null, [Validators.required]],
@@ -72,6 +73,7 @@ export class ComplaintModelComponent implements OnInit {
 
 
     clear(){
+
         this.form.reset();
         this.form.controls['IsSecretComplaint'].reset(false);
         this.submitted = false;

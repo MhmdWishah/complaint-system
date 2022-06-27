@@ -44,3 +44,14 @@ export interface FollowUpInfo{
     ID: number;
     ToEmpIDName: string;
 }
+
+export interface ComplaintEmp{
+    ComplaintID: number; 
+    EmpID: number;
+    EmpName: string;
+}
+
+export interface ComplaintOtherEmps{
+    ComplaintID: number; 
+    ComplaintOtherEmployees: string;
+}

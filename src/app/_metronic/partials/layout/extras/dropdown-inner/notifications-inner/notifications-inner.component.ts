@@ -49,7 +49,6 @@ export class NotificationsInnerComponent implements OnInit {
   onNotificationClick(notification: Notification){
     this.notifyService.SaveAsRead(notification.id).subscribe(
       (response: Response|undefined) => {
-        console.log("response:",response)
         // if(response!.status! > 0){
           this.fetchNotifications();
           this.router.navigate([notification.href])

@@ -22,5 +22,9 @@ export class DashboardService {
     get Configs$(){
         return this.Configs.asObservable();
     }
+
+    destroy(){
+        this.Configs.next(undefined)
+    }
     
 }

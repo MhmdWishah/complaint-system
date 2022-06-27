@@ -78,7 +78,7 @@ this.dataUser = dataUser;
 
   }
   showmodal5(id: any) {
-    console.log("id", id)
+    // console.log("id", id)
     this.userId = id;
     this.displaymodal5 = true;
 
@@ -132,7 +132,7 @@ this.dataUser = dataUser;
       acceptLabel: ' ',
       rejectLabel: " ",
       accept: () => {
-        console.log("element", element.IsEmailNotification)
+        // console.log("element", element.IsEmailNotification)
         this.usersService.isEmailNotification
           ({
             isEmailNotification: !element.IsEmailNotification,

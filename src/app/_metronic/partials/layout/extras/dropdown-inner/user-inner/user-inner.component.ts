@@ -28,7 +28,6 @@ export class UserInnerComponent implements OnInit, OnDestroy {
     private router:Router
   ) {
     this.userInfo = GetUserInfo();
-    console.log(this.userInfo);
     this.langs = [
       {
         lang: 'en',

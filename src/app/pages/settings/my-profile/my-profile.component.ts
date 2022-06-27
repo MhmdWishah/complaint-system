@@ -61,7 +61,7 @@ getDataProfile(){
 }
 
   onEditProfile() {
-    console.log("this.actionChange",this.actionChange)
+    // console.log("this.actionChange",this.actionChange)
     if(this.actionChange==true){
     this.service.saveEdit(this.formProfile.value).subscribe((res: any) => {
       if (res.rv > 0) {
@@ -120,15 +120,15 @@ getDataProfile(){
       this.imageChangedEvent.target.files[0].name,
     )
 
-    console.log(this.imageChangedEvent.target.files[0]);
-    console.log(this.fileToReturn);
+    // console.log(this.imageChangedEvent.target.files[0]);
+    // console.log(this.fileToReturn);
     return this.fileToReturn;
   }
 
 
   base64ToFile(data:any, filename:any) {
     console.log("data", data);
-    console.log("filename", filename);
+    // console.log("filename", filename);
     const arr = data.split(',');
     const mime = arr[0].match(/:(.*?);/)[1];
     const bstr = atob(arr[1]);
@@ -199,23 +199,23 @@ getDataProfile(){
   ]
 
   pondHandleInit() {
-    console.log('FilePond has initialised', this.myPond);
+    // console.log('FilePond has initialised', this.myPond);
   }
 
   pondHandleAddFile(event: any) {
-    console.log('A file was added', event);
+    // console.log('A file was added', event);
   }
 
   pondHandleRemoveFile(event: any) {
-    console.log('A file was removed', event);
+    // console.log('A file was removed', event);
   }
 
   pondHandleActivateFile(event: any) {
-    console.log('A file was activated', event)
+    // console.log('A file was activated', event)
   }
 
   uploadFiles(){
-    console.log(this.myPond.getFiles());
+    // console.log(this.myPond.getFiles());
   }
 
 

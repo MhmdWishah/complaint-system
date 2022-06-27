@@ -153,7 +153,7 @@
                 <div class="overlay overflow-hidden position-relative border border-4 border-gray-200 rounded">
                   <ng-container *ngIf="demo.value.published === true; else unpublished">
                     <div class="overlay-wrapper">
-                      <img src="{{ demo.value.thumbnail }}" alt="demo" class="w-100"/>
+                      <!-- <img src="{{ demo.value.thumbnail }}" alt="demo" class="w-100"/> -->
                     </div>
 
                     <div class="overlay-layer bg-dark bg-opacity-10">
@@ -163,7 +163,7 @@
 
                   <ng-template #unpublished>
                     <div class="overlay-wrapper">
-                      <img src="{{ demo.value.thumbnail }}" alt="demo" class="w-100 opacity-25"/>
+                      <!-- <img src="{{ demo.value.thumbnail }}" alt="demo" class="w-100 opacity-25"/> -->
                     </div>
 
                     <div class="overlay-layer bg-dark bg-opacity-10">

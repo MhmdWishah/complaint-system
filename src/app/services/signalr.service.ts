@@ -26,10 +26,9 @@ export class SignalRService {
 
   private register(): void {
     this.hubConnection.on('Notification', (param: string) => {
-      console.log("register, register:", param);
       this.notificationsService.SearchNotifications();
       this.notificationsService.Notifications$.subscribe(value => {
-        console.log("notificationsService.notifications$:", value)
+        // console.log("notificationsService.notifications$:", value)
         if(this.lenght != value.length && value.filter(notif => !notif.is_read).length > 0)
           this.audio.play();
         this.lenght = value.length
