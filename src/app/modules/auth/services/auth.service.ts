@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Injectable, OnDestroy } from '@angular/core';
 import { Observable, BehaviorSubject, of, Subscription } from 'rxjs';
 import { map, catchError, switchMap, finalize, tap } from 'rxjs/operators';
@@ -9,7 +9,7 @@ import { environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 
-export type UserType = UserModel | undefined;
+export type UserType = UserModel | undefined | HttpErrorResponse;
 
 @Injectable({
   providedIn: 'root',
@@ -21,7 +21,6 @@ export class AuthService implements OnDestroy {
   private baseUrl: string = environment.baseUrl + "/token";
 
   // public fields
-  currentUser$: Observable<UserType>;
   isLoading$: Observable<boolean>;
   currentUserSubject: BehaviorSubject<any>;
   isLoadingSubject: BehaviorSubject<boolean>;
@@ -34,6 +33,10 @@ export class AuthService implements OnDestroy {
     this.currentUserSubject.next(user);
   }
 
+  get currentUser$(): Observable<UserType>{
+    return this.currentUserSubject.asObservable();
+  }
+
   constructor(
     private authHttpService: AuthHTTPService,
     private router: Router,
@@ -42,8 +45,8 @@ export class AuthService implements OnDestroy {
   ) {
     this.isLoadingSubject = new BehaviorSubject<boolean>(false);
     this.currentUserSubject = new BehaviorSubject<UserType>(undefined);
-    this.currentUser$ = this.currentUserSubject.asObservable();
     this.isLoading$ = this.isLoadingSubject.asObservable();
+
   }
 
 
@@ -57,6 +60,7 @@ export class AuthService implements OnDestroy {
           this.currentUserSubject.next(res);
         }),
         catchError((error: any) => {
+          this.currentUserSubject.next(error);
           return of();
         }),
         finalize(() => this.isLoadingSubject.next(false))
@@ -93,11 +97,13 @@ export class AuthService implements OnDestroy {
 
   logout() {
     localStorage.removeItem(this.authLocalStorageToken);
+    console.log("is active", this.isActive)
+    // this.router.navigate(['/auth/login']);
+    document.location.reload();
 
-    this.router.navigate(['/auth/login']);
   }
   get isActive() {
-    return !!localStorage.getItem("token");
+    return !!localStorage.getItem(this.authLocalStorageToken);
   }
 
 

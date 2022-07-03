@@ -22,7 +22,7 @@ import { AsideMenuComponent } from './components/aside/aside-menu/aside-menu.com
 import { TopbarComponent } from './components/topbar/topbar.component';
 import { PageTitleComponent } from './components/header/page-title/page-title.component';
 import { HeaderMenuComponent } from './components/header/header-menu/header-menu.component';
-import { DrawersModule, DropdownMenusModule, ModalsModule } from '../partials';
+import { DropdownMenusModule } from '../partials';
 import { PagesModule } from '../../pages/pages.module';
 
 const routes: Routes = [
@@ -62,8 +62,6 @@ const routes: Routes = [
     NgbDropdownModule,
     NgbProgressbarModule,
     ExtrasModule,
-    ModalsModule,
-    DrawersModule,
     DropdownMenusModule,
     NgbTooltipModule,
     TranslateModule,

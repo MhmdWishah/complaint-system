@@ -5,6 +5,8 @@ export interface ComplaintInfo{
     Status: number;
     ComplainantName: string;
     ComplainantAddress: string;
+    ComplainantAddressName: string;
+    ComplainantAddressDetails: string;
     ComplainantMobileNumber: string;
     ComplainantEmail: string;
     ComplaintPlace: string;

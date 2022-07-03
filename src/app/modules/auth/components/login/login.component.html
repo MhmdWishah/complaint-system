@@ -50,8 +50,8 @@
       formControlName="username"
       autocomplete="off"
       [ngClass]="{
-        'is-invalid': (loginForm.controls['username'].invalid && (loginForm.controls['username'].touched || loginForm.controls['username'].dirty)),
-        'is-valid': loginForm.controls['username'].valid && (loginForm.controls['username'].touched || loginForm.controls['username'].dirty)
+        'is-invalid': ((f?.username?.invalid || f?.username?.errors?.loginFailed) && (f?.username?.touched || f?.username?.dirty || loginSubmit)),
+        'is-valid': (f?.username?.valid  && !f?.username?.errors?.loginFailed) && (f?.username?.touched || f?.username?.dirty || loginSubmit)
       }"
     />
     <ng-container
@@ -59,23 +59,23 @@
       [ngTemplateOutletContext]="{
         validation: 'required',
         message: 'username is required',
-        control: loginForm.controls['username']
+        control: f?.username
       }"
     ></ng-container>
     <ng-container
       [ngTemplateOutlet]="formError"
       [ngTemplateOutletContext]="{
         validation: 'username',
-        message: 'username is invalid',
-        control: loginForm.controls['username']
+        message: 'يجب إدخال اسم المستخدم',
+        control: f?.username
       }"
     ></ng-container>
     <ng-container
       [ngTemplateOutlet]="formError"
       [ngTemplateOutletContext]="{
         validation: 'minLength',
-        message: 'username should have at least 3 symbols',
-        control: loginForm.controls['username']
+        message: 'اسم المستخدم على الأقل يجب أن يتكون من حرف واحد',
+        control: f?.username
       }"
     ></ng-container>
     <ng-container
@@ -83,7 +83,7 @@
       [ngTemplateOutletContext]="{
         validation: 'maxLength',
         message: 'username should have maximum 360 symbols',
-        control: loginForm.controls['username']
+        control: f?.username
       }"
     ></ng-container>
   </div>
@@ -112,32 +112,32 @@
       autocomplete="off"
       formControlName="password"
       [ngClass]="{
-        'is-invalid': (loginForm.controls['password'].invalid && (loginForm.controls['password'].touched || loginForm.controls['password'].dirty)),
-        'is-valid': loginForm.controls['password'].valid && (loginForm.controls['password'].touched || loginForm.controls['password'].dirty)
+        'is-invalid': ((f.password?.invalid || f.password?.errors?.loginFailed)&& (f.password?.touched || f.password?.dirty || loginSubmit)),
+        'is-valid': (f.password?.valid && !f.password?.errors?.loginFailed) && (f.password?.touched || f.password?.dirty || loginSubmit)
       }"
     />
     <ng-container
       [ngTemplateOutlet]="formError"
       [ngTemplateOutletContext]="{
         validation: 'required',
-        message: 'Password is required',
-        control: loginForm.controls['password']
+        message: 'يجب إدخال كلمة المرور',
+        control: f.password
       }"
     ></ng-container>
     <ng-container
       [ngTemplateOutlet]="formError"
       [ngTemplateOutletContext]="{
         validation: 'minlength',
-        message: 'Password should have at least 3 symbols',
-        control: loginForm.controls['password']
+        message: 'كلمة المرور على الأقل يجب أن تتكون من حرف واحد',
+        control: f.password
       }"
     ></ng-container>
     <ng-container
       [ngTemplateOutlet]="formError"
       [ngTemplateOutletContext]="{
         validation: 'maxLength',
-        message: 'Password should have maximum 100 symbols',
-        control: loginForm.controls['password']
+        message: 'كلمة المرور يجيب ألا تزيد عن 100 حرف',
+        control: f.password
       }"
     ></ng-container>
   </div>
@@ -146,7 +146,7 @@
   <!--begin::Action-->
   <div class="text-center">
     <button
-      type="button"
+      type="submit"
       id="kt_sign_in_submit"
       class="btn btn-lg btn-primary w-100 mb-5"
       [disabled]="loginForm.invalid"

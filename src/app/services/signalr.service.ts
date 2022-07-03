@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, ChangeDetectorRef } from '@angular/core';
 import { HubConnection, HubConnectionBuilder, LogLevel } from '@aspnet/signalr';
 import { NotificationsService } from './notifications.service';
 import { environment } from 'src/environments/environment.prod';
@@ -9,6 +9,8 @@ export class SignalRService {
   private hubConnection: HubConnection;
   private audio: any;
   private lenght: number;
+  private lastNotificationRecord: any;
+
 
   constructor(private notificationsService: NotificationsService) {
     this.createConnection();
@@ -26,12 +28,14 @@ export class SignalRService {
 
   private register(): void {
     this.hubConnection.on('Notification', (param: string) => {
-      this.notificationsService.SearchNotifications();
+      this.notificationsService.SearchNotifications(true);
       this.notificationsService.Notifications$.subscribe(value => {
-        // console.log("notificationsService.notifications$:", value)
-        if(this.lenght != value.length && value.filter(notif => !notif.is_read).length > 0)
-          this.audio.play();
-        this.lenght = value.length
+        if(value.length > 0){
+          if(value[0].id != this.lastNotificationRecord?.id! && !value[0].is_read && value[0].fromSignalR){
+            this.audio.play();
+          }
+          this.lastNotificationRecord = value[0];
+        }
       });
     });
   }

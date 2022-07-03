@@ -1,4 +1,4 @@
-import { Component, HostBinding, OnInit } from '@angular/core';
+import { Component, HostBinding, OnInit, ChangeDetectorRef } from '@angular/core';
 import { LayoutService } from '../../../../../layout';
 import { NotificationsService } from '../../../../../../services/notifications.service';
 import { Observable } from 'rxjs';
@@ -30,12 +30,14 @@ export class NotificationsInnerComponent implements OnInit {
   constructor(
     private notifyService: NotificationsService,
     private signalRService:SignalRService,
-    private router: Router ) {}
+    private router: Router,
+    private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     this.fetchNotifications();
     this.notifications$ = this.notifyService.Notifications$;
-    this.unreadNotificationsNumber$ = this.notifyService.UnreadNotificationsNumber$; 
+    this.unreadNotificationsNumber$ = this.notifyService.UnreadNotificationsNumber$;
+    this.cdr.detectChanges(); 
   }
 
   setActiveTabId(tabId: NotificationsTabsType) {
@@ -44,6 +46,7 @@ export class NotificationsInnerComponent implements OnInit {
 
   fetchNotifications(){
     this.notifyService.SearchNotifications();
+    this.cdr.detectChanges();
   }
 
   onNotificationClick(notification: Notification){
@@ -51,7 +54,8 @@ export class NotificationsInnerComponent implements OnInit {
       (response: Response|undefined) => {
         // if(response!.status! > 0){
           this.fetchNotifications();
-          this.router.navigate([notification.href])
+          this.cdr.detectChanges();
+          this.router.navigate([notification.href]);
         // }
         // this.router.navigate([notification.href])
       }

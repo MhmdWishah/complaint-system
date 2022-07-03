@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 import { TooltipModule } from 'primeng/tooltip';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { PrimeModule } from '../../settings/prime.module';
 import { CardsModule } from '../../../_metronic/partials/content/cards/cards.module';
 import { ToastModule } from 'primeng/toast';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -14,6 +13,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { ComponentsModule } from '../../../components/components.module';
 import { UsersInfoComponent } from './users-info.component';
 import { usersServices } from '../services/index';
+import { PrimeModule } from '../../prime.module';
 
 @NgModule({
   imports: [

@@ -5,9 +5,9 @@
             <input type="text" class="form-control" readonly [value]="ComplaintInfo!.ComplainantName!" >
         </div>
 
-        <div class="col-md-4">
+        <div class="col-md-8">
             <label class="form-label" >العنوان</label>
-            <input type="text" class="form-control" readonly [value]="ComplaintInfo!.ComplainantAddress!">
+            <input type="text" class="form-control" readonly [value]="ComplaintInfo?.ComplainantAddressName! + ' | ' + ComplaintInfo?.ComplainantAddressDetails!">
         </div>
 
         <div class="col-md-4">
@@ -45,7 +45,14 @@
 
         <div class="col-md-4">
             <label class="form-label">هل هي شكوى سرية أو حساسة؟</label>
-            <input class="form-control" readonly [value]="ComplaintInfo!.IsSecretComplaint!">
+            <div class="input-group">
+                <input class="form-control"  readonly [value]="(ComplaintInfo?.IsSecretComplaint!)? 'سرية':'ليست سرية'">
+                <div class="input-group-text">
+                    <i *ngIf="ComplaintInfo!.IsSecretComplaint" class="text-danger fas fa-lock"></i>
+    
+                    <i *ngIf="!ComplaintInfo!.IsSecretComplaint" class="text-success fas fa-lock-open"></i>
+                </div>
+            </div>
         </div>
 
         

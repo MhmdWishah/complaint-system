@@ -125,7 +125,16 @@
                             <td>{{ complaint!.ComplaintDate! }}</td>
                             <td>{{ complaint!.ComplaintRiskLevelName! }}</td>
                             <td>{{ complaint!.ComplaintTypeName! }}</td>
-                            <td>{{ complaint!.IsSecretComplaint! }}</td>
+                            <td>
+                              <a *ngIf="complaint!.IsSecretComplaint" role="contentinfo" class="btn cursor-default btn-icon btn-danger btn-circle btn-sm" matTooltip="سرية">
+                                <i class="fas fa-lock"></i>
+                              </a>
+
+                              <a *ngIf="!complaint!.IsSecretComplaint" role="contentinfo" class="btn cursor-default btn-icon btn-success btn-circle btn-sm" matTooltip="غير سرية">
+                                <i class="fas fa-lock-open"></i>
+                              </a>
+                              
+                            </td>
                             <!-- <td>
                             <a *ngIf="user.Active" tabindex="-1" aria-disabled="true" class="pe-none btn btn-icon btn-circle btn-success btn-sm">
                                 <i class="fas fa-user-check"></i>

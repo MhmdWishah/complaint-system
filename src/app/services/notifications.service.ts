@@ -11,19 +11,28 @@ export class NotificationsService {
   private readonly baseUrl: string = "/Notifications";
   private Notifications: BehaviorSubject<Notification[]> = new BehaviorSubject<Notification[]>([]);
   private UnreadNotificationsNumber = new BehaviorSubject<number>(0);
+  private NotificationsForSignalR: BehaviorSubject<Notification[]> = new BehaviorSubject<Notification[]>([]);
 
   constructor(private http: HttpService, 
     // private signalR: SignalRService
     ) {
   }
 
-  SearchNotifications() {
+  SearchNotifications(fromSignalR?:boolean) {
     const EmpID = localStorage.getItem("empID");
     this.http.getData(this.baseUrl + "?Program=Complaint", { EmpID }).pipe(
       tap((res: Notification[]) => {
         // console.log("nots", res)
         // if(length != res.length) this.audio.play();
-        this.Notifications.next(res);
+        
+        if(fromSignalR){
+          var not = {...res[0], fromSignalR:true};
+          const nots = res.map((notifi:any,index:number) => index == 0?not:notifi)
+          this.Notifications.next(nots);
+        }else{
+          this.Notifications.next(res);
+        }
+        
         this.UnreadNotificationsNumber.next(res.filter(not => !not.is_read).length);
       })
     ).subscribe();

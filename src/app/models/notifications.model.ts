@@ -18,4 +18,5 @@ export interface Notification{
     pk_type: number;
     source_id: number;
     text: string;
+    fromSignalR?: boolean
 }

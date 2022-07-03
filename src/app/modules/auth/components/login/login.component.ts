@@ -6,6 +6,7 @@ import { UserModel } from '../../models/user.model';
 import { AuthService } from '../../services/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -25,6 +26,8 @@ export class LoginComponent implements OnInit, OnDestroy {
   returnUrl: string;
   isLoading$: Observable<boolean>;
 
+  loginSubmit: boolean = false;
+
   // private fields
   private unsubscribe: Subscription[] = []; // Read more: => https://brianflove.com/2016/12/11/anguar-2-unsubscribe-observables/
 
@@ -36,10 +39,6 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   ) {
     this.isLoading$ = this.authService.isLoading$;
-    // redirect to home if already logged in
-    if (this.authService.currentUserValue) {
-      this.router.navigate(['/']);
-    }
   }
 
   ngOnInit(): void {
@@ -47,6 +46,20 @@ export class LoginComponent implements OnInit, OnDestroy {
     // get return url from route parameters or default to '/'
     this.returnUrl =
       this.route.snapshot.queryParams['returnUrl'.toString()] || '/';
+    
+
+    this.authService.currentUser$.subscribe(
+      value => {
+        this.hasError = false;
+        this.f?.username?.setErrors({loginFailed: null});
+        this.f?.password?.setErrors({loginFailed: null});
+        if(value instanceof HttpErrorResponse){
+          this.hasError = true;
+          this.f?.username?.setErrors({loginFailed: value.error.message})
+          this.f?.password?.setErrors({loginFailed: value.error.message})
+        }
+      }
+    )
   }
 
   // convenience getter for easy access to form fields
@@ -77,7 +90,8 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   login() {
-    this.loginForm.markAsDirty();
+    // this.loginForm.markAsDirty();
+    this.loginSubmit = true;
     this.authService.login(this.f.username.value, this.f.password.value);
     //   .login(this.f.email.value, this.f.password.value)
     // this.hasError = false;
@@ -96,5 +110,8 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.unsubscribe.forEach((sb) => sb.unsubscribe());
+    this.loginForm.reset(this.defaultAuth);
+    this.hasError = false;
+    this.loginSubmit = false;
   }
 }

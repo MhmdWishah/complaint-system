@@ -32,6 +32,7 @@
                 <form [formGroup]="form" class="row py-2 gy-5">
                     <div class="col-md-4" >
                         <label class="required form-label">اسم المدعي بالكامل</label>
+                        <app-chars-counter [value]="formControls?.ComplainantName?.value" [maxLength]="100"></app-chars-counter>
                         <input maxlength="100" minlength="0" type="text" class="form-control" formControlName="ComplainantName">
                         <app-required-validation-msg [control]="formControls!.ComplainantName!" [submitted]="submitted"></app-required-validation-msg>
                     </div>
@@ -46,6 +47,7 @@
                     </div>
                     <div class="col-md-4">
                         <label class="form-label" >تفاصيل العنوان</label>
+                        <app-chars-counter [value]="formControls?.ComplainantAddressDetails?.value" [maxLength]="200"></app-chars-counter>
                         <!-- <input type="text" class="form-control" formControlName="ComplainantAddress"> -->
                         <input class="form-control" maxLength="200"
                         formControlName="ComplainantAddressDetails">
@@ -53,12 +55,14 @@
 
                     <div class="col-md-4">
                         <label class="form-label" >رقم الهاتف المحمول</label>
+                        <app-chars-counter [value]="formControls?.ComplainantMobileNumber?.value" [maxLength]="15"></app-chars-counter>
                         <input maxlength="15" minlength="0" type="text" class="form-control" formControlName="ComplainantMobileNumber">
                         <app-required-validation-msg [control]="formControls!.ComplainantMobileNumber!" [submitted]="submitted"></app-required-validation-msg>
                     </div>
 
                     <div class="col-md-4">
                         <label class="form-label" >الإيميل</label>
+                        <app-chars-counter [value]="formControls?.ComplainantEmail?.value" [maxLength]="150"></app-chars-counter>
                         <input maxlength="150" minlength="0" type="email" class="form-control" formControlName="ComplainantEmail">
                         <app-required-validation-msg [control]="formControls!.ComplainantEmail!" [submitted]="submitted"></app-required-validation-msg>
                         <div class="errors">
@@ -76,6 +80,7 @@
                     </div>
                     <div class="col-md-4">
                         <label class="required form-label" >مكان تقديم الشكوى</label>
+                        <app-chars-counter [value]="formControls?.ComplaintPlace?.value" [maxLength]="200"></app-chars-counter>
                         <input maxlength="200" minlength="0" type="text" class="form-control" formControlName="ComplaintPlace">
                         <app-required-validation-msg [control]="formControls!.ComplaintPlace!" [submitted]="submitted"></app-required-validation-msg>
                     </div>
@@ -136,7 +141,7 @@
 
                     <div class="col-md-4">
                         <label class="form-label">المركز المقدَّم فيه الشكوى:</label>
-                        <select class="form-select" formControlName="ComplaintSourse">
+                        <select class="form-select" formControlName="DepartmentID">
                             <option *ngFor="let type of codes.Department" [value]="type.Code">{{type.Name}}</option>
                         </select>
                         <!-- <app-required-validation-msg [control]="formControls!.ComplaintSourse!" [submitted]="submitted"></app-required-validation-msg> -->
@@ -144,12 +149,14 @@
 
                     <div class="col-md-12">
                         <label class="required form-label">وصف الشكوى</label>
+                        <app-chars-counter [value]="formControls?.ComplaintDescription?.value" [maxLength]="4000"></app-chars-counter>
                         <textarea maxlength="4000" minlength="0" type="text" class="form-control" formControlName="ComplaintDescription" rows="5"></textarea>
                         <app-required-validation-msg [control]="formControls!.ComplaintDescription!" [submitted]="submitted"></app-required-validation-msg>
                     </div>
 
-                    <div class="col-md-12">
+                    <div class="col-md-12" >
                         <label class="required form-label">النتائج المتوقعة</label>
+                        <app-chars-counter [value]="formControls?.ComplaintExpectedResults?.value" [maxLength]="4000"></app-chars-counter>
                         <textarea maxlength="4000" minlength="0" rows="3" type="text" class="form-control" formControlName="ComplaintExpectedResults"></textarea>
                         <app-required-validation-msg [control]="formControls!.ComplaintExpectedResults!" [submitted]="submitted"></app-required-validation-msg>
                     </div>

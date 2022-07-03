@@ -5,7 +5,6 @@ import { TooltipModule } from 'primeng/tooltip';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { CardsModule } from '../../_metronic/partials/content/cards/cards.module';
-import { PrimeModule } from '../settings/prime.module';
 import { ToastModule } from 'primeng/toast';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { components } from '../../components/index';
@@ -31,7 +30,6 @@ import { components } from '../../components/index';
     ReactiveFormsModule,
     FormsModule,
     CardsModule,
-    PrimeModule,
     ToastModule,
     MatProgressSpinnerModule
   ],

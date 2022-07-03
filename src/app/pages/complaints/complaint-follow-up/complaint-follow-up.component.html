@@ -5,6 +5,27 @@
         <h3 class="fw-bolder m-0">متابعة الشكوى</h3>
       </div>
       <div class="card-header-actions d-flex justify-content-between gap-3 py-3">
+        <ng-container *ngIf="selectedComplaintInfo$ | async as complaint">
+            <a *ngIf="complaint!.IsSecretComplaint" role="contentinfo" class="btn cursor-default btn-icon btn-danger btn-circle btn-sm" matTooltip="الشكوى سرية">
+                <i class="fas fa-lock"></i>
+            </a>
+
+            <a *ngIf="!complaint!.IsSecretComplaint" role="contentinfo" class="btn cursor-default btn-icon btn-success btn-circle btn-sm" matTooltip="الشكوى غير سرية">
+                <i class="fas fa-lock-open"></i>
+            </a>  
+
+            <a *ngIf="complaint?.Status! == 2" role="contentinfo" class="btn cursor-default btn-icon btn-circle btn-light btn-circle btn-sm" matTooltip="الشكوى بدون أي إجراء حتى الآن">
+                <i class="far fa-hourglass fs-3"></i>
+            </a>
+            <a *ngIf="complaint?.Status! == 3" role="contentinfo" class="btn cursor-default btn-icon btn-circle btn-light btn-primary btn-sm" matTooltip="الشكوى قيد استكمال البيانات">
+                <i class="fa fa-hourglass-half fs-3"></i>
+
+            </a>
+
+            <a *ngIf="complaint?.Status! == 4" role="contentinfo" class="btn cursor-default btn-icon btn-circle btn-light btn-success btn-sm" matTooltip="تم إجراء تقرير الحالة على الشكوى">
+                <i class="fas fa-hourglass fs-3"></i>
+            </a>
+        </ng-container>
         
       </div>
     </div>
@@ -64,7 +85,7 @@
                                 </div>
 
                                 <div class="col-md-12 px-2" *ngIf="formControls!.FollowUpType!.value != 102">
-                                    <label class="form-label">تحويل إلى:</label>
+                                    <label class="form-label">استكمال بيانات من الموظفين:</label>
                                     <mat-form-field class="col-md-12">
                                         <mat-chip-list #chipList>
                                             <mat-chip
@@ -79,14 +100,19 @@
                                                 <mat-icon (click)="removeEmp(selectedEmp)">close</mat-icon>
                                             </button>
                                             </mat-chip>
-                                            <input
-                                            type="text"
-                                            class="form-control chipListInput"
-                                            [formControl]="empSearchControl"
-                                            [matAutocomplete]="empAuto"
-                                            [matChipInputFor]="chipList"
-                                            id="chipListToEmpsInput"
-                                            />
+                                            <div class="input-group">
+                                                <input
+                                                    type="text"
+                                                    class="form-control chipListInput"
+                                                    [formControl]="empSearchControl"
+                                                    [matAutocomplete]="empAuto"
+                                                    [matChipInputFor]="chipList"
+                                                    id="chipListToEmpsInput"
+                                                />
+                                                <div class="input-group-text border-0 mx-1">
+                                                    <i class="fas fa-search"></i>
+                                                </div>
+                                            </div>
                                         </mat-chip-list>
                                         <mat-autocomplete #empAuto="matAutocomplete">
                                             <mat-option *ngFor="let searchedEmp of searchedEmp$ | async"
@@ -98,6 +124,7 @@
 
                                 <div class="col-md-12">
                                     <label class="required form-label">وصف المتابعة</label>
+                                    <app-chars-counter [value]="formControls?.Description?.value" [maxLength]="4000"></app-chars-counter>
                                     <textarea maxlength="4000" type="text" class="form-control" formControlName="Description" rows="3"></textarea>
                                     <app-required-validation-msg [control]="formControls!.Description!" [submitted]="submitted"></app-required-validation-msg>
                                 </div>
@@ -116,7 +143,7 @@
                             <div class="col-md-12 d-flex align-items-center flex-column p-4">
                                 
                                 <ng-container *ngIf="allFollowUps$ | async as followUps; else loadingSpinner" >
-                                    <div class="col-md-10 my-3" *ngFor="let followUp of followUps">
+                                    <div class="col-md-12 my-3" *ngFor="let followUp of followUps">
                                         <app-follow-up-template [followUpInfo]="followUp"></app-follow-up-template>
                                     </div>
                                 </ng-container>

@@ -19,12 +19,17 @@ export class AuthGuard implements CanActivate {
     private toastr: ToastrService) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    // console.log(route.queryParams);
-    // console.log("here")
-    if (!this.auth.isActive ) {
-      this.router.navigate(['/auth/login']);
-      return false;
+    if (!this.auth.isActive) {
+      if(state.url.includes('/auth/login')){
+        return true;
+      }else{
+        this.router.navigate(['/auth/login']);
+        return false;
+      }
     }else{
+      if(state.url.includes('/auth/login')){
+        this.router.navigate(['/']);
+      }
       return true;
     }
   //   const url = state.url

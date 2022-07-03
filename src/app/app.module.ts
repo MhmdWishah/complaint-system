@@ -18,9 +18,6 @@ import {MatIconModule} from '@angular/material/icon';
 
 
 // #fake-start#
-import { FakeAPIService } from './_fake/fake-api.service';
-import { ConfigurationsComponent } from './pages/settings/configurations/configurations.component';
-import { MyProfileComponent } from './pages/settings/my-profile/my-profile.component';
 import { ToastrModule } from 'ngx-toastr';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { CommonModule } from '@angular/common';
@@ -54,12 +51,7 @@ function appInitializer(authService: AuthService,notificationsService:Notificati
       // preventDuplicates: true,
     }),
     // #fake-start#
-    environment.isMockEnabled
-      ? HttpClientInMemoryWebApiModule.forRoot(FakeAPIService, {
-          passThruUnknownUrl: true,
-          dataEncapsulation: false,
-        })
-      : [],
+
     // #fake-end#
     AppRoutingModule,
     InlineSVGModule.forRoot(),

@@ -177,6 +177,7 @@ export class ComplaintFollowUpComponent implements OnInit, OnDestroy {
                     (response: Response|undefined) =>{
                         if(response!.status! > 0){
                             this.clearAfterSave();
+                            this.fetchFollowUps();
                             // this.fetchFollowUps();
                         }
                     }

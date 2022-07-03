@@ -37,7 +37,7 @@
             <ng-container *ngIf="ComplaintEmps$ | async as emps; else loadingSpinner">
                 <h4 class="my-4">أعضاء لجنة الشكاوى :-</h4>
                 <div class="col-md-12 row gap-4 flex-wrap my-5">
-                    <div style="width: calc(100%/4.2)" class="card bg-light" *ngFor="let emp of emps">
+                    <div style="width: calc(100%/4.2); height: 75px;" class="card bg-light" *ngFor="let emp of emps">
                         <div class="card-body card-body px-1 d-flex justify-content-between align-items-center">
                             <p class="font-size-14 font-weight-400">{{emp.EmpName}}</p>
                             <button class="btn btn-icon btn-danger btn-circle btn-sm" (click)="removeEmp(emp)">
@@ -52,8 +52,9 @@
         <hr class="my-8">
 
         <div class="row gy-5">
-            <div class="col-md-10">
-                <label class="form-label">موظفون آخرون</label>
+            <div class="col-md-11">
+                <label class="form-label">أعضاء آخرون من خارج المؤسسة</label>
+                <app-chars-counter [value]="(complaintOtherEmps?.value!)?(complaintOtherEmps?.value):''" [maxLength]="500"></app-chars-counter>
                 <textarea
                     rows="4"
                     maxlength="500"
@@ -67,7 +68,7 @@
                 </div> -->
             </div>
 
-            <div class="col-md-2 pt-15">
+            <div class="col-md-1 pt-20">
                 <a role="button" class="btn btn-primary btn-sm" matTooltip="إضافة إلى لجنة الشكاوى" (click)="saveComplaintOtherEmps()">
                     <span class="hidden-mobile">حفظ</span>
                     &nbsp;

@@ -44,23 +44,27 @@ export class ComplaintFollowUpService {
     }
 
     SaveComplaintFollowUp(data:ComplaintFollowUp): Observable<Response|any> {
-        return this.http.saveData(this.baseUrl+"/FollowUpSave", data);
+        return this.http.saveData(this.baseUrl+"/FollowUpSave", data)
     }
 
     SaveComplaintEmp(emp:ComplaintEmp): Observable<Response|any> {
         return this.http.saveData(this.baseUrl+"/ComplaintEmployee", emp)
-            .pipe(map((response: Response|any) => {
+            .pipe(tap((response: Response|any) => {
+
                 if(+response!.status > 0){
                     const oldEmps = this.ComplaintEmps!.getValue();
                     var newEmps: ComplaintEmp[] = [];
+
                     if(!!oldEmps && oldEmps!.length > 0){
                         newEmps = [...oldEmps, emp];
+
                     }else{
                         newEmps = [emp];
+
                     }
                     this.ComplaintEmps.next(newEmps);
 
-                    return response;
+
                 }
             }));
     }
