@@ -1,0 +1,17 @@
+::ng-deep .p-dialog {
+    direction: rtl;
+}
+
+::ng-deep .p-dialog-header {
+    text-align: right;
+}
+
+::ng-deep .p-dialog-footer {
+    display: flex;
+    justify-content: flex-start;
+    gap: 10px;
+}
+
+.table th, .table td {
+    text-align: right;
+}

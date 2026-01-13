@@ -1,0 +1,239 @@
+<div class="card card-custom">
+    <!-- begin::Header -->
+    <div class="card-header card-header-stretch">
+        <div class="card-title m-0">
+            <h3 class="fw-bolder m-0">شاشة الشكاوى العامة</h3>
+        </div>
+        <!-- Add button commented out for now
+        <div class="card-header-actions d-flex justify-content-between gap-3 py-3">
+            <button class="btn btn-primary" (click)="openAddDialog()">
+                <i class="fas fa-plus"></i>
+                إضافة شكوى
+            </button>
+        </div>
+        -->
+    </div>
+    <!-- end::Header -->
+
+    <!-- begin::Body -->
+    <div class="card-body">
+        <div *ngIf="codes$ | async as codes; else loadingSpinner">
+            <!-- Search Form -->
+            <section>
+                <form [formGroup]="searchForm" class="row align-items-end">
+                    <div class="col-md-3 mb-3">
+                        <label>من تاريخ</label>
+                        <input type="date" class="form-control" formControlName="FromDate">
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label>إلى تاريخ</label>
+                        <input type="date" class="form-control" formControlName="ToDate">
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <button type="button" class="btn btn-info btn-sm me-2" matTooltip="استعراض" (click)="fetchComplaints()">
+                            <i class="fas fa-search"></i>
+                            استعراض
+                        </button>
+                        <button type="button" class="btn btn-secondary btn-sm" matTooltip="تفريغ" (click)="clearSearch()">
+                            <i class="fas fa-eraser"></i>
+                            تفريغ
+                        </button>
+                    </div>
+                </form>
+            </section>
+
+            <hr class="my-5">
+
+            <!-- Data Table -->
+            <section>
+                <div *ngIf="isLoading$ | async" class="d-flex justify-content-center py-10">
+                    <mat-spinner diameter="40"></mat-spinner>
+                </div>
+                <table *ngIf="!(isLoading$ | async)" class="table table-light table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>اسم مقدم الشكوى</th>
+                            <th>الجنس</th>
+                            <th>العنوان</th>
+                            <th>رقم الجوال</th>
+                            <th>البريد الإلكتروني</th>
+                            <th>تاريخ تقديم الشكوى</th>
+                            <th>نص الشكوى</th>
+                            <th style="width: 12%">إجراءات</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let complaint of complaints$ | async">
+                            <td>{{ complaint.ComplainantName }}</td>
+                            <td>{{ complaint.ComplainantGenderTxt }}</td>
+                            <td>{{ complaint.ComplainantAddressTxt }}</td>
+                            <td>{{ complaint.ComplainantMobileNumber }}</td>
+                            <td>{{ complaint.ComplainantEmail }}</td>
+                            <td>{{ complaint.ComplaintDate }}</td>
+                            <td>{{ (complaint.ComplaintDescription?.length || 0) > 30 ? (complaint.ComplaintDescription | slice:0:30) + '...' : complaint.ComplaintDescription }}</td>
+                            <td>
+                                <!-- Edit button commented out for now
+                                <button class="btn btn-icon btn-primary btn-circle btn-sm me-1"
+                                        matTooltip="تعديل"
+                                        (click)="openEditDialog(complaint)">
+                                    <i class="fas fa-pen"></i>
+                                </button>
+                                -->
+                                <button class="btn btn-icon btn-success btn-circle btn-sm"
+                                        matTooltip="تحويل لشكوى رسمية"
+                                        (click)="openPreviewDialog(complaint)">
+                                    <i class="fas fa-exchange-alt"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+        </div>
+    </div>
+</div>
+
+<!-- Add/Edit Dialog -->
+<p-dialog [(visible)]="displayAddEditDialog"
+          [header]="isEditMode ? 'تعديل شكوى عامة' : 'إضافة شكوى عامة'"
+          [modal]="true"
+          [style]="{width: '60vw'}"
+          [draggable]="false"
+          [resizable]="false"
+          [closable]="true"
+          (onHide)="closeAddEditDialog()">
+    <div *ngIf="codes$ | async as codes">
+        <form [formGroup]="complaintForm" class="row">
+            <div class="col-md-6 mb-4">
+                <label class="required">اسم المشتكي</label>
+                <input type="text" class="form-control" formControlName="ComplainantName">
+                <app-required-validation-msg [control]="formControls.ComplainantName" [submitted]="submitted"></app-required-validation-msg>
+            </div>
+
+            <div class="col-md-6 mb-4">
+                <label class="required">المركز</label>
+                <select class="form-control" formControlName="Center">
+                    <option [value]="null" disabled>اختر المركز</option>
+                    <option *ngFor="let center of codes?.centers" [value]="center.Code">{{ center.Name }}</option>
+                </select>
+                <app-required-validation-msg [control]="formControls.Center" [submitted]="submitted"></app-required-validation-msg>
+            </div>
+
+            <div class="col-md-6 mb-4">
+                <label class="required">العنوان</label>
+                <select class="form-control" formControlName="ComplainantAddress">
+                    <option [value]="null" disabled>اختر العنوان</option>
+                    <option *ngFor="let address of codes?.addresses" [value]="address.Code">{{ address.Name }}</option>
+                </select>
+                <app-required-validation-msg [control]="formControls.ComplainantAddress" [submitted]="submitted"></app-required-validation-msg>
+            </div>
+
+            <div class="col-md-6 mb-4">
+                <label>تفاصيل العنوان</label>
+                <input type="text" class="form-control" formControlName="ComplainantAddressDetails">
+            </div>
+
+            <div class="col-md-6 mb-4">
+                <label class="required">رقم الهاتف المحمول</label>
+                <input type="text" class="form-control" formControlName="ComplainantMobileNumber">
+                <app-required-validation-msg [control]="formControls.ComplainantMobileNumber" [submitted]="submitted"></app-required-validation-msg>
+            </div>
+
+            <div class="col-md-6 mb-4">
+                <label>البريد الإلكتروني</label>
+                <input type="email" class="form-control" formControlName="ComplainantEmail">
+            </div>
+
+            <div class="col-md-6 mb-4">
+                <label class="required">الجنس</label>
+                <select class="form-control" formControlName="ComplainantGender">
+                    <option [value]="null" disabled>اختر الجنس</option>
+                    <option *ngFor="let gender of codes?.genders" [value]="gender.Code">{{ gender.Name }}</option>
+                </select>
+                <app-required-validation-msg [control]="formControls.ComplainantGender" [submitted]="submitted"></app-required-validation-msg>
+            </div>
+
+            <div class="col-md-12 mb-4">
+                <label class="required">وصف الشكوى</label>
+                <textarea class="form-control" formControlName="ComplaintDescription" rows="4" maxlength="4000"></textarea>
+                <app-required-validation-msg [control]="formControls.ComplaintDescription" [submitted]="submitted"></app-required-validation-msg>
+            </div>
+        </form>
+    </div>
+
+    <ng-template pTemplate="footer">
+        <button class="btn btn-secondary" (click)="closeAddEditDialog()" [disabled]="isSaving">
+            <i class="fas fa-times"></i>
+            إلغاء
+        </button>
+        <button class="btn btn-primary" (click)="saveComplaint()" [disabled]="isSaving">
+            <span *ngIf="isSaving" class="spinner-border spinner-border-sm me-1" role="status"></span>
+            <i *ngIf="!isSaving" class="fas fa-save"></i>
+            {{ isSaving ? 'جاري الحفظ...' : 'حفظ' }}
+        </button>
+    </ng-template>
+</p-dialog>
+
+<!-- Preview Dialog (Convert to Official) -->
+<p-dialog [(visible)]="displayPreviewDialog"
+          header="معاينة الشكوى العامة"
+          [modal]="true"
+          [style]="{width: '50vw'}"
+          [draggable]="false"
+          [resizable]="false"
+          [closable]="true"
+          (onHide)="closePreviewDialog()">
+    <div *ngIf="selectedComplaint" class="row">
+        <div class="col-md-6 mb-3">
+            <strong>اسم مقدم الشكوى:</strong>
+            <p>{{ selectedComplaint.ComplainantName }}</p>
+        </div>
+        <div class="col-md-6 mb-3">
+            <strong>الجنس:</strong>
+            <p>{{ selectedComplaint.ComplainantGenderTxt }}</p>
+        </div>
+        <div class="col-md-6 mb-3">
+            <strong>العنوان:</strong>
+            <p>{{ selectedComplaint.ComplainantAddressTxt }}</p>
+        </div>
+        <div class="col-md-6 mb-3">
+            <strong>تفاصيل العنوان:</strong>
+            <p>{{ selectedComplaint.ComplainantAddressDetails || '-' }}</p>
+        </div>
+        <div class="col-md-6 mb-3">
+            <strong>رقم الجوال:</strong>
+            <p>{{ selectedComplaint.ComplainantMobileNumber }}</p>
+        </div>
+        <div class="col-md-6 mb-3">
+            <strong>البريد الإلكتروني:</strong>
+            <p>{{ selectedComplaint.ComplainantEmail || '-' }}</p>
+        </div>
+        <div class="col-md-6 mb-3">
+            <strong>تاريخ تقديم الشكوى:</strong>
+            <p>{{ selectedComplaint.ComplaintDate }}</p>
+        </div>
+        <div class="col-md-12 mb-3">
+            <strong>نص الشكوى:</strong>
+            <p>{{ selectedComplaint.ComplaintDescription }}</p>
+        </div>
+    </div>
+
+    <ng-template pTemplate="footer">
+        <button class="btn btn-secondary" (click)="closePreviewDialog()" [disabled]="isConverting">
+            <i class="fas fa-times"></i>
+            إلغاء
+        </button>
+        <button class="btn btn-success" (click)="convertToOfficial()" [disabled]="isConverting">
+            <span *ngIf="isConverting" class="spinner-border spinner-border-sm me-1" role="status"></span>
+            <i *ngIf="!isConverting" class="fas fa-exchange-alt"></i>
+            {{ isConverting ? 'جاري التحويل...' : 'تحويل' }}
+        </button>
+    </ng-template>
+</p-dialog>
+
+<!-- Loading Spinner -->
+<ng-template #loadingSpinner>
+    <div class="col-md-12 d-flex justify-content-center py-15">
+        <mat-spinner></mat-spinner>
+    </div>
+</ng-template>

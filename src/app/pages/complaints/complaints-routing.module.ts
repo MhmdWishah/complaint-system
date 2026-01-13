@@ -20,6 +20,12 @@ export const routes: Routes = [
         loadChildren: () =>
             import('./complaint-follow-up/complaint-follow-up.module').then((m) => m.ComplaintFollowUpModule),
     },
+
+    {
+        path: 'PublicComplaints',
+        loadChildren: () =>
+            import('./public-complaints/public-complaints.module').then((m) => m.PublicComplaintsModule),
+    },
     // {
     //     path: '/Complaint',
     //     redirectTo: '/ComplaintModel',
