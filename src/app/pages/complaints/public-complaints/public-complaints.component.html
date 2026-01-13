@@ -21,13 +21,20 @@
             <!-- Search Form -->
             <section>
                 <form [formGroup]="searchForm" class="row align-items-end">
-                    <div class="col-md-3 mb-3">
+                    <div class="col-md-2 mb-3">
                         <label>من تاريخ</label>
                         <input type="date" class="form-control" formControlName="FromDate">
                     </div>
-                    <div class="col-md-3 mb-3">
+                    <div class="col-md-2 mb-3">
                         <label>إلى تاريخ</label>
                         <input type="date" class="form-control" formControlName="ToDate">
+                    </div>
+                    <div class="col-md-2 mb-3" *ngIf="publicComplaintsCodes$ | async as publicCodes">
+                        <label>حالة الاستلام</label>
+                        <select class="form-control" formControlName="TransferStatus">
+                            <option [value]="null">الكل</option>
+                            <option *ngFor="let status of publicCodes?.TransferStatus" [value]="status.Code">{{ status.Name }}</option>
+                        </select>
                     </div>
                     <div class="col-md-4 mb-3">
                         <button type="button" class="btn btn-info btn-sm me-2" matTooltip="استعراض" (click)="fetchComplaints()">
@@ -56,30 +63,35 @@
                             <th>الجنس</th>
                             <th>العنوان</th>
                             <th>رقم الجوال</th>
-                            <th>البريد الإلكتروني</th>
                             <th>تاريخ تقديم الشكوى</th>
                             <th>نص الشكوى</th>
-                            <th style="width: 12%">إجراءات</th>
+                            <th>مستلم الشكوى</th>
+                            <th>تاريخ الاستلام</th>
+                            <th style="width: 10%">إجراءات</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let complaint of complaints$ | async">
+                        <tr *ngFor="let complaint of complaints$ | async"
+                            [class.table-success]="complaint.ReceivedFullName">
                             <td>{{ complaint.ComplainantName }}</td>
                             <td>{{ complaint.ComplainantGenderTxt }}</td>
                             <td>{{ complaint.ComplainantAddressTxt }}</td>
                             <td>{{ complaint.ComplainantMobileNumber }}</td>
-                            <td>{{ complaint.ComplainantEmail }}</td>
                             <td>{{ complaint.ComplaintDate }}</td>
                             <td>{{ (complaint.ComplaintDescription?.length || 0) > 30 ? (complaint.ComplaintDescription | slice:0:30) + '...' : complaint.ComplaintDescription }}</td>
+                            <td>{{ complaint.ReceivedFullName || '-' }}</td>
+                            <td>{{ complaint.ReceivedDate || '-' }}</td>
                             <td>
-                                <!-- Edit button commented out for now
-                                <button class="btn btn-icon btn-primary btn-circle btn-sm me-1"
-                                        matTooltip="تعديل"
-                                        (click)="openEditDialog(complaint)">
-                                    <i class="fas fa-pen"></i>
+                                <!-- Preview button for received complaints -->
+                                <button *ngIf="complaint.ReceivedFullName"
+                                        class="btn btn-icon btn-info btn-circle btn-sm"
+                                        matTooltip="معاينة"
+                                        (click)="openPreviewDialog(complaint)">
+                                    <i class="fas fa-eye"></i>
                                 </button>
-                                -->
-                                <button class="btn btn-icon btn-success btn-circle btn-sm"
+                                <!-- Receive button for non-received complaints -->
+                                <button *ngIf="!complaint.ReceivedFullName"
+                                        class="btn btn-icon btn-success btn-circle btn-sm"
                                         matTooltip="استلام الشكوى"
                                         (click)="openPreviewDialog(complaint)">
                                     <i class="fas fa-check-circle"></i>
@@ -221,9 +233,12 @@
     <ng-template pTemplate="footer">
         <button class="btn btn-secondary" (click)="closePreviewDialog()" [disabled]="isConverting">
             <i class="fas fa-times"></i>
-            إلغاء
+            إغلاق
         </button>
-        <button class="btn btn-success" (click)="convertToOfficial()" [disabled]="isConverting">
+        <button *ngIf="!selectedComplaint?.ReceivedFullName"
+                class="btn btn-success"
+                (click)="convertToOfficial()"
+                [disabled]="isConverting">
             <span *ngIf="isConverting" class="spinner-border spinner-border-sm me-1" role="status"></span>
             <i *ngIf="!isConverting" class="fas fa-check-circle"></i>
             {{ isConverting ? 'جاري الاستلام...' : 'استلام الشكوى' }}

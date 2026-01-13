@@ -11,9 +11,13 @@ export interface PublicComplaint {
     ComplainantGender: string;
     ComplainantGenderTxt: string;
     ComplaintDate: string;
+    TransferStatus?: number;
+    ReceivedFullName?: string;
+    ReceivedDate?: string;
 }
 
 export interface PublicComplaintSearchParams {
     FromDate?: string;
     ToDate?: string;
+    TransferStatus?: number;
 }

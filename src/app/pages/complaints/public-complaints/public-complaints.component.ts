@@ -16,6 +16,7 @@ export class PublicComplaintsComponent implements OnInit {
     // Observables
     complaints$: Observable<PublicComplaint[] | undefined>;
     codes$: Observable<any>;
+    publicComplaintsCodes$: Observable<any>;
     isLoading$: Observable<boolean>;
 
     // Forms
@@ -53,12 +54,14 @@ export class PublicComplaintsComponent implements OnInit {
 
     private initCodes(): void {
         this.codes$ = this.codesService.getPageCodes('complaint');
+        this.publicComplaintsCodes$ = this.codesService.getPageCodes('PublicComplaints');
     }
 
     private initSearchForm(): void {
         this.searchForm = this.fb.group({
             FromDate: [null],
-            ToDate: [null]
+            ToDate: [null],
+            TransferStatus: [null]
         });
     }
 
