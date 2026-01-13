@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { PublicComplaint } from './public-complaints.model';
@@ -37,7 +37,8 @@ export class PublicComplaintsComponent implements OnInit {
         private fb: FormBuilder,
         private publicComplaintsService: PublicComplaintsService,
         private codesService: CodesService,
-        private toastr: ToastrService
+        private toastr: ToastrService,
+        private cdr: ChangeDetectorRef
     ) {
         this.initSearchForm();
         this.initComplaintForm();
@@ -152,6 +153,7 @@ export class PublicComplaintsComponent implements OnInit {
                         this.isConverting = false;
                         if (response?.rv === 0 && response?.Msg) {
                             this.toastr.error(response.Msg);
+                            this.cdr.detectChanges();
                         } else if (response?.status > 0 || response?.rv > 0) {
                             this.toastr.success('تم تحويل الشكوى بنجاح');
                             this.closePreviewDialog();
@@ -161,6 +163,7 @@ export class PublicComplaintsComponent implements OnInit {
                     error: () => {
                         this.isConverting = false;
                         this.toastr.error('حدث خطأ أثناء التحويل');
+                        this.cdr.detectChanges();
                     }
                 });
         }
