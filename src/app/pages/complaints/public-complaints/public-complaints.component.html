@@ -80,9 +80,9 @@
                                 </button>
                                 -->
                                 <button class="btn btn-icon btn-success btn-circle btn-sm"
-                                        matTooltip="تحويل لشكوى رسمية"
+                                        matTooltip="استلام الشكوى"
                                         (click)="openPreviewDialog(complaint)">
-                                    <i class="fas fa-exchange-alt"></i>
+                                    <i class="fas fa-check-circle"></i>
                                 </button>
                             </td>
                         </tr>
@@ -225,8 +225,8 @@
         </button>
         <button class="btn btn-success" (click)="convertToOfficial()" [disabled]="isConverting">
             <span *ngIf="isConverting" class="spinner-border spinner-border-sm me-1" role="status"></span>
-            <i *ngIf="!isConverting" class="fas fa-exchange-alt"></i>
-            {{ isConverting ? 'جاري التحويل...' : 'تحويل' }}
+            <i *ngIf="!isConverting" class="fas fa-check-circle"></i>
+            {{ isConverting ? 'جاري الاستلام...' : 'استلام الشكوى' }}
         </button>
     </ng-template>
 </p-dialog>

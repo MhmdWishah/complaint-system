@@ -155,14 +155,14 @@ export class PublicComplaintsComponent implements OnInit {
                             this.toastr.error(response.Msg);
                             this.cdr.detectChanges();
                         } else if (response?.status > 0 || response?.rv > 0) {
-                            this.toastr.success('تم تحويل الشكوى بنجاح');
+                            this.toastr.success('تم استلام الشكوى بنجاح');
                             this.closePreviewDialog();
                             this.fetchComplaints();
                         }
                     },
                     error: () => {
                         this.isConverting = false;
-                        this.toastr.error('حدث خطأ أثناء التحويل');
+                        this.toastr.error('حدث خطأ أثناء الاستلام');
                         this.cdr.detectChanges();
                     }
                 });
