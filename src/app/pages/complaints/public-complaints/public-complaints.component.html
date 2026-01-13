@@ -77,10 +77,10 @@
                             <td>{{ complaint.ComplainantGenderTxt }}</td>
                             <td>{{ complaint.ComplainantAddressTxt }}</td>
                             <td>{{ complaint.ComplainantMobileNumber }}</td>
-                            <td>{{ complaint.ComplaintDate }}</td>
+                            <td>{{ complaint.ComplaintDate | date:'yyyy-MM-dd' }}</td>
                             <td>{{ (complaint.ComplaintDescription?.length || 0) > 30 ? (complaint.ComplaintDescription | slice:0:30) + '...' : complaint.ComplaintDescription }}</td>
                             <td>{{ complaint.ReceivedFullName || '-' }}</td>
-                            <td>{{ complaint.ReceivedDate || '-' }}</td>
+                            <td>{{ complaint.ReceivedDate ? (complaint.ReceivedDate | date:'yyyy-MM-dd HH:mm') : '-' }}</td>
                             <td>
                                 <!-- Preview button for received complaints -->
                                 <button *ngIf="complaint.ReceivedFullName"
@@ -223,6 +223,14 @@
         <div class="col-md-6 mb-3">
             <strong>تاريخ تقديم الشكوى:</strong>
             <p>{{ selectedComplaint.ComplaintDate }}</p>
+        </div>
+        <div class="col-md-6 mb-3" *ngIf="selectedComplaint.ReceivedFullName">
+            <strong>مستلم الشكوى:</strong>
+            <p>{{ selectedComplaint.ReceivedFullName }}</p>
+        </div>
+        <div class="col-md-6 mb-3" *ngIf="selectedComplaint.ReceivedDate">
+            <strong>تاريخ الاستلام:</strong>
+            <p>{{ selectedComplaint.ReceivedDate | date:'yyyy-MM-dd HH:mm' }}</p>
         </div>
         <div class="col-md-12 mb-3">
             <strong>نص الشكوى:</strong>
